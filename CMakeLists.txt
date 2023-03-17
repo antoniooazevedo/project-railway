@@ -7,4 +7,5 @@ include_directories(src)
 
 add_executable(project_railway
         src/Scraper.cpp
-        src/Scraper.h)
+        src/Scraper.h
+        src/main.cpp)

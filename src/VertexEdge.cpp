@@ -129,14 +129,15 @@ void Vertex::deleteEdge(Edge *edge) {
 
 /********************** Edge  ****************************/
 
-Edge::Edge(Vertex *orig, Vertex *dest, double w): orig(orig), dest(dest), weight(w) {}
+
+Edge::Edge(Vertex *orig, Vertex *dest, double w): orig(orig), dest(dest), capacity(w) {}
 
 Vertex * Edge::getDest() const {
     return this->dest;
 }
 
-double Edge::getWeight() const {
-    return this->weight;
+double Edge::getCapacity() const {
+    return this->capacity;
 }
 
 Vertex * Edge::getOrig() const {

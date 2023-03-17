@@ -1,44 +1,53 @@
 // By: Gonçalo Leão
 
+//#include <wsman.h>
 #include "Graph.h"
 
 int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-std::vector<Vertex *> Graph::getVertexSet() const {
+std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-Vertex * Graph::findVertex(const int &id) const {
+
+
+/*Vertex * Graph::findVertex(const int &id) const {
     for (auto v : vertexSet)
         if (v->getId() == id)
             return v;
     return nullptr;
-}
+}*/
 
 /*
  * Finds the index of the vertex with a given content.
  */
+
+/*
 int Graph::findVertexIdx(const int &id) const {
     for (unsigned i = 0; i < vertexSet.size(); i++)
         if (vertexSet[i]->getId() == id)
             return i;
     return -1;
 }
+ */
+
 /*
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
+
+/*
 bool Graph::addVertex(const int &id) {
     if (findVertex(id) != nullptr)
         return false;
     vertexSet.push_back(new Vertex(id));
     return true;
-}
+}*/
 
 /*
  * Adds an edge to a graph (this), given the contents of the source and

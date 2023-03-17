@@ -9,8 +9,11 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_map>
+#include <string>
 
 #include "VertexEdge.h"
+
+using namespace std;
 
 class Graph {
 public:
