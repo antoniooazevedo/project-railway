@@ -12,4 +12,12 @@ add_executable(project_railway
         src/VertexEdge.h
         src/Graph.cpp
         src/Graph.h
-        src/main.cpp)
+        src/main.cpp
+        src/Program.cpp
+        src/Program.h
+        src/Menu.cpp
+        src/Menu.h
+        src/MenuItem.cpp
+        src/MenuItem.h
+        src/ChangeMenu.cpp
+        src/ChangeMenu.h)
