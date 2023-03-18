@@ -15,13 +15,14 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
  * Auxiliary function to find a vertex with a given content.
  */
 
-
-/*Vertex * Graph::findVertex(const int &id) const {
+/*
+Vertex * Graph::findVertex(const int &id) const {
     for (auto v : vertexSet)
         if (v->getId() == id)
             return v;
     return nullptr;
-}*/
+}
+ */
 
 /*
  * Finds the index of the vertex with a given content.
@@ -41,19 +42,29 @@ int Graph::findVertexIdx(const int &id) const {
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
 
-/*
-bool Graph::addVertex(const int &id) {
+bool Graph::addVertex(const string &id) {
+    /*if (findVertex(id) != nullptr)
+        return false;
+        */
+    vertexSet.insert({id, new Vertex(id)});
+    return true;
+}
+
+bool Graph::addVertex(Vertex *v) {
+    /*
     if (findVertex(id) != nullptr)
         return false;
-    vertexSet.push_back(new Vertex(id));
+        */
+    vertexSet.insert({v->getId(), v});
     return true;
-}*/
+}
 
 /*
  * Adds an edge to a graph (this), given the contents of the source and
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
+/*
 bool Graph::addEdge(const int &sourc, const int &dest, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
@@ -62,6 +73,7 @@ bool Graph::addEdge(const int &sourc, const int &dest, double w) {
     v1->addEdge(v2, w);
     return true;
 }
+
 
 bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
     auto v1 = findVertex(sourc);
@@ -74,6 +86,7 @@ bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
     e2->setReverse(e1);
     return true;
 }
+  */
 
 void deleteMatrix(int **m, int n) {
     if (m != nullptr) {

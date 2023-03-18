@@ -1,7 +1,8 @@
 Name,District,Municipality,Township,Line
+Alferrarede,SANTARÉM,ABRANTES,Abrantes (São Vicente e São João) e Alferrarede,Linha da Beira Baixa
+Viana do Castelo,VIANA DO CASTELO,VIANA DO CASTELO,Viana do Castelo,Linha do Minho
 Oliveira de Azeméis,AVEIRO,OLIVEIRA DE AZEMÉIS,"O. Azeméis, Riba-Ul, Ul, Macinhata da Seixa, Madail",Linha do Vouga
 Porto Campanhã,PORTO,PORTO,Porto,Linha do Norte
-Viana do Castelo,VIANA DO CASTELO,VIANA DO CASTELO,Viana do Castelo,Linha do Minho
 Ermidas-Sado,SETÚBAL,SANTIAGO DO CACÉM,Ermidas-Sado,Linha do Sul
 Faro,FARO,FARO,Faro,Linha do Algarve
 Funcheira,BEJA,OURIQUE,Funcheira,Linha do Sul
@@ -23,7 +24,6 @@ Famalicão,BRAGA,VILA NOVA DE FAMALICÃO,Vila Nova de Famalicão e Calendário,L
 Covas,BRAGA,GUIMARÃES,Urgezes,Linha de Guimarães
 Darque,VIANA DO CASTELO,VIANA DO CASTELO,Darque,Linha do Minho
 Seiça-Ourém,SANTARÉM,OURÉM,Seiça,Linha do Norte
-Alferrarede,SANTARÉM,ABRANTES,Abrantes (São Vicente e São João) e Alferrarede,Linha da Beira Baixa
 Fernando Pó,SETÚBAL,PALMELA,Poceirão e Marateca,Linha do Alentejo
 Aveiro - Vouga,AVEIRO,AVEIRO,Esgueira,Linha do Vouga
 São Romão,PORTO,TROFA,Coronado (São Romão e São Mamede),Linha do Minho

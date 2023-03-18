@@ -18,10 +18,12 @@ class Edge;
 
 class Vertex {
 public:
-    Vertex(int id);
+    Vertex(std::string id);
+    Vertex(std::string id, std::string district, std::string municipality, std::string mainLine,
+           std::list<std::string> townships);
     bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
-    int getId() const;
+    std::string getId() const;
     std::vector<Edge *> getAdj() const;
     bool isVisited() const;
     bool isProcessing() const;
@@ -30,18 +32,18 @@ public:
     Edge *getPath() const;
     std::vector<Edge *> getIncoming() const;
 
-    void setId(int info);
+    void setId(std::string info);
     void setVisited(bool visited);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
-    bool removeEdge(int destID);
+    bool removeEdge(std::string destID);
     void removeOutgoingEdges();
 
 protected:
-    int id;                // identifier
+    std::string id;                // identifier
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
@@ -50,7 +52,7 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     Edge *path = nullptr;
-    std::string name, district, municipality, main_line;
+    std::string name = id, district, municipality, main_line;
     std::list<std::string> townships;
 
     std::vector<Edge *> incoming; // incoming edges

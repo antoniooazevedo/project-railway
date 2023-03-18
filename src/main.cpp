@@ -4,9 +4,11 @@
 
 #include <iostream>
 #include "Scraper.h"
+#include "Graph.h"
 
 int main(){
     Scraper sc;
-    sc.scrape_stations("C:\\Users\\tomas\\CLionProjects\\project-railway\\src\\data\\stations.csv");
+    Graph gh;
+    sc.scrape_stations("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/stations.csv", gh);
     return 0;
 }

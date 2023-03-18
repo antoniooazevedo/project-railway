@@ -4,12 +4,11 @@
 
 
 #include "Scraper.h"
+#include "Graph.h"
 
 using namespace std;
 
-
-void Scraper::scrape_stations(string filename) {
-    int i = 1;
+void Scraper::scrape_stations(string filename, Graph &graph) {
     ifstream file;
     file.open(filename);
 
@@ -21,15 +20,26 @@ void Scraper::scrape_stations(string filename) {
 
     while (getline(file, line)){
         istringstream iss(line);
-        string info;
         getline(iss, name,',');
         getline(iss, district,',');
         getline(iss, municipality,',');
         getline(iss, townshipword,'"');
-        getline(iss, townshipword,'"');
-        scrape_townships(townshipword);
-        i++;
 
+        if (townshipword.empty()){
+            getline(iss, townshipword,'"');
+            townships = scrape_townships(townshipword);
+            getline(iss, main_line, ',');
+            getline(iss, main_line, ',');
+        }
+        else{
+            stringstream smol(townshipword);
+            getline(smol, townshipword, ',');
+            townships = scrape_townships(townshipword);
+            getline(smol, main_line, ',');
+        }
+
+        auto v = new Vertex(name, district, municipality, main_line, townships);
+        graph.addVertex(v);
     }
 }
 
@@ -37,9 +47,14 @@ list<string> Scraper::scrape_townships(string aux_string){
     list<string> aux_list;
     istringstream iss(aux_string);
     string township;
+    int i = 0;
 
     while (getline(iss,township,',')){
+        if(i > 0){
+            township.erase(0, 1);
+        }
         aux_list.push_back(township);
+        i++;
     }
     return  aux_list;
 }

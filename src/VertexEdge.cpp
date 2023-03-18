@@ -2,9 +2,16 @@
 
 #include "VertexEdge.h"
 
+using namespace std;
+
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int id): id(id) {}
+Vertex::Vertex(string id, std::string district, std::string municipality, std::string mainLine,
+               std::list<std::string> townships)
+        : id(id), district(district), municipality(municipality), main_line(mainLine), townships(townships) {}
+
+Vertex::Vertex(std::string id) : id(id) {}
+
 
 /*
  * Auxiliary function to add an outgoing edge to a vertex (this),
@@ -22,7 +29,7 @@ Edge * Vertex::addEdge(Vertex *d, double w) {
  * from a vertex (this).
  * Returns true if successful, and false if such edge does not exist.
  */
-bool Vertex::removeEdge(int destID) {
+bool Vertex::removeEdge(string destID) {
     bool removedEdge = false;
     auto it = adj.begin();
     while (it != adj.end()) {
@@ -56,7 +63,7 @@ bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
 
-int Vertex::getId() const {
+string Vertex::getId() const {
     return this->id;
 }
 
@@ -88,7 +95,7 @@ std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
-void Vertex::setId(int id) {
+void Vertex::setId(string id) {
     this->id = id;
 }
 
