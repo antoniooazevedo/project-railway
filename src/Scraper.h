@@ -17,9 +17,9 @@ using namespace std;
 
 class Scraper {
 public:
-    void scrape_stations(string filename, Graph &gh);
-    void scrape_networks(string filename, Graph &gh);
-    list<string> scrape_townships(string aux);
+    static void scrape_stations(string filename, Graph &gh);
+    static void scrape_networks(string filename, Graph &gh);
+    static list<string> scrape_townships(string aux);
 };
 
 

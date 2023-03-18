@@ -62,7 +62,7 @@ protected:
 
 /********************** Edge  ****************************/
 
-enum service{standard = 0, alfaPendular = 1};
+enum service{STANDARD,ALFA_PENDULAR};
 
 class Edge {
 public:
@@ -74,10 +74,12 @@ public:
     Vertex * getOrig() const;
     Edge *getReverse() const;
     double getFlow() const;
+    int getService() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
+    void setService(enum service s);
 protected:
     Vertex * dest; // destination vertex
     double capacity; // edge weight, can also be used for capacity

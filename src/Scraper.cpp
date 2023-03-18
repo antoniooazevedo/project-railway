@@ -13,7 +13,7 @@ void Scraper::scrape_stations(string filename, Graph &graph) {
     file.open(filename);
 
     string line;
-    getline(file, line);
+    getline(file, line);  // discard first line
     string name, district, municipality, main_line;
     list<string> townships;
     string townshipword;
@@ -29,13 +29,13 @@ void Scraper::scrape_stations(string filename, Graph &graph) {
             getline(iss, townshipword,'"');
             townships = scrape_townships(townshipword);
             getline(iss, main_line, ',');
-            getline(iss, main_line, ',');
+            getline(iss, main_line, '\r');
         }
         else{
             stringstream smol(townshipword);
             getline(smol, townshipword, ',');
             townships = scrape_townships(townshipword);
-            getline(smol, main_line, ',');
+            getline(smol, main_line, '\r');
         }
 
         auto v = new Vertex(name, district, municipality, main_line, townships);
@@ -57,4 +57,29 @@ list<string> Scraper::scrape_townships(string aux_string){
         i++;
     }
     return  aux_list;
+}
+
+void Scraper::scrape_networks(std::string filename, Graph &gh) {
+    ifstream file;
+    file.open(filename);
+
+    string line;
+    getline(file, line); // discard first line
+
+    string s1, s2, capacity, service_string;
+
+    while(getline(file, line)) {
+        istringstream iss(line);
+        getline(iss, s1, ',');
+        getline(iss, s2, ',');
+        getline(iss, capacity, ',');
+        getline(iss, service_string, '\r');
+
+        enum service service;
+        if (service_string == "STANDARD") service = STANDARD;
+        else if (service_string == "ALFA PENDULAR") service = ALFA_PENDULAR;
+
+        gh.addBidirectionalEdge(s1, s2, stoi(capacity), service);
+    }
+
 }

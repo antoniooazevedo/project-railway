@@ -34,8 +34,8 @@ public:
      * destination vertices and the edge weight (w).
      * Returns true if successful, and false if the source or destination vertex does not exist.
      */
-    bool addEdge(const int &sourc, const int &dest, double w);
-    bool addBidirectionalEdge(const int &sourc, const int &dest, double w);
+    bool addEdge(const string &sourc, const string &dest, double c, enum service s);
+    bool addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s);
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;

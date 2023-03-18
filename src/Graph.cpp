@@ -15,14 +15,11 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
  * Auxiliary function to find a vertex with a given content.
  */
 
-/*
-Vertex * Graph::findVertex(const int &id) const {
-    for (auto v : vertexSet)
-        if (v->getId() == id)
-            return v;
-    return nullptr;
+
+Vertex * Graph::findVertex(const string &id) const {
+    return vertexSet.find(id)->second;
 }
- */
+
 
 /*
  * Finds the index of the vertex with a given content.
@@ -74,19 +71,21 @@ bool Graph::addEdge(const int &sourc, const int &dest, double w) {
     return true;
 }
 
-
-bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
+  */
+bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
-    auto e1 = v1->addEdge(v2, w);
-    auto e2 = v2->addEdge(v1, w);
+    auto e1 = v1->addEdge(v2, c);
+    auto e2 = v2->addEdge(v1, c);
     e1->setReverse(e2);
     e2->setReverse(e1);
+    e1->setService(s);
+    e2->setService(s);
     return true;
 }
-  */
+
 
 void deleteMatrix(int **m, int n) {
     if (m != nullptr) {

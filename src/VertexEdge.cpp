@@ -160,7 +160,11 @@ bool Edge::isSelected() const {
 }
 
 double Edge::getFlow() const {
-    return flow;
+    return this->flow;
+}
+
+int Edge::getService() const {
+    return this->service;
 }
 
 void Edge::setSelected(bool selected) {
@@ -173,4 +177,8 @@ void Edge::setReverse(Edge *reverse) {
 
 void Edge::setFlow(double flow) {
     this->flow = flow;
+}
+
+void Edge::setService(enum service s) {
+    this->service = s;
 }
