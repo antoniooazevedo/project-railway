@@ -81,5 +81,11 @@ void Scraper::scrape_networks(std::string filename, Graph &gh) {
 
         gh.addBidirectionalEdge(s1, s2, stoi(capacity), service);
     }
+}
 
+void Scraper::fix_graph(Graph &gh){
+    auto map = gh.getVertexSet();
+    for (auto &v: map){
+        if (v.second->getAdj().empty()) gh.removeVertex(v.second);
+    }
 }

@@ -28,6 +28,8 @@ public:
      */
     bool addVertex(const string &id);
     bool addVertex(Vertex *v);
+    bool removeVertex(const string &id);
+    bool removeVertex(Vertex *v);
 
     /*
      * Adds an edge to a graph (this), given the contents of the source and

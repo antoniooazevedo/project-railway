@@ -17,7 +17,9 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
 
 
 Vertex * Graph::findVertex(const string &id) const {
-    return vertexSet.find(id)->second;
+    auto v = vertexSet.find(id);
+    if (v == vertexSet.end()) return nullptr;
+    else return v->second;
 }
 
 
@@ -40,22 +42,30 @@ int Graph::findVertexIdx(const int &id) const {
  */
 
 bool Graph::addVertex(const string &id) {
-    /*if (findVertex(id) != nullptr)
+    if (findVertex(id) != nullptr)
         return false;
-        */
     vertexSet.insert({id, new Vertex(id)});
     return true;
 }
 
 bool Graph::addVertex(Vertex *v) {
-    /*
-    if (findVertex(id) != nullptr)
+    if (findVertex(v->getId()) != nullptr)
         return false;
-        */
     vertexSet.insert({v->getId(), v});
     return true;
 }
 
+bool Graph::removeVertex(const std::string &id) {
+    if (findVertex(id) == nullptr) return false;
+    vertexSet.erase(id);
+    return true;
+}
+
+bool Graph::removeVertex(Vertex *v) {
+    if (findVertex(v->getId()) == nullptr) return false;
+    vertexSet.erase(v->getId());
+    return true;
+}
 /*
  * Adds an edge to a graph (this), given the contents of the source and
  * destination vertices and the edge weight (w).

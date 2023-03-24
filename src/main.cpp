@@ -7,9 +7,11 @@
 #include "Graph.h"
 
 int main(){
-    Scraper sc;
     Graph gh;
-    sc.scrape_stations("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/stations.csv", gh);
-    sc.scrape_networks("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/network.csv", gh);
+    Scraper::scrape_stations("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/stations.csv", gh);
+    Scraper::scrape_networks("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/network.csv", gh);
+    cout << gh.getVertexSet().size() << '\n';
+    Scraper::fix_graph(gh);
+    cout << gh.getVertexSet().size() << '\n';
     return 0;
 }
