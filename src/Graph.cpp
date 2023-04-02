@@ -1,6 +1,3 @@
-// By: Gonçalo Leão
-
-//#include <wsman.h>
 #include "Graph.h"
 
 int Graph::getNumVertex() const {
@@ -30,7 +27,7 @@ bool Graph::reachDest(const string &origin, const string &dest) const {
         return true;
     }
     if (v == nullptr) return false;
-    v->setVisited(true);
+    v->setHit(true);
     for (auto e : v->getAdj()) {
         if (e->getDest()->getId() == dest) {
             return true;
@@ -42,50 +39,96 @@ bool Graph::reachDest(const string &origin, const string &dest) const {
     return false;
 }
 
-bool Graph::augmentingpath(const string &origin, const string &dest) const {
+
+double Graph::findBottleneck(Vertex* origin, Vertex* dest) const {
+    double cap = numeric_limits<double>::max();
+    auto v = dest;
+    while (v != origin) {
+        auto e = v->getPath();
+        if (e->getOrig() == v){
+            cap = min(cap, e->getCapacity() - e->getFlow());
+            v = e->getOrig();
+    }
+        else{
+            cap = min(cap, e->getFlow());
+            v = e->getOrig();
+        }
+    }
+    return cap;
+}
+
+void Graph::augmentFlow(Vertex* origin, Vertex* dest, double flow) const {
+    auto v = dest;
+    while (v != origin) {
+        auto e = v->getPath();
+        if (e->getOrig() == v){
+            e->setFlow(e->getFlow() + flow);
+            v = e->getOrig();
+        }
+        else{
+            e->setFlow(e->getFlow() - flow);
+            v = e->getOrig();
+        }
+    }
+}
+
+bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
+    for(auto v : vertexSet){
+        v.second->setVisited(false);
+        v.second->setHit(false);
+    }
+
     queue<Vertex*> q;
-    auto s = findVertex(origin);
-    q.push(findVertex(origin));
-    s->setVisited(true);
-    s->setPath(nullptr);
-    while(!q.empty()){
+    origin->setVisited(true);
+    q.push(origin);
+    while(!q.empty() && !dest->isVisited()){
         auto v = q.front();
         q.pop();
+
+        if (v == dest)
+            return true;
+
         for(auto e : v->getAdj()){
             auto w = e->getDest();
-            if(!w->isVisited() && e->getCapacity()-e->getFlow() > 0){
+            if(!w->isVisited() && e->getCapacity()-e->getFlow() > 0 && w->getReached()){
                 w->setVisited(true);
                 w->setPath(e);
-                e->setFlow(min(e->getCapacity()-e->getFlow(), e->getFlow()));
-                if(w->getId() == dest) return true;
+                q.push(w);
+            }
+        }
+        for( auto e : v->getIncoming()){
+            auto w = e->getOrig();
+            if(!w->isVisited() && e->getFlow() > 0){
+                w->setVisited(true);
+                w->setPath(e);
                 q.push(w);
             }
         }
     }
-    return false;
-
+    return dest->isVisited();
 }
-void Graph::MaxFlow(const string &origin, const string &dest) const {
-    for(auto v : vertexSet){
-        for(auto e : v.second->getAdj()){
-            e->setFlow(0);
-        }
+
+void Graph::maxFlow(const string &origin, const string &dest) const {
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    // Call dfs
+
+    for(const auto& v : vertexSet){
+        v.second->setVisited(false);
+        v.second->setHit(false);
     }
 
-    while (augmentingpath(origin, dest)){
-        auto v = findVertex(dest);
-        while (v != findVertex(origin)){
-            auto e = v->getPath();
-            auto parent = e->getOrig();
-            for (auto e : v->getIncoming()){
-                if(e->getOrig() == parent){
-                    e->setFlow(-e->getFlow());
-                    break;
-                }
-            }
-            v = parent;
-        }
+    for(const auto& v : vertexSet){
+        for(auto e : v.second->getAdj())
+            e->setFlow(0);
+        for (auto e: v.second->getIncoming())
+            e->setFlow(0);
+    }
 
+    while (findPath(s, t)){
+        double flow = minCap(s, t);
+        augmentFlow(s, t, flow);
     }
 }
 

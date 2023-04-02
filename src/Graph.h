@@ -38,10 +38,6 @@ public:
      */
     bool addEdge(const string &sourc, const string &dest, double c, enum service s);
     bool addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s);
-    bool reachDest(const string &origin, const string &dest) const;
-    void MaxFlow(const string &origin, const string &dest) const;
-    bool augmentingpath(const string &origin, const string &dest) const;
-
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
@@ -55,6 +51,12 @@ protected:
      * Finds the index of the vertex with a given content.
      */
     int findVertexIdx(const int &id) const;
+    double minCap(Vertex *origin, Vertex *dest) const;
+    void augmentFlow(Vertex* origin, Vertex* dest, double flow) const;
+    double findBottleneck(Vertex* origin, Vertex* dest) const;
+    void maxFlow(const string &origin, const string &dest) const;
+    bool reachDest(const string &origin, const string &dest) const;
+    bool findPath(Vertex* origin , Vertex* dest ) const;
 };
 
 void deleteMatrix(int **m, int n);

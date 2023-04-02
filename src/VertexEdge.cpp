@@ -75,6 +75,12 @@ bool Vertex::getReached() const {
     return this->reachDestination;
 }
 
+bool Vertex::getHit() const {
+    return this->hit;
+}
+
+
+
 bool Vertex::isVisited() const {
     return this->visited;
 }
@@ -109,6 +115,10 @@ void Vertex::setVisited(bool visited) {
 
 void Vertex::setReachedDestination(bool reachDestination) {
     this->reachDestination = reachDestination;
+}
+
+void Vertex::setHit(bool hit) {
+    this->hit = hit;
 }
 
 void Vertex::setProcesssing(bool processing) {
