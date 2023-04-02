@@ -71,6 +71,10 @@ std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
 
+bool Vertex::getReached() const {
+    return this->reachDestination;
+}
+
 bool Vertex::isVisited() const {
     return this->visited;
 }
@@ -101,6 +105,10 @@ void Vertex::setId(string id) {
 
 void Vertex::setVisited(bool visited) {
     this->visited = visited;
+}
+
+void Vertex::setReachedDestination(bool reachDestination) {
+    this->reachDestination = reachDestination;
 }
 
 void Vertex::setProcesssing(bool processing) {

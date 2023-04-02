@@ -26,6 +26,7 @@ public:
     std::string getId() const;
     std::vector<Edge *> getAdj() const;
     bool isVisited() const;
+    bool getReached() const;
     bool isProcessing() const;
     unsigned int getIndegree() const;
     double getDist() const;
@@ -34,6 +35,7 @@ public:
 
     void setId(std::string info);
     void setVisited(bool visited);
+    void setReachedDestination(bool reachDestination);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
@@ -47,7 +49,8 @@ protected:
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
-    bool visited = false; // used by DFS, BFS, Prim ...
+    bool visited = false;// used by DFS, BFS, Prim ...
+    bool reachDestination = true; // used by Dijkstra
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;

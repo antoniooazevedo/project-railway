@@ -38,6 +38,10 @@ public:
      */
     bool addEdge(const string &sourc, const string &dest, double c, enum service s);
     bool addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s);
+    bool reachDest(const string &origin, const string &dest) const;
+    void MaxFlow(const string &origin, const string &dest) const;
+    bool augmentingpath(const string &origin, const string &dest) const;
+
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;

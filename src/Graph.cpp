@@ -22,6 +22,74 @@ Vertex * Graph::findVertex(const string &id) const {
     else return v->second;
 }
 
+bool Graph::reachDest(const string &origin, const string &dest) const {
+    auto v = findVertex(origin);
+
+    if (origin == dest){
+        findVertex(dest)->setReachedDestination(true);
+        return true;
+    }
+    if (v == nullptr) return false;
+    v->setVisited(true);
+    for (auto e : v->getAdj()) {
+        if (e->getDest()->getId() == dest) {
+            return true;
+        }
+        if (!e->getDest()->isVisited()) {
+            reachDest(e->getDest()->getId(), dest);
+        }
+    }
+    return false;
+}
+
+bool Graph::augmentingpath(const string &origin, const string &dest) const {
+    queue<Vertex*> q;
+    auto s = findVertex(origin);
+    q.push(findVertex(origin));
+    s->setVisited(true);
+    s->setPath(nullptr);
+    while(!q.empty()){
+        auto v = q.front();
+        q.pop();
+        for(auto e : v->getAdj()){
+            auto w = e->getDest();
+            if(!w->isVisited() && e->getCapacity()-e->getFlow() > 0){
+                w->setVisited(true);
+                w->setPath(e);
+                e->setFlow(min(e->getCapacity()-e->getFlow(), e->getFlow()));
+                if(w->getId() == dest) return true;
+                q.push(w);
+            }
+        }
+    }
+    return false;
+
+}
+void Graph::MaxFlow(const string &origin, const string &dest) const {
+    for(auto v : vertexSet){
+        for(auto e : v.second->getAdj()){
+            e->setFlow(0);
+        }
+    }
+
+    while (augmentingpath(origin, dest)){
+        auto v = findVertex(dest);
+        while (v != findVertex(origin)){
+            auto e = v->getPath();
+            auto parent = e->getOrig();
+            for (auto e : v->getIncoming()){
+                if(e->getOrig() == parent){
+                    e->setFlow(-e->getFlow());
+                    break;
+                }
+            }
+            v = parent;
+        }
+
+    }
+}
+
+
 
 /*
  * Finds the index of the vertex with a given content.
