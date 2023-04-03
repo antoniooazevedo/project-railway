@@ -51,12 +51,13 @@ protected:
      * Finds the index of the vertex with a given content.
      */
     int findVertexIdx(const int &id) const;
-    double minCap(Vertex *origin, Vertex *dest) const;
-    void augmentFlow(Vertex* origin, Vertex* dest, double flow) const;
-    double findBottleneck(Vertex* origin, Vertex* dest) const;
+    void augmentFlow(Vertex* dest, int flow) const;
+    double findBottleneck(Vertex* src) const;
     void maxFlow(const string &origin, const string &dest) const;
     bool reachDest(const string &origin, const string &dest) const;
     bool findPath(Vertex* origin , Vertex* dest ) const;
+    void resetNodes() const;
+    void resetFlow() const;
 };
 
 void deleteMatrix(int **m, int n);

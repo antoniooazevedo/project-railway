@@ -76,16 +76,16 @@ public:
     Edge(Vertex *orig, Vertex *dest, double c);
 
     Vertex * getDest() const;
-    double getCapacity() const;
+    int getCapacity() const;
     bool isSelected() const;
     Vertex * getOrig() const;
     Edge *getReverse() const;
-    double getFlow() const;
+    int getFlow() const;
     int getService() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
-    void setFlow(double flow);
+    void setFlow(int flow);
     void setService(enum service s);
 protected:
     Vertex * dest; // destination vertex

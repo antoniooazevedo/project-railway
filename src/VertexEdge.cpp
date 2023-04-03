@@ -161,7 +161,7 @@ Vertex * Edge::getDest() const {
     return this->dest;
 }
 
-double Edge::getCapacity() const {
+int Edge::getCapacity() const {
     return this->capacity;
 }
 
@@ -177,8 +177,8 @@ bool Edge::isSelected() const {
     return this->selected;
 }
 
-double Edge::getFlow() const {
-    return this->flow;
+int Edge::getFlow() const {
+    return this->flow;g
 }
 
 int Edge::getService() const {
@@ -193,7 +193,7 @@ void Edge::setReverse(Edge *reverse) {
     this->reverse = reverse;
 }
 
-void Edge::setFlow(double flow) {
+void Edge::setFlow(int flow) {
     this->flow = flow;
 }
 
