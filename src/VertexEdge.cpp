@@ -67,6 +67,10 @@ string Vertex::getId() const {
     return this->id;
 }
 
+string Vertex::getLine() const {
+    return this->main_line;
+}
+
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
@@ -117,6 +121,14 @@ void Vertex::setDist(double dist) {
 
 void Vertex::setPath(Edge *path) {
     this->path = path;
+}
+
+void Vertex::setQueue(bool enqueue) {
+    this->enqueue = enqueue;
+}
+
+bool Vertex::inQueue() const {
+    return this->enqueue;
 }
 
 void Vertex::deleteEdge(Edge *edge) {

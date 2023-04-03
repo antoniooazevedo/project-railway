@@ -8,7 +8,8 @@
 
 using namespace std;
 
-void Scraper::scrape_stations(string filename, Graph &graph) {
+unordered_map<string, vector<Vertex *>> Scraper::scrape_stations(string filename, Graph &graph) {
+    unordered_map<string, vector<Vertex *>> line_map;
     ifstream file;
     file.open(filename);
 
@@ -37,10 +38,14 @@ void Scraper::scrape_stations(string filename, Graph &graph) {
             townships = scrape_townships(townshipword);
             getline(smol, main_line, '\r');
         }
+        vector<Vertex*> vec;
+        line_map[main_line] = vec;
 
         auto v = new Vertex(name, district, municipality, main_line, townships);
         graph.addVertex(v);
     }
+
+    return line_map;
 }
 
 list<string> Scraper::scrape_townships(string aux_string){
@@ -87,5 +92,80 @@ void Scraper::fix_graph(Graph &gh){
     auto map = gh.getVertexSet();
     for (auto &v: map){
         if (v.second->getAdj().empty()) gh.removeVertex(v.second);
+    }
+}
+
+void Scraper::getPrematureExtremes(unordered_map<std::string, vector<Vertex *>> &map, Graph &gh) {
+    auto vertexSet = gh.getVertexSet();
+    for (auto const &v: vertexSet){
+        int count = 0;
+        auto line = v.second->getLine();
+
+        for (auto &e: v.second->getAdj()){
+            if (e->getDest()->getLine() == line) count++;
+        }
+
+        if (count == 1 || count > 2){
+            auto find_res = map.find(line);
+            vector<Vertex *> vec = {v.second};
+
+            if (!find_res->second.empty()){
+                for (auto &vertex: find_res->second) vec.push_back(vertex);
+            }
+
+            map[line] = vec;
+        }
+    }
+
+    for (auto pa: map){
+        if (pa.second.empty()){
+            for (auto v: vertexSet){
+                if (v.second->getLine() == pa.first){
+                    pa.second.push_back(v.second);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void Scraper::findExtremes(unordered_map<string, vector<Vertex*>> &map, Graph &gh){
+    getPrematureExtremes(map, gh);
+    for (auto &p : map){
+        findExtremesBFS(p.second[0], gh);
+        for (auto &v: p.second) extremes.insert(v);
+    }
+}
+
+void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
+
+    for(auto &n : gh.getVertexSet()){
+        n.second->setQueue(false);
+        n.second->setProcesssing(false);
+    }
+
+    queue<Vertex*> q;
+    q.push(origin);
+    origin->setQueue(true);
+
+    while (!q.empty()){
+        auto v = q.front();
+        q.pop();
+
+
+        for(auto &e: v->getAdj()) {
+            auto w = e->getDest();
+            if (w->getLine() != v->getLine()) {
+                continue;
+            }
+            if (!w->inQueue()) {
+                w->setQueue(true);
+                q.push(w);
+            } else if (w->isProcessing()) {
+                extremes.insert(w);
+            }
+        }
+        v->setProcesssing(true);
+
     }
 }

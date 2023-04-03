@@ -25,6 +25,8 @@ public:
 
     std::string getId() const;
     std::vector<Edge *> getAdj() const;
+    std::string getLine() const;
+    bool inQueue() const;
     bool isVisited() const;
     bool isProcessing() const;
     unsigned int getIndegree() const;
@@ -34,6 +36,7 @@ public:
 
     void setId(std::string info);
     void setVisited(bool visited);
+    void setQueue(bool enqueue);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
@@ -47,6 +50,7 @@ protected:
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
+    bool enqueue = false;
     bool visited = false; // used by DFS, BFS, Prim ...
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
@@ -62,7 +66,7 @@ protected:
 
 /********************** Edge  ****************************/
 
-enum service{STANDARD,ALFA_PENDULAR};
+enum service{STANDARD = 2,ALFA_PENDULAR = 4};
 
 class Edge {
 public:

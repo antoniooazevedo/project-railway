@@ -9,6 +9,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_map>
+#include <set>
 #include <string>
 
 #include "VertexEdge.h"
@@ -37,7 +38,7 @@ public:
      * Returns true if successful, and false if the source or destination vertex does not exist.
      */
     bool addEdge(const string &sourc, const string &dest, double c, enum service s);
-    bool addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s);
+    bool addBidirectionalEdge(const string &source, const string &dest, double c, enum service s);
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
