@@ -155,13 +155,13 @@ void Scraper::findExtremes(unordered_map<string, vector<Vertex*>> &map, Graph &g
 void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
 
     for(auto &n : gh.getVertexSet()){
-        n.second->setQueue(false);
+        n.second->setInQueue(false);
         n.second->setProcesssing(false);
     }
 
     queue<Vertex*> q;
     q.push(origin);
-    origin->setQueue(true);
+    origin->setInQueue(true);
     bool isExtreme;
 
     while (!q.empty()){
@@ -176,8 +176,8 @@ void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
             if (w->getLine() != v->getLine()) {
                 continue;
             }
-            if (!w->inQueue()) {
-                w->setQueue(true);
+            if (!w->getInQueue()) {
+                w->setInQueue(true);
                 q.push(w);
             }
 

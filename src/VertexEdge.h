@@ -41,7 +41,6 @@ public:
     void setVisited(bool visited);
     void setReachedDestination(bool reachDestination);
     void setHit(bool hit);
-    void setQueue(bool enqueue);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
