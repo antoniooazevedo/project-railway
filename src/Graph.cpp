@@ -48,8 +48,8 @@ bool Graph::reachDest(const string &origin, const string &dest) const {
 }
 
 
-double Graph::findBottleneck(Vertex* src) const {
-    double cap = numeric_limits<double>::max();
+int Graph::findBottleneck(Vertex* src) const {
+    int cap = numeric_limits<double>::max();
     int tmp;
     auto v = src;
     auto e = v->getPath();
@@ -241,6 +241,7 @@ void Graph::resetNodes() const {
         v.second->setVisited(false);
         v.second->setPath(nullptr);
         v.second->setPrice(INF);
+        v.second->setInQueue(false);
     }
 }
 
@@ -265,4 +266,37 @@ void deleteMatrix(double **m, int n) {
 Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());
+}
+
+int Graph::computeCost(Vertex *origin) const {
+    int totalCost = 0;
+    queue<Vertex *> q;
+    resetNodes();
+
+    origin->setInQueue(true);
+    q.push(origin);
+    Vertex *currNode;
+
+    while (!q.empty()) {
+        currNode = q.front();
+
+        for (Edge *e: currNode->getAdj()) {
+            Vertex *destNode = e->getDest();
+
+            if (e->getFlow() > 0) {
+                if (!destNode->getInQueue()) {
+                    q.push(destNode);
+                    destNode->setInQueue(true);
+                }
+                if (!destNode->isVisited()) {
+                    totalCost += e->getFlow() * e->getCapacity();
+                }
+            }
+        }
+
+        q.pop();
+        origin->setVisited(true);
+    }
+
+    return totalCost;
 }

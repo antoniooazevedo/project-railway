@@ -53,11 +53,12 @@ protected:
      */
     int findVertexIdx(const int &id) const;
     void augmentFlow(Vertex* dest, int flow) const;
-    double findBottleneck(Vertex* src) const;
+    int findBottleneck(Vertex* src) const;
     void maxFlow(const string &origin, const string &dest) const;
     bool findCheapestPath(Vertex *origin, Vertex *dest);
     bool reachDest(const string &origin, const string &dest) const;
     bool findPath(Vertex* origin , Vertex* dest ) const;
+    int computeCost(Vertex *origin) const;
     void resetNodes() const;
     void resetFlow() const;
 };
