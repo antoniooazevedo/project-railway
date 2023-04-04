@@ -58,6 +58,7 @@ protected:
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;
+    int price = 0;
     Edge *path = nullptr;
     std::string name = id, district, municipality, main_line;
     std::list<std::string> townships;

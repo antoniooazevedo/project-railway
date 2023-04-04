@@ -41,6 +41,7 @@ public:
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
+    int queueIndex;
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
 
