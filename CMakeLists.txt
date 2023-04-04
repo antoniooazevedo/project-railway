@@ -20,4 +20,4 @@ add_executable(project_railway
         src/MenuItem.cpp
         src/MenuItem.h
         src/ChangeMenu.cpp
-        src/ChangeMenu.h)
+        src/ChangeMenu.h src/ExampleGraphs.cpp src/ExampleGraphs.h)

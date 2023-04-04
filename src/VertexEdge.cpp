@@ -194,7 +194,7 @@ bool Edge::isSelected() const {
 }
 
 int Edge::getFlow() const {
-    return this->flow;g
+    return this->flow;
 }
 
 int Edge::getService() const {

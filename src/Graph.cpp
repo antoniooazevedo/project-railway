@@ -63,7 +63,6 @@ bool Graph::reachDest(const string &origin, const string &dest) const {
 
     return currVertex->getReached();
 }
- */
 
 
 double Graph::findBottleneck(Vertex* src) const {
