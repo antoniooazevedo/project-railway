@@ -71,6 +71,16 @@ std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
 
+bool Vertex::getReached() const {
+    return this->reachDestination;
+}
+
+bool Vertex::getHit() const {
+    return this->hit;
+}
+
+
+
 bool Vertex::isVisited() const {
     return this->visited;
 }
@@ -101,6 +111,14 @@ void Vertex::setId(string id) {
 
 void Vertex::setVisited(bool visited) {
     this->visited = visited;
+}
+
+void Vertex::setReachedDestination(bool reachDestination) {
+    this->reachDestination = reachDestination;
+}
+
+void Vertex::setHit(bool hit) {
+    this->hit = hit;
 }
 
 void Vertex::setProcesssing(bool processing) {
@@ -143,7 +161,7 @@ Vertex * Edge::getDest() const {
     return this->dest;
 }
 
-double Edge::getCapacity() const {
+int Edge::getCapacity() const {
     return this->capacity;
 }
 
@@ -159,8 +177,8 @@ bool Edge::isSelected() const {
     return this->selected;
 }
 
-double Edge::getFlow() const {
-    return this->flow;
+int Edge::getFlow() const {
+    return this->flow;g
 }
 
 int Edge::getService() const {
@@ -175,7 +193,7 @@ void Edge::setReverse(Edge *reverse) {
     this->reverse = reverse;
 }
 
-void Edge::setFlow(double flow) {
+void Edge::setFlow(int flow) {
     this->flow = flow;
 }
 

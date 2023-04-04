@@ -1,6 +1,3 @@
-// By: Gonçalo Leão
-
-//#include <wsman.h>
 #include "Graph.h"
 
 int Graph::getNumVertex() const {
@@ -11,67 +8,159 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
-/*
- * Auxiliary function to find a vertex with a given content.
- */
-
-
 Vertex * Graph::findVertex(const string &id) const {
-    return vertexSet.find(id)->second;
+    auto v = vertexSet.find(id);
+    if (v == vertexSet.end()) return nullptr;
+    else return v->second;
+}
+
+bool Graph::reachDest(const string &origin, const string &dest) const {
+    auto currVertex = findVertex(origin);
+
+    if (currVertex == nullptr) return false;
+
+    currVertex->setVisited(true);
+
+    if (origin == dest){
+        findVertex(dest)->setReachedDestination(true);
+        return true;
+    }
+
+    for (auto e : currVertex->getAdj()) {
+        auto destVertex = e->getDest();
+
+        if (!destVertex->isVisited()) {
+            destVertex->setPath(e);
+            if (reachDest(destVertex->getId(), dest))
+                currVertex->setReachedDestination(true);
+        }
+
+        // Visit an already visited node that reached the destination
+        else if (destVertex->getReached()) {
+            auto edgeToParent = currVertex->getPath();
+            if (edgeToParent != nullptr && edgeToParent->getOrig() != destVertex) {
+                currVertex->setReachedDestination(true);
+            }
+        }
+    }
+
+    return currVertex->getReached();
 }
 
 
-/*
- * Finds the index of the vertex with a given content.
- */
+double Graph::findBottleneck(Vertex* src) const {
+    double cap = numeric_limits<double>::max();
+    int tmp;
+    auto v = src;
+    auto e = v->getPath();
 
-/*
-int Graph::findVertexIdx(const int &id) const {
-    for (unsigned i = 0; i < vertexSet.size(); i++)
-        if (vertexSet[i]->getId() == id)
-            return i;
-    return -1;
+    while (e != nullptr) {
+        tmp = e->getOrig() == v ? e->getFlow() : e->getCapacity() - e->getFlow() - e->getReverse()->getFlow();
+
+        if (tmp < cap)
+            cap = tmp;
+
+        v = e->getOrig() == v ? e->getDest() : e->getOrig();
+
+        e = v->getPath();
+    }
+
+    return cap;
 }
- */
 
-/*
- *  Adds a vertex with a given content or info (in) to a graph (this).
- *  Returns true if successful, and false if a vertex with that content already exists.
- */
+void Graph::augmentFlow(Vertex* dest, int flow) const {
+    auto v = dest;
+    auto e = v->getPath();
+
+    while (e != nullptr) {
+        e->getOrig() == v ? e->setFlow(e->getFlow() - flow) : e->setFlow(e->getFlow() + flow);
+
+        v = e->getOrig() == v ? e->getDest() : e->getOrig();
+
+        e = v->getPath();
+    }
+}
+
+bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
+    resetNodes();
+
+    queue<Vertex*> q;
+    origin->setVisited(true);
+    q.push(origin);
+
+    while (!q.empty()) {
+        auto v = q.front();
+        q.pop();
+
+        for (auto e : v->getAdj()) {
+            auto w = e->getDest();
+
+            if (w->getReached() && !w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+                if (w == dest) {
+                    w->setPath(e);
+                    return true;
+                }
+
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+
+        for (auto e : v->getIncoming()) {
+            auto w = e->getOrig();
+            if (w->getReached() && !w->isVisited() && e->getFlow() > 0) {
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+    }
+
+    return false;
+}
+
+void Graph::maxFlow(const string &origin, const string &dest) const {
+    resetNodes();
+    resetFlow();
+
+    reachDest(origin, dest);
+
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    while (findPath(s, t)){
+        double flow = findBottleneck(t);
+        augmentFlow(t, flow);
+    }
+}
 
 bool Graph::addVertex(const string &id) {
-    /*if (findVertex(id) != nullptr)
+    if (findVertex(id) != nullptr)
         return false;
-        */
     vertexSet.insert({id, new Vertex(id)});
     return true;
 }
 
 bool Graph::addVertex(Vertex *v) {
-    /*
-    if (findVertex(id) != nullptr)
+    if (findVertex(v->getId()) != nullptr)
         return false;
-        */
     vertexSet.insert({v->getId(), v});
     return true;
 }
 
-/*
- * Adds an edge to a graph (this), given the contents of the source and
- * destination vertices and the edge weight (w).
- * Returns true if successful, and false if the source or destination vertex does not exist.
- */
-/*
-bool Graph::addEdge(const int &sourc, const int &dest, double w) {
-    auto v1 = findVertex(sourc);
-    auto v2 = findVertex(dest);
-    if (v1 == nullptr || v2 == nullptr)
-        return false;
-    v1->addEdge(v2, w);
+bool Graph::removeVertex(const std::string &id) {
+    if (findVertex(id) == nullptr) return false;
+    vertexSet.erase(id);
     return true;
 }
 
-  */
+bool Graph::removeVertex(Vertex *v) {
+    if (findVertex(v->getId()) == nullptr) return false;
+    vertexSet.erase(v->getId());
+    return true;
+}
+
 bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
@@ -86,6 +175,23 @@ bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double
     return true;
 }
 
+void Graph::resetFlow() const {
+    for (const auto& v: getVertexSet()) {
+        for (auto e: v.second->getAdj()) {
+            e->setFlow(0);
+        }
+        for (auto e: v.second->getIncoming()) {
+            e->setFlow(0);
+        }
+    }
+}
+
+void Graph::resetNodes() const {
+    for (auto v: getVertexSet()) {
+        v.second->setVisited(false);
+        v.second->setPath(nullptr);
+    }
+}
 
 void deleteMatrix(int **m, int n) {
     if (m != nullptr) {

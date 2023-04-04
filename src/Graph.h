@@ -28,6 +28,8 @@ public:
      */
     bool addVertex(const string &id);
     bool addVertex(Vertex *v);
+    bool removeVertex(const string &id);
+    bool removeVertex(Vertex *v);
 
     /*
      * Adds an edge to a graph (this), given the contents of the source and
@@ -49,6 +51,13 @@ protected:
      * Finds the index of the vertex with a given content.
      */
     int findVertexIdx(const int &id) const;
+    void augmentFlow(Vertex* dest, int flow) const;
+    double findBottleneck(Vertex* src) const;
+    void maxFlow(const string &origin, const string &dest) const;
+    bool reachDest(const string &origin, const string &dest) const;
+    bool findPath(Vertex* origin , Vertex* dest ) const;
+    void resetNodes() const;
+    void resetFlow() const;
 };
 
 void deleteMatrix(int **m, int n);

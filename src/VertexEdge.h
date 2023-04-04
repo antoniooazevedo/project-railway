@@ -26,6 +26,8 @@ public:
     std::string getId() const;
     std::vector<Edge *> getAdj() const;
     bool isVisited() const;
+    bool getHit() const;
+    bool getReached() const;
     bool isProcessing() const;
     unsigned int getIndegree() const;
     double getDist() const;
@@ -34,6 +36,8 @@ public:
 
     void setId(std::string info);
     void setVisited(bool visited);
+    void setReachedDestination(bool reachDestination);
+    void setHit(bool hit);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
@@ -47,7 +51,10 @@ protected:
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
-    bool visited = false; // used by DFS, BFS, Prim ...
+    bool visited = false;// used by DFS, BFS, Prim ...
+    bool reachDestination = false;
+    bool hit = false;
+    // used by Dijkstra
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;
@@ -69,16 +76,16 @@ public:
     Edge(Vertex *orig, Vertex *dest, double c);
 
     Vertex * getDest() const;
-    double getCapacity() const;
+    int getCapacity() const;
     bool isSelected() const;
     Vertex * getOrig() const;
     Edge *getReverse() const;
-    double getFlow() const;
+    int getFlow() const;
     int getService() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
-    void setFlow(double flow);
+    void setFlow(int flow);
     void setService(enum service s);
 protected:
     Vertex * dest; // destination vertex
