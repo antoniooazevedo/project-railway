@@ -1,13 +1,19 @@
+//
+// Created by tomas on 17/03/2023.
+//
+
+#include <iostream>
 #include "Scraper.h"
 #include "Graph.h"
-#include "Program.h"
 
 int main(){
     Graph gh;
-    Scraper::scrape_stations("../src/data/stations.csv", gh);
+    auto line_map = Scraper::scrape_stations("../src/data/stations.csv", gh);
     Scraper::scrape_networks("../src/data/network.csv", gh);
-    cout << gh.getVertexSet().size() << '\n';
     Scraper::fix_graph(gh);
-    cout << gh.getVertexSet().size() << '\n';
+    Scraper::findExtremes(line_map, gh);
+    for (auto v: gh.getExtremes()) {
+        cout << "Station: " << v->getLine() << "   Line: " << v->getId() << endl;
+    }
     return 0;
 }

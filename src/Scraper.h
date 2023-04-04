@@ -9,6 +9,7 @@
 #include <sstream>
 #include <list>
 #include <string>
+#include <unordered_set>
 
 #include "Graph.h"
 
@@ -17,10 +18,15 @@ using namespace std;
 
 class Scraper {
 public:
-    static void scrape_stations(string filename, Graph &gh);
+    static unordered_map<string, vector<Vertex *>> scrape_stations(string filename, Graph &gh);
     static void scrape_networks(string filename, Graph &gh);
     static list<string> scrape_townships(string aux);
     static void fix_graph(Graph &gh);
+    static void findExtremes(unordered_map<string, vector<Vertex *>> &map, Graph &gh);
+
+private:
+    static void getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map, Graph &gh);
+    static void findExtremesBFS(Vertex *origin, Graph &gh);
 };
 
 

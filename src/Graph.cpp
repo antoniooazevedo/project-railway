@@ -1,3 +1,6 @@
+// By: Gonçalo Leão
+
+//#include <wsman.h>
 #include "Graph.h"
 
 int Graph::getNumVertex() const {
@@ -8,10 +11,24 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
+unordered_set<Vertex*> Graph::getExtremes() const{
+    return extremes;
+}
+
+
+/*
+ * Auxiliary function to find a vertex with a given content.
+ */
+
+
 Vertex * Graph::findVertex(const string &id) const {
     auto v = vertexSet.find(id);
     if (v == vertexSet.end()) return nullptr;
     else return v->second;
+}
+
+void Graph::insertExtreme(Vertex *v) {
+    extremes.insert(v);
 }
 
 bool Graph::reachDest(const string &origin, const string &dest) const {
@@ -46,6 +63,7 @@ bool Graph::reachDest(const string &origin, const string &dest) const {
 
     return currVertex->getReached();
 }
+ */
 
 
 double Graph::findBottleneck(Vertex* src) const {
@@ -160,7 +178,22 @@ bool Graph::removeVertex(Vertex *v) {
     vertexSet.erase(v->getId());
     return true;
 }
+/*
+ * Adds an edge to a graph (this), given the contents of the source and
+ * destination vertices and the edge weight (w).
+ * Returns true if successful, and false if the source or destination vertex does not exist.
+ */
+/*
+bool Graph::addEdge(const int &sourc, const int &dest, double w) {
+    auto v1 = findVertex(sourc);
+    auto v2 = findVertex(dest);
+    if (v1 == nullptr || v2 == nullptr)
+        return false;
+    v1->addEdge(v2, w);
+    return true;
+}
 
+  */
 bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);

@@ -67,6 +67,10 @@ string Vertex::getId() const {
     return this->id;
 }
 
+string Vertex::getLine() const {
+    return this->main_line;
+}
+
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
@@ -137,6 +141,14 @@ void Vertex::setPath(Edge *path) {
     this->path = path;
 }
 
+void Vertex::setQueue(bool enqueue) {
+    this->enqueue = enqueue;
+}
+
+bool Vertex::inQueue() const {
+    return this->enqueue;
+}
+
 void Vertex::deleteEdge(Edge *edge) {
     Vertex *dest = edge->getDest();
     // Remove the corresponding edge from the incoming list
@@ -150,6 +162,10 @@ void Vertex::deleteEdge(Edge *edge) {
         }
     }
     delete edge;
+}
+
+bool Vertex::operator==(const Vertex &v) {
+    return this->getId() == v.getId();
 }
 
 /********************** Edge  ****************************/

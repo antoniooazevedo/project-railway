@@ -9,7 +9,9 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_map>
+#include <set>
 #include <string>
+#include <unordered_set>
 
 #include "VertexEdge.h"
 
@@ -37,12 +39,17 @@ public:
      * Returns true if successful, and false if the source or destination vertex does not exist.
      */
     bool addEdge(const string &sourc, const string &dest, double c, enum service s);
-    bool addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s);
+    bool addBidirectionalEdge(const string &source, const string &dest, double c, enum service s);
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
+    unordered_set<Vertex*> getExtremes() const;
+    void insertExtreme(Vertex* v);
+
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
+    unordered_set<Vertex*> extremes;
+
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
@@ -59,6 +66,9 @@ protected:
     void resetNodes() const;
     void resetFlow() const;
 };
+
+
+
 
 void deleteMatrix(int **m, int n);
 void deleteMatrix(double **m, int n);
