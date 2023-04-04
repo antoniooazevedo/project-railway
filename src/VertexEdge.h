@@ -25,6 +25,7 @@ public:
 
     std::string getId() const;
     std::vector<Edge *> getAdj() const;
+    std::string getLine() const;
     bool isVisited() const;
     bool getHit() const;
     bool getReached() const;
@@ -40,6 +41,7 @@ public:
     void setVisited(bool visited);
     void setReachedDestination(bool reachDestination);
     void setHit(bool hit);
+    void setQueue(bool enqueue);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
@@ -50,6 +52,7 @@ public:
     bool removeEdge(std::string destID);
     void removeOutgoingEdges();
     int queueIndex;
+    bool operator==(const Vertex& v);
 
 protected:
     std::string id;                // identifier
@@ -60,6 +63,7 @@ protected:
     bool reachDestination = false;
     bool hit = false;
     // used by Dijkstra
+    bool enqueue = false;
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;
@@ -76,7 +80,7 @@ protected:
 
 /********************** Edge  ****************************/
 
-enum service{STANDARD,ALFA_PENDULAR};
+enum service{STANDARD = 2,ALFA_PENDULAR = 4};
 
 class Edge {
 public:

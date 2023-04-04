@@ -4,12 +4,13 @@
 #include "Menu.h"
 #include "MenuItem.h"
 #include "ChangeMenu.h"
+#include "PairsMaxFlow.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
  * @brief Program's constructor
  */
-Program::Program()
+Program::Program(Graph &rw) : railway(rw)
 {
     currMenuPage = 0;
     createMainMenu();
@@ -78,6 +79,7 @@ void Program::createMenu1()
 {
     menus.emplace_back("../src/menus/menu1");
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 2));
+    menus[menus.size() - 1].addMenuItem(new PairsMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
 

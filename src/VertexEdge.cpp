@@ -67,6 +67,10 @@ string Vertex::getId() const {
     return this->id;
 }
 
+string Vertex::getLine() const {
+    return this->main_line;
+}
+
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
@@ -166,6 +170,10 @@ bool Vertex::getInQueue() const {
 
 void Vertex::setInQueue(bool inQueue) {
     this->inQueue = inQueue;
+}
+
+bool Vertex::operator==(const Vertex &v) {
+    return this->getId() == v.getId();
 }
 
 /********************** Edge  ****************************/
