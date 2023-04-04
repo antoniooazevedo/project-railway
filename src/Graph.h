@@ -46,6 +46,8 @@ public:
     unordered_set<Vertex*> getExtremes() const;
     void insertExtreme(Vertex* v);
 
+    int getMaxFlow(Vertex* v1, Vertex* v2);
+
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
     unordered_set<Vertex*> extremes;

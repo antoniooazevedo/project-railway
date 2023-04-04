@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Scraper.h"
 #include "Graph.h"
+#include "Program.h"
 
 int main(){
     Graph gh;
@@ -15,5 +16,9 @@ int main(){
     for (auto v: gh.getExtremes()) {
         cout << "Station: " << v->getLine() << "   Line: " << v->getId() << endl;
     }
+
+    Program p(gh);
+    p.run();
+
     return 0;
 }

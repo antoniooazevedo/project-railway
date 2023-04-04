@@ -63,7 +63,6 @@ bool Graph::reachDest(const string &origin, const string &dest) const {
 
     return currVertex->getReached();
 }
- */
 
 
 double Graph::findBottleneck(Vertex* src) const {
@@ -224,6 +223,13 @@ void Graph::resetNodes() const {
         v.second->setVisited(false);
         v.second->setPath(nullptr);
     }
+}
+
+int Graph::getMaxFlow(Vertex *v1, Vertex *v2) {
+    maxFlow(v1->getId(), v2->getId());
+    int flow = 0;
+    for (auto e: v2->getIncoming()) flow += e->getFlow();
+    return flow;
 }
 
 void deleteMatrix(int **m, int n) {
