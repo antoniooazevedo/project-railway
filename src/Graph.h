@@ -55,7 +55,8 @@ protected:
     void augmentFlow(Vertex* dest, int flow) const;
     int findBottleneck(Vertex* src) const;
     void maxFlow(const string &origin, const string &dest) const;
-    bool findCheapestPath(Vertex *origin, Vertex *dest);
+    void costMaxFlow(const string &origin, const string &dest) const;
+    bool findCheapestPath(Vertex *origin, Vertex *dest) const;
     bool reachDest(const string &origin, const string &dest) const;
     bool findPath(Vertex* origin , Vertex* dest ) const;
     int computeCost(Vertex *origin) const;

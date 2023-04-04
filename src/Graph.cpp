@@ -130,12 +130,29 @@ void Graph::maxFlow(const string &origin, const string &dest) const {
     auto t = findVertex(dest);
 
     while (findPath(s, t)){
-        double flow = findBottleneck(t);
+        int flow = findBottleneck(t);
         augmentFlow(t, flow);
     }
 }
 
-bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) {
+
+void Graph::costMaxFlow(const string &origin, const string &dest) const {
+    resetNodes();
+    resetFlow();
+
+    reachDest(origin, dest);
+
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    while (findCheapestPath(s, t)){
+        int flow = findBottleneck(t);
+        augmentFlow(t, flow);
+    }
+}
+
+
+bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
     resetNodes();
 
     MutablePriorityQueue<Vertex> mq;
