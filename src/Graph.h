@@ -12,6 +12,7 @@
 #include <string>
 
 #include "VertexEdge.h"
+#include "MutablePriorityQueue.h"
 
 using namespace std;
 
@@ -41,7 +42,6 @@ public:
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
-    int queueIndex;
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
 
@@ -55,6 +55,7 @@ protected:
     void augmentFlow(Vertex* dest, int flow) const;
     double findBottleneck(Vertex* src) const;
     void maxFlow(const string &origin, const string &dest) const;
+    bool findCheapestPath(Vertex *origin, Vertex *dest);
     bool reachDest(const string &origin, const string &dest) const;
     bool findPath(Vertex* origin , Vertex* dest ) const;
     void resetNodes() const;

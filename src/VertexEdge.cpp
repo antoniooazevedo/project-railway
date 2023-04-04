@@ -60,7 +60,7 @@ void Vertex::removeOutgoingEdges() {
 }
 
 bool Vertex::operator<(Vertex & vertex) const {
-    return this->dist < vertex.dist;
+    return this->price < vertex.price;
 }
 
 string Vertex::getId() const {
@@ -152,6 +152,22 @@ void Vertex::deleteEdge(Edge *edge) {
     delete edge;
 }
 
+int Vertex::getPrice() const {
+    return price;
+}
+
+void Vertex::setPrice(int price) {
+    this->price = price;
+}
+
+bool Vertex::getInQueue() const {
+    return inQueue;
+}
+
+void Vertex::setInQueue(bool inQueue) {
+    this->inQueue = inQueue;
+}
+
 /********************** Edge  ****************************/
 
 
@@ -178,7 +194,7 @@ bool Edge::isSelected() const {
 }
 
 int Edge::getFlow() const {
-    return this->flow;g
+    return this->flow;
 }
 
 int Edge::getService() const {

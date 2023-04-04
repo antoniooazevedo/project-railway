@@ -95,7 +95,7 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
 
-            if (w->getReached() && !w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
                 if (w == dest) {
                     w->setPath(e);
                     return true;
@@ -109,7 +109,7 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
 
         for (auto e : v->getIncoming()) {
             auto w = e->getOrig();
-            if (w->getReached() && !w->isVisited() && e->getFlow() > 0) {
+            if (!w->isVisited() && e->getFlow() > 0) {
                 w->setVisited(true);
                 w->setPath(e);
                 q.push(w);
@@ -133,6 +133,56 @@ void Graph::maxFlow(const string &origin, const string &dest) const {
         double flow = findBottleneck(t);
         augmentFlow(t, flow);
     }
+}
+
+bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) {
+    resetNodes();
+
+    MutablePriorityQueue<Vertex> mq;
+    Vertex *currNode = origin;
+
+    currNode->setPrice(0);
+
+    for (const auto& pair : vertexSet) {
+        pair.second->setInQueue(true);
+        mq.insert(pair.second);
+    }
+
+    while (!mq.empty()) {
+        currNode = mq.extractMin();
+
+        if (currNode == dest)
+            return true;
+
+        for (auto e: currNode->getAdj()) {
+            Vertex *adjNode = e->getDest();
+            Edge *reverse = e->getReverse();
+
+            bool relaxEdge = adjNode->getPrice() > currNode->getPrice() + e->getService();
+            bool isNotFull = e->getCapacity() > e->getFlow() + reverse->getFlow();
+
+            if (adjNode->getInQueue() && relaxEdge && !isNotFull) {
+                adjNode->setPrice(adjNode->getPrice() + e->getService());
+                adjNode->setPath(e);
+                mq.decreaseKey(adjNode);
+            }
+        }
+
+        for (auto e: currNode->getIncoming()) {
+            Vertex *adjNode = e->getOrig();
+
+            bool relaxEdge = adjNode->getPrice() > currNode->getPrice() - e->getService();
+
+            if (adjNode->getInQueue() && e->getFlow() > 0 && relaxEdge) {
+                adjNode->setPrice(adjNode->getPrice() - e->getService());
+                adjNode->setPath(e);
+                mq.decreaseKey(adjNode);
+            }
+        }
+        currNode->setInQueue(false);
+    }
+
+    return false;
 }
 
 bool Graph::addVertex(const string &id) {
@@ -190,6 +240,7 @@ void Graph::resetNodes() const {
     for (auto v: getVertexSet()) {
         v.second->setVisited(false);
         v.second->setPath(nullptr);
+        v.second->setPrice(INF);
     }
 }
 

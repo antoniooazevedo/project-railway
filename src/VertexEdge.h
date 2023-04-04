@@ -31,6 +31,8 @@ public:
     bool isProcessing() const;
     unsigned int getIndegree() const;
     double getDist() const;
+    int getPrice() const;
+    bool getInQueue() const;
     Edge *getPath() const;
     std::vector<Edge *> getIncoming() const;
 
@@ -41,10 +43,13 @@ public:
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
+    void setPrice(int price);
+    void setInQueue(bool inQueue);
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(std::string destID);
     void removeOutgoingEdges();
+    int queueIndex;
 
 protected:
     std::string id;                // identifier
@@ -59,6 +64,7 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     int price = 0;
+    bool inQueue;
     Edge *path = nullptr;
     std::string name = id, district, municipality, main_line;
     std::list<std::string> townships;
@@ -99,7 +105,7 @@ protected:
     Vertex *orig;
     Edge *reverse = nullptr;
 
-    double flow; // for flow-related problems
+    int flow; // for flow-related problems
 
     enum service service;
 };
