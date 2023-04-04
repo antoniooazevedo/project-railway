@@ -132,9 +132,14 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
         }
     }
 
-    for (auto pa: map) {
-        if (pa.second.empty())
-            map.erase(pa.first);
+    auto itr = map.begin();
+
+    while (itr != map.end()) {
+        if (itr->second.empty()) {
+            itr = map.erase(itr);
+        }
+        else
+            itr++;
     }
 }
 

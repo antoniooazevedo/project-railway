@@ -13,8 +13,7 @@ int main(){
     Scraper::fix_graph(gh);
     Scraper::findExtremes(line_map, gh);
     for (auto v: gh.getExtremes()) {
-        cout << "Station: " << v->getLine() << "   Line: " << v->getId()
-        cout << "station: " << v->getId() << "    line: " << v->getLine() << endl;
+        cout << "Station: " << v->getLine() << "   Line: " << v->getId() << endl;
     }
     return 0;
 }
