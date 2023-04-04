@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <set>
 #include <string>
+#include <unordered_set>
 
 #include "VertexEdge.h"
 
@@ -42,8 +43,13 @@ public:
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
+    unordered_set<Vertex*> getExtremes() const;
+    void insertExtreme(Vertex* v);
+
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
+    unordered_set<Vertex*> extremes;
+
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
@@ -53,6 +59,9 @@ protected:
      */
     int findVertexIdx(const int &id) const;
 };
+
+
+
 
 void deleteMatrix(int **m, int n);
 void deleteMatrix(double **m, int n);

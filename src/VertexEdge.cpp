@@ -146,6 +146,10 @@ void Vertex::deleteEdge(Edge *edge) {
     delete edge;
 }
 
+bool Vertex::operator==(const Vertex &v) {
+    return this->getId() == v.getId();
+}
+
 /********************** Edge  ****************************/
 
 

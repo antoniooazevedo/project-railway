@@ -11,6 +11,11 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
     return vertexSet;
 }
 
+unordered_set<Vertex*> Graph::getExtremes() const{
+    return extremes;
+}
+
+
 /*
  * Auxiliary function to find a vertex with a given content.
  */
@@ -20,6 +25,10 @@ Vertex * Graph::findVertex(const string &id) const {
     auto v = vertexSet.find(id);
     if (v == vertexSet.end()) return nullptr;
     else return v->second;
+}
+
+void Graph::insertExtreme(Vertex *v) {
+    extremes.insert(v);
 }
 
 

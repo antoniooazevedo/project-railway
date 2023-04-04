@@ -8,11 +8,12 @@
 
 int main(){
     Graph gh;
-    auto line_map = Scraper::scrape_stations("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/stations.csv", gh);
-    Scraper::scrape_networks("/home/work/Desktop/code_file/2Sem/DA/project-railway/src/data/network.csv", gh);
+    auto line_map = Scraper::scrape_stations("../src/data/stations.csv", gh);
+    Scraper::scrape_networks("../src/data/network.csv", gh);
     Scraper::fix_graph(gh);
     Scraper::findExtremes(line_map, gh);
-    for (auto v: Scraper::extremes) {
+    for (auto v: gh.getExtremes()) {
+        cout << "Station: " << v->getLine() << "   Line: " << v->getId()
         cout << "station: " << v->getId() << "    line: " << v->getLine() << endl;
     }
     return 0;

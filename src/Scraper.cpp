@@ -95,7 +95,7 @@ void Scraper::fix_graph(Graph &gh){
     }
 }
 
-void Scraper::getPrematureExtremes(unordered_map<std::string, vector<Vertex *>> &map, Graph &gh) {
+void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map, Graph &gh) {
     auto vertexSet = gh.getVertexSet();
     for (auto const &v: vertexSet){
         int count = 0;
@@ -106,14 +106,18 @@ void Scraper::getPrematureExtremes(unordered_map<std::string, vector<Vertex *>> 
         }
 
         if (count == 1 || count > 2){
-            auto find_res = map.find(line);
+            map[line].push_back(v.second);
+
+            /* PERGUNTAR AO ANTONIO
+            auto find_res = map.find(line)
+
             vector<Vertex *> vec = {v.second};
 
             if (!find_res->second.empty()){
                 for (auto &vertex: find_res->second) vec.push_back(vertex);
             }
 
-            map[line] = vec;
+            map[line] = vec;*/
         }
     }
 
@@ -127,15 +131,21 @@ void Scraper::getPrematureExtremes(unordered_map<std::string, vector<Vertex *>> 
             }
         }
     }
+
+    for (auto pa: map) {
+        if (pa.second.empty())
+            map.erase(pa.first);
+    }
 }
 
 void Scraper::findExtremes(unordered_map<string, vector<Vertex*>> &map, Graph &gh){
     getPrematureExtremes(map, gh);
     for (auto &p : map){
         findExtremesBFS(p.second[0], gh);
-        for (auto &v: p.second) extremes.insert(v);
+        for (auto &v: p.second) gh.insertExtreme(v);
     }
 }
+
 
 void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
 
@@ -147,8 +157,11 @@ void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
     queue<Vertex*> q;
     q.push(origin);
     origin->setQueue(true);
+    bool isExtreme;
 
     while (!q.empty()){
+        isExtreme = true;
+
         auto v = q.front();
         q.pop();
 
@@ -161,11 +174,15 @@ void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
             if (!w->inQueue()) {
                 w->setQueue(true);
                 q.push(w);
-            } else if (w->isProcessing()) {
-                extremes.insert(w);
+            }
+
+            if (!w->isProcessing()) {
+                isExtreme = false;
             }
         }
-        v->setProcesssing(true);
 
+        if (isExtreme)
+            gh.insertExtreme(v);
+        v->setProcesssing(true);
     }
 }

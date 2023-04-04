@@ -9,6 +9,7 @@
 #include <sstream>
 #include <list>
 #include <string>
+#include <unordered_set>
 
 #include "Graph.h"
 
@@ -22,7 +23,6 @@ public:
     static list<string> scrape_townships(string aux);
     static void fix_graph(Graph &gh);
     static void findExtremes(unordered_map<string, vector<Vertex *>> &map, Graph &gh);
-    static set<Vertex*> extremes;
 
 private:
     static void getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map, Graph &gh);

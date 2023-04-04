@@ -44,6 +44,7 @@ public:
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(std::string destID);
     void removeOutgoingEdges();
+    bool operator==(const Vertex& v);
 
 protected:
     std::string id;                // identifier
