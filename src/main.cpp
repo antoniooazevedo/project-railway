@@ -10,10 +10,17 @@
 
 
 int main(){
-    Graph gh;
+    Graph gh = ExampleGraphs::maxFlowSinglePointGraph1();
+    /*
     auto line_map = Scraper::scrape_stations("../src/data/stations.csv", gh);
     Scraper::scrape_networks("../src/data/network.csv", gh);
     Scraper::fix_graph(gh);
+    Scraper::findExtremes(line_map, gh);
+
+     */
+    unordered_map<string, vector<Vertex *>> line_map;
+    vector<Vertex *> v;
+    line_map["Line1"] = v;
     Scraper::findExtremes(line_map, gh);
 
     Program p(gh);

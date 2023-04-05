@@ -1,5 +1,6 @@
 #include <limits>
 #include <set>
+#include "ExampleGraphs.h"
 #include "Program.h"
 #include "Menu.h"
 #include "MenuItem.h"

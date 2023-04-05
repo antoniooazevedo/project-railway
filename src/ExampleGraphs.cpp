@@ -163,3 +163,31 @@ Graph ExampleGraphs::costGraph2() {
     return gh;
 }
 
+Graph ExampleGraphs::maxFlowSinglePointGraph1() {
+    Graph gh;
+    for (auto i = 1; i <= 14; i++) {
+        int line = 1;
+        auto *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 4, STANDARD);
+    gh.addBidirectionalEdge("V2", "V3", 8, STANDARD);
+    gh.addBidirectionalEdge("V3", "V4", 8, STANDARD);
+    gh.addBidirectionalEdge("V4", "V5", 2, STANDARD);
+    gh.addBidirectionalEdge("V5", "V6", 10, STANDARD);
+    gh.addBidirectionalEdge("V6", "V7", 6, STANDARD);
+
+    gh.addBidirectionalEdge("V7", "V8", 2, STANDARD);
+    gh.addBidirectionalEdge("V8", "V9", 6, STANDARD);
+    gh.addBidirectionalEdge("V9", "V10", 10, STANDARD);
+    gh.addBidirectionalEdge("V10", "V7", 8, STANDARD);
+
+    gh.addBidirectionalEdge("V4", "V11", 16, STANDARD);
+    gh.addBidirectionalEdge("V11", "V12", 20, STANDARD);
+    gh.addBidirectionalEdge("V12", "V13", 12, STANDARD);
+    gh.addBidirectionalEdge("V12", "V14", 18, STANDARD);
+
+    return gh;
+}
+

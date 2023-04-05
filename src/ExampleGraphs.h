@@ -24,6 +24,8 @@ public:
     static Graph costGraph1();
 
     static Graph costGraph2();
+
+    static Graph maxFlowSinglePointGraph1();
 };
 
 #endif //PROJECT_RAILWAY_EXAMPLEGRAPHS_H
