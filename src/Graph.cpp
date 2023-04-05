@@ -22,7 +22,9 @@ unordered_set<Vertex*> Graph::getExtremes() const{
 
 
 Vertex * Graph::findVertex(const string &id) const {
-    auto v = vertexSet.find(id);
+    auto lowerId = id;
+    transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
+    auto v = vertexSet.find(lowerId);
     if (v == vertexSet.end()) return nullptr;
     else return v->second;
 }
@@ -229,7 +231,10 @@ bool Graph::addVertex(const string &id) {
 bool Graph::addVertex(Vertex *v) {
     if (findVertex(v->getId()) != nullptr)
         return false;
-    vertexSet.insert({v->getId(), v});
+
+    auto lowerId = v->getId();
+    transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
+    vertexSet.insert({lowerId, v});
     return true;
 }
 
