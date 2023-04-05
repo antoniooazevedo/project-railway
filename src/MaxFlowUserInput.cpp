@@ -9,8 +9,7 @@ MaxFlowUserInput::MaxFlowUserInput(int &currMenuPage, Graph &gh) : MenuItem(curr
 }
 
 void MaxFlowUserInput::execute() {
-    string orig = ""
-            , dest = "";
+    string orig = "", dest = "";
 
     cin.ignore(2000, '\n');
     while (graph.findVertex(orig) == nullptr){

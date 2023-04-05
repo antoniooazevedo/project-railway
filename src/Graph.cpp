@@ -15,6 +15,22 @@ unordered_set<Vertex*> Graph::getExtremes() const{
     return extremes;
 }
 
+unordered_set<Vertex*> Graph::getExtremesMunicipalities() const{
+    return extremesMunicipalities;
+}
+
+unordered_set<Vertex*> Graph::getExtremesDistricts() const{
+    return extremesDistricts;
+}
+
+int Graph::getRegion() const {
+    return this->region;
+}
+
+void Graph::setRegion(enum region r) {
+    this->region = r;
+}
+
 
 /*
  * Auxiliary function to find a vertex with a given content.
@@ -31,6 +47,14 @@ Vertex * Graph::findVertex(const string &id) const {
 
 void Graph::insertExtreme(Vertex *v) {
     extremes.insert(v);
+}
+
+void Graph::insertExtremeMunicipality(Vertex *v) {
+    extremesMunicipalities.insert(v);
+}
+
+void Graph::insertExtremeDistrict(Vertex *v) {
+    extremesDistricts.insert(v);
 }
 
 bool Graph::reachDest(const string &origin, const string &dest) const {

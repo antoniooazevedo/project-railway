@@ -26,7 +26,7 @@ private:
     void createMenu2();
 
 public:
-    Program(Graph &railway);
+    Program();
     void run();
     bool getMenuOption(int &option, int nButtons);
     void cleanMenus();

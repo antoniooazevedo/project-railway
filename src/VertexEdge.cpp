@@ -71,6 +71,14 @@ string Vertex::getLine() const {
     return this->main_line;
 }
 
+string Vertex::getDistrict() const {
+    return this->district;
+}
+
+string Vertex::getMunicipality() const {
+    return this->municipality;
+}
+
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }

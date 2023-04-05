@@ -10,22 +10,27 @@
 #include <limits>
 #include <algorithm>
 
+using namespace std;
+
 class Edge;
 
-#define INF std::numeric_limits<double>::max()
+#define INF numeric_limits<double>::max()
 
 /************************* Vertex  **************************/
 
 class Vertex {
 public:
-    Vertex(std::string id);
-    Vertex(std::string id, std::string district, std::string municipality, std::string mainLine,
-           std::list<std::string> townships);
+    Vertex(string id);
+    Vertex(string id, string district, string municipality, string mainLine,
+           list<string> townships);
     bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
-    std::string getId() const;
-    std::vector<Edge *> getAdj() const;
-    std::string getLine() const;
+    string getId() const;
+    vector<Edge *> getAdj() const;
+    string getLine() const;
+    string getDistrict() const;
+    string getMunicipality() const;
+    
     bool isVisited() const;
     bool getHit() const;
     bool getReached() const;
@@ -35,9 +40,9 @@ public:
     int getPrice() const;
     bool getInQueue() const;
     Edge *getPath() const;
-    std::vector<Edge *> getIncoming() const;
+    vector<Edge *> getIncoming() const;
 
-    void setId(std::string info);
+    void setId(string info);
     void setVisited(bool visited);
     void setReachedDestination(bool reachDestination);
     void setHit(bool hit);
@@ -48,14 +53,14 @@ public:
     void setInQueue(bool inQueue);
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
-    bool removeEdge(std::string destID);
+    bool removeEdge(string destID);
     void removeOutgoingEdges();
     int queueIndex;
     bool operator==(const Vertex& v);
 
 protected:
-    std::string id;                // identifier
-    std::vector<Edge *> adj;  // outgoing edges
+    string id;                // identifier
+    vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
     bool visited = false;// used by DFS, BFS, Prim ...
@@ -69,10 +74,10 @@ protected:
     int price = 0;
     bool inQueue;
     Edge *path = nullptr;
-    std::string name = id, district, municipality, main_line;
-    std::list<std::string> townships;
+    string name = id, district, municipality, main_line;
+    list<string> townships;
 
-    std::vector<Edge *> incoming; // incoming edges
+    vector<Edge *> incoming; // incoming edges
 
     void deleteEdge(Edge *edge);
 };

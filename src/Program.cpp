@@ -6,13 +6,15 @@
 #include "ChangeMenu.h"
 #include "PairsMaxFlow.h"
 #include "MaxFlowUserInput.h"
+#include "Scraper.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
  * @brief Program's constructor
  */
-Program::Program(Graph &rw) : railway(rw)
+Program::Program()
 {
+
     currMenuPage = 0;
     createMainMenu();
     createMenu1();
@@ -24,6 +26,8 @@ Program::Program(Graph &rw) : railway(rw)
  */
 void Program::run()
 {
+
+
     int option;
     while (currMenuPage != -1)
     {

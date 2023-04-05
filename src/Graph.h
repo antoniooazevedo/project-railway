@@ -18,6 +18,7 @@
 
 using namespace std;
 
+enum region {LINE = 0, MUNICIPALITIES = 1, DISTRICTS = 2};
 class Graph {
 public:
     ~Graph();
@@ -39,19 +40,27 @@ public:
      * destination vertices and the edge weight (w).
      * Returns true if successful, and false if the source or destination vertex does not exist.
      */
-    bool addEdge(const string &sourc, const string &dest, double c, enum service s);
+    bool addEdge(const string &source, const string &dest, double c, enum service s);
     bool addBidirectionalEdge(const string &source, const string &dest, double c, enum service s);
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
     unordered_set<Vertex*> getExtremes() const;
+    unordered_set<Vertex *> getExtremesMunicipalities() const;
+    unordered_set<Vertex *> getExtremesDistricts() const;
     void insertExtreme(Vertex* v);
+    void insertExtremeMunicipality(Vertex* v);
+    void insertExtremeDistrict(Vertex* v);
+    int getRegion() const;
 
+    void setRegion(enum region r);
     int getMaxFlow(Vertex* v1, Vertex* v2);
 
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
     unordered_set<Vertex*> extremes;
+    unordered_set<Vertex*> extremesMunicipalities;
+    unordered_set<Vertex*> extremesDistricts;
 
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
@@ -71,6 +80,9 @@ protected:
     int computeCost(Vertex *origin) const;
     void resetNodes() const;
     void resetFlow() const;
+
+    enum region region;
+
 };
 
 

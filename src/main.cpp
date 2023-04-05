@@ -10,13 +10,17 @@
 
 
 int main(){
-    Graph gh;
-    auto line_map = Scraper::scrape_stations("../src/data/stations.csv", gh);
-    Scraper::scrape_networks("../src/data/network.csv", gh);
-    Scraper::fix_graph(gh);
-    Scraper::findExtremes(line_map, gh);
-
-    Program p(gh);
+    Graph railway;
+    auto region_map = Scraper::scrape_stations("../src/data/stations.csv", railway);
+    Scraper::scrape_networks("../src/data/network.csv", railway);
+    Scraper::fix_graph(railway);
+    Scraper::findExtremes(region_map, railway);
+    for (auto v : railway.getVertexSet()) {
+        if (v.second->getLine() == "Rede Espanhola") {
+            cout << "LMAOOOOO\n";
+        }
+    }
+    Program p;
     p.run();
 
     return 0;
