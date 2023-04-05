@@ -91,17 +91,20 @@ public:
     Edge *getReverse() const;
     int getFlow() const;
     int getService() const;
+    bool getDisabled() const;
 
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(int flow);
     void setService(enum service s);
+    void setDisabled(bool disabled);
 protected:
     Vertex * dest; // destination vertex
     double capacity; // edge weight, can also be used for capacity
 
     // auxiliary fields
     bool selected = false;
+    bool disabled = false;
 
     // used for bidirectional edges
     Vertex *orig;

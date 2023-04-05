@@ -8,6 +8,7 @@
 #include "PairsMaxFlow.h"
 #include "MaxFlowUserInput.h"
 #include "SinglePointMaxFlow.h"
+#include "ReducedConnectivityMaxFlow.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
@@ -94,6 +95,7 @@ void Program::createMenu1()
 void Program::createMenu2() {
     menus.emplace_back("../src/menus/menu2");
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
+    menus[menus.size() - 1].addMenuItem(new ReducedConnectivityMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
 

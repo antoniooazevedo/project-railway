@@ -113,7 +113,7 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
 
-            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow() && !e->getDisabled()) {
                 if (w == dest) {
                     w->setPath(e);
                     return true;
@@ -127,7 +127,7 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
 
         for (auto e : v->getIncoming()) {
             auto w = e->getOrig();
-            if (!w->isVisited() && e->getFlow() > 0) {
+            if (!w->isVisited() && e->getFlow() > 0 && !e->getDisabled()) {
                 w->setVisited(true);
                 w->setPath(e);
                 q.push(w);

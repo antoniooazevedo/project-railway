@@ -179,7 +179,7 @@ bool Vertex::operator==(const Vertex &v) {
 /********************** Edge  ****************************/
 
 
-Edge::Edge(Vertex *orig, Vertex *dest, double w): orig(orig), dest(dest), capacity(w) {}
+Edge::Edge(Vertex *orig, Vertex *dest, double w): orig(orig), dest(dest), capacity(w) {disabled = false;}
 
 Vertex * Edge::getDest() const {
     return this->dest;
@@ -209,6 +209,10 @@ int Edge::getService() const {
     return this->service;
 }
 
+bool Edge::getDisabled() const {
+    return this->disabled;
+}
+
 void Edge::setSelected(bool selected) {
     this->selected = selected;
 }
@@ -223,4 +227,8 @@ void Edge::setFlow(int flow) {
 
 void Edge::setService(enum service s) {
     this->service = s;
+}
+
+void Edge::setDisabled(bool disabled) {
+    this->disabled = disabled;
 }
