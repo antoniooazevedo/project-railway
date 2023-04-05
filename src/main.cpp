@@ -15,11 +15,6 @@ int main(){
     Scraper::scrape_networks("../src/data/network.csv", gh);
     Scraper::fix_graph(gh);
     Scraper::findExtremes(line_map, gh);
-    for (auto v : gh.getVertexSet()) {
-        if (v.second->getLine() == "Rede Espanhola") {
-            cout << "LMAOOOOO\n";
-        }
-    }
 
     return 0;
 }

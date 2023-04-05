@@ -25,5 +25,9 @@ add_executable(project_railway
         src/PairsMaxFlow.h
         src/ChangeMenu.h
         src/ExampleGraphs.cpp
-        src/ExampleGraphs.h)
+        src/ExampleGraphs.h
+        src/MaxFlowUserInput.cpp
+        src/MaxFlowUserInput.h
+        src/utils.cpp
+        src/utils.h)
 
