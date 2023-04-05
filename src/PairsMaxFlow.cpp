@@ -1,6 +1,4 @@
-//
-// Created by work on 04-04-2023.
-//
+
 
 #include "PairsMaxFlow.h"
 

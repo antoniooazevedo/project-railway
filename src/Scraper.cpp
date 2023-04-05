@@ -107,17 +107,6 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
 
         if (count == 1 || count > 2){
             map[line].push_back(v.second);
-
-            /* PERGUNTAR AO ANTONIO
-            auto find_res = map.find(line)
-
-            vector<Vertex *> vec = {v.second};
-
-            if (!find_res->second.empty()){
-                for (auto &vertex: find_res->second) vec.push_back(vertex);
-            }
-
-            map[line] = vec;*/
         }
     }
 
