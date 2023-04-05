@@ -1,8 +1,5 @@
-//
-// Created by tomas on 04/04/2023.
-//
-
 #include "ExampleGraphs.h"
+
 Graph ExampleGraphs::Graph1(){
     Graph gh1;
     for (auto i = 1; i <= 8; i++) {
@@ -126,5 +123,20 @@ Graph ExampleGraphs::Graph6(){
 
 
     return gh6;
+}
+
+Graph ExampleGraphs::costGraph1() {
+    Graph gh;
+
+    for (auto i = 1; i <= 5; i++) {
+        int line = 1;
+        Vertex *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 1,STANDARD);
+    gh.addBidirectionalEdge("V2", "V3", 1,STANDARD);
+    gh.addBidirectionalEdge("V3", "V4", 1,STANDARD);
+    gh.addBidirectionalEdge("V4", "V5", 1,STANDARD);
 }
 

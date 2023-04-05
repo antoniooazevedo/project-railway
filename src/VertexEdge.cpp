@@ -60,7 +60,7 @@ void Vertex::removeOutgoingEdges() {
 }
 
 bool Vertex::operator<(Vertex & vertex) const {
-    return this->dist < vertex.dist;
+    return this->price < vertex.price;
 }
 
 string Vertex::getId() const {
@@ -141,14 +141,6 @@ void Vertex::setPath(Edge *path) {
     this->path = path;
 }
 
-void Vertex::setQueue(bool enqueue) {
-    this->enqueue = enqueue;
-}
-
-bool Vertex::inQueue() const {
-    return this->enqueue;
-}
-
 void Vertex::deleteEdge(Edge *edge) {
     Vertex *dest = edge->getDest();
     // Remove the corresponding edge from the incoming list
@@ -162,6 +154,22 @@ void Vertex::deleteEdge(Edge *edge) {
         }
     }
     delete edge;
+}
+
+int Vertex::getPrice() const {
+    return price;
+}
+
+void Vertex::setPrice(int price) {
+    this->price = price;
+}
+
+bool Vertex::getInQueue() const {
+    return inQueue;
+}
+
+void Vertex::setInQueue(bool inQueue) {
+    this->inQueue = inQueue;
 }
 
 bool Vertex::operator==(const Vertex &v) {
