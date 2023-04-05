@@ -6,6 +6,7 @@
 #include "ChangeMenu.h"
 #include "PairsMaxFlow.h"
 #include "MaxFlowUserInput.h"
+#include "SinglePointMaxFlow.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
@@ -82,6 +83,7 @@ void Program::createMenu1()
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 2));
     menus[menus.size() - 1].addMenuItem(new MaxFlowUserInput(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new PairsMaxFlow(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new SinglePointMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
 

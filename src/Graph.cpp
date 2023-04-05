@@ -20,7 +20,6 @@ unordered_set<Vertex*> Graph::getExtremes() const{
  * Auxiliary function to find a vertex with a given content.
  */
 
-
 Vertex * Graph::findVertex(const string &id) const {
     auto lowerId = id;
     transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
@@ -227,7 +226,9 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
 bool Graph::addVertex(const string &id) {
     if (findVertex(id) != nullptr)
         return false;
-    vertexSet.insert({id, new Vertex(id)});
+    string lowerid = id;
+    transform(lowerid.begin(), lowerid.end(), lowerid.begin(), ::tolower);
+    vertexSet.insert({lowerid, new Vertex(id)});
     return true;
 }
 
@@ -243,12 +244,15 @@ bool Graph::addVertex(Vertex *v) {
 
 bool Graph::removeVertex(const std::string &id) {
     if (findVertex(id) == nullptr) return false;
+    auto v = findVertex(id);
+    v->removeOutgoingEdges();
     vertexSet.erase(id);
     return true;
 }
 
 bool Graph::removeVertex(Vertex *v) {
     if (findVertex(v->getId()) == nullptr) return false;
+    v->removeOutgoingEdges();
     vertexSet.erase(v->getId());
     return true;
 }

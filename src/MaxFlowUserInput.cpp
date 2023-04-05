@@ -13,26 +13,28 @@ void MaxFlowUserInput::execute() {
             , dest = "";
 
     cin.ignore(2000, '\n');
-    while (graph.findVertex(orig) == nullptr){
+    while (true){
         cout << "Origin: ";
         std::getline(cin, orig);
-        transform(orig.begin(), orig.end(), orig.begin(), ::tolower);
 
         if (graph.findVertex(orig) == nullptr){
             cout << "Station not found";
             cout << endl;
+            continue;
         }
+        break;
     }
 
-    while (graph.findVertex(dest) == nullptr){
+    while (true){
         cout << "Destination: ";
         std::getline(cin, dest);
-        transform(dest.begin(), dest.end(), dest.begin(), ::tolower);
 
         if (graph.findVertex(dest) == nullptr){
             cout << "Station not found";
             cout << endl;
+            continue;
         }
+        break;
     }
 
     auto flow = graph.getMaxFlow(graph.findVertex(orig), graph.findVertex(dest));

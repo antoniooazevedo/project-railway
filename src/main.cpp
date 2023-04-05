@@ -16,6 +16,9 @@ int main(){
     Scraper::fix_graph(gh);
     Scraper::findExtremes(line_map, gh);
 
+    Program p(gh);
+    p.run();
+
     return 0;
 }
 
