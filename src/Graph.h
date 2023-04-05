@@ -42,6 +42,9 @@ public:
     bool addEdge(const string &sourc, const string &dest, double c, enum service s);
     bool addBidirectionalEdge(const string &source, const string &dest, double c, enum service s);
 
+    void costMaxFlow(const string &origin, const string &dest) const;
+    int computeCost(Vertex *origin) const;
+
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
     unordered_set<Vertex*> getExtremes() const;
@@ -64,11 +67,9 @@ protected:
     void augmentFlow(Vertex* dest, int flow) const;
     int findBottleneck(Vertex* src) const;
     void maxFlow(const string &origin, const string &dest) const;
-    void costMaxFlow(const string &origin, const string &dest) const;
     bool findCheapestPath(Vertex *origin, Vertex *dest) const;
     bool reachDest(const string &origin, const string &dest) const;
     bool findPath(Vertex* origin , Vertex* dest ) const;
-    int computeCost(Vertex *origin) const;
     void resetNodes() const;
     void resetFlow() const;
 };

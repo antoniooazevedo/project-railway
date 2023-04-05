@@ -134,9 +134,32 @@ Graph ExampleGraphs::costGraph1() {
         gh.addVertex(v);
     }
 
-    gh.addBidirectionalEdge("V1", "V2", 1,STANDARD);
-    gh.addBidirectionalEdge("V2", "V3", 1,STANDARD);
-    gh.addBidirectionalEdge("V3", "V4", 1,STANDARD);
-    gh.addBidirectionalEdge("V4", "V5", 1,STANDARD);
+    gh.addBidirectionalEdge("V1", "V2", 2, STANDARD);
+    gh.addBidirectionalEdge("V1", "V3", 2, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V2", "V3", 4, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V2", "V4", 4, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V4", "V5", 4, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V3", "V5", 2, STANDARD);
+
+    return gh;
+}
+
+Graph ExampleGraphs::costGraph2() {
+    Graph gh;
+
+    for (auto i = 1; i <= 6; i++) {
+        int line = 1;
+        Vertex *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 2, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V2", "V3", 2, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V1", "V4", 2, STANDARD);
+    gh.addBidirectionalEdge("V4", "V5", 4, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V5", "V6", 4, ALFA_PENDULAR);
+    gh.addBidirectionalEdge("V3", "V6", 2, STANDARD);
+
+    return gh;
 }
 

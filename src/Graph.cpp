@@ -185,8 +185,11 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
     while (!mq.empty()) {
         currNode = mq.extractMin();
 
+        if (currNode != origin && currNode->getPath() == nullptr)
+            continue;
+
         if (currNode == dest)
-            return true;
+            return currNode->getPath() != nullptr;
 
         for (auto e: currNode->getAdj()) {
             Vertex *adjNode = e->getDest();
@@ -195,7 +198,7 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
             bool relaxEdge = adjNode->getPrice() > currNode->getPrice() + e->getService();
             bool isNotFull = e->getCapacity() > e->getFlow() + reverse->getFlow();
 
-            if (adjNode->getInQueue() && relaxEdge && !isNotFull) {
+            if (adjNode->getInQueue() && relaxEdge && isNotFull) {
                 adjNode->setPrice(adjNode->getPrice() + e->getService());
                 adjNode->setPath(e);
                 mq.decreaseKey(adjNode);
@@ -329,7 +332,7 @@ int Graph::computeCost(Vertex *origin) const {
     queue<Vertex *> q;
     resetNodes();
 
-    origin->setInQueue(true);
+    origin->setVisited(true);
     q.push(origin);
     Vertex *currNode;
 
@@ -340,18 +343,15 @@ int Graph::computeCost(Vertex *origin) const {
             Vertex *destNode = e->getDest();
 
             if (e->getFlow() > 0) {
-                if (!destNode->getInQueue()) {
-                    q.push(destNode);
-                    destNode->setInQueue(true);
-                }
                 if (!destNode->isVisited()) {
-                    totalCost += e->getFlow() * e->getCapacity();
+                    q.push(destNode);
+                    destNode->setVisited(true);
                 }
+                totalCost += e->getFlow() * e->getService();
             }
         }
 
         q.pop();
-        origin->setVisited(true);
     }
 
     return totalCost;

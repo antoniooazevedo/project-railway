@@ -12,7 +12,7 @@
 
 class Edge;
 
-#define INF std::numeric_limits<double>::max()
+#define INF std::numeric_limits<int>::max()
 
 /************************* Vertex  **************************/
 
@@ -62,7 +62,6 @@ protected:
     bool reachDestination = false;
     bool hit = false;
     // used by Dijkstra
-    bool enqueue = false;
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;

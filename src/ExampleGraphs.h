@@ -22,6 +22,8 @@ public:
     static Graph Graph6();
 
     static Graph costGraph1();
+
+    static Graph costGraph2();
 };
 
 #endif //PROJECT_RAILWAY_EXAMPLEGRAPHS_H
