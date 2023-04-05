@@ -61,6 +61,7 @@ protected:
     unordered_set<Vertex*> extremes;
     unordered_set<Vertex*> extremesMunicipalities;
     unordered_set<Vertex*> extremesDistricts;
+    vector<unordered_map<string,vector<Vertex*>>> region_map;
 
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall

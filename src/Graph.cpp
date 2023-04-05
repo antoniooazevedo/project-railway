@@ -270,7 +270,9 @@ bool Graph::removeVertex(const std::string &id) {
 
 bool Graph::removeVertex(Vertex *v) {
     if (findVertex(v->getId()) == nullptr) return false;
-    vertexSet.erase(v->getId());
+    auto lowerId = v->getId();
+    transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
+    vertexSet.erase(lowerId);
     return true;
 }
 /*
@@ -278,17 +280,17 @@ bool Graph::removeVertex(Vertex *v) {
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
+
 /*
-bool Graph::addEdge(const int &sourc, const int &dest, double w) {
-    auto v1 = findVertex(sourc);
+bool Graph::addEdge(const int &source, const int &dest, double w) {
+    auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
     v1->addEdge(v2, w);
     return true;
-}
+}*/
 
-  */
 bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);

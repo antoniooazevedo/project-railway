@@ -20,14 +20,14 @@ class Edge;
 
 class Vertex {
 public:
-    Vertex(string id);
-    Vertex(string id, string district, string municipality, string mainLine,
-           list<string> townships);
+    Vertex(std::string id);
+    Vertex(std::string id, std::string district, std::string municipality, std::string mainLine,
+           std::list<std::string> townships);
     bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
-    string getId() const;
-    vector<Edge *> getAdj() const;
-    string getLine() const;
+    std::string getId() const;
+    std::vector<Edge *> getAdj() const;
+    std::string getLine() const;
     string getDistrict() const;
     string getMunicipality() const;
     

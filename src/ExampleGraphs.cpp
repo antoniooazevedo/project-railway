@@ -138,5 +138,6 @@ Graph ExampleGraphs::costGraph1() {
     gh.addBidirectionalEdge("V2", "V3", 1,STANDARD);
     gh.addBidirectionalEdge("V3", "V4", 1,STANDARD);
     gh.addBidirectionalEdge("V4", "V5", 1,STANDARD);
+    return gh;
 }
 

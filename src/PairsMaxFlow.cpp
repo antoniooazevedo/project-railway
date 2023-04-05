@@ -1,6 +1,6 @@
 
-
 #include "PairsMaxFlow.h"
+#include "Scraper.h"
 
 PairsMaxFlow::PairsMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){
     this->graph = gh;
@@ -12,6 +12,7 @@ bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pa
 
 void PairsMaxFlow::execute() {
     auto extremes = graph.getExtremes();
+    result_vector.clear();
     int flow = 0;
     for (auto v1: extremes){
         for (auto v2: extremes){
