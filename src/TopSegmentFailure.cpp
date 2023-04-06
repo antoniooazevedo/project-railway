@@ -54,25 +54,5 @@ void TopSegmentFailure::execute() {
     auto vertexSet = railway->getVertexSet();
     auto original_results = fullGraphMaxFlow();
 
-    for (auto &pa: vertexSet){
-        for (auto &e: pa.second->getAdj()){
-            if (pa.second->getId() < e->getDest()->getId()){
-                e->setDisabled(true);
-                e->getReverse()->setDisabled(true);
 
-                auto particular_results = fullGraphMaxFlow();
-
-                e->setDisabled(false);
-                e->getReverse()->setDisabled(false);
-
-                auto deltas = getDelta(original_results, particular_results);
-
-                cout << pa.second->getId() << " <-> " << e->getDest()->getId() << endl << endl;
-                for (int i = 0; i <= 2; i++){
-                    cout << "Station: " << deltas[i].first->getId() << "  Loss in flow: " << deltas[i].second << endl;
-                }
-                cout << "----------------------------------------\n\n\n";
-            }
-        }
-    }
 }

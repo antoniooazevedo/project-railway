@@ -108,6 +108,7 @@ void Program::createMenu1()
 /**
  * @brief Creates the show menu
  */
+
 void Program::createMenu2() {
     menus.emplace_back("../src/menus/menu2");
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
