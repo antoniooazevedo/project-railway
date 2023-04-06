@@ -224,3 +224,11 @@ void Edge::setFlow(int flow) {
 void Edge::setService(enum service s) {
     this->service = s;
 }
+
+bool Edge::getVisited() const {
+    return visited;
+}
+
+void Edge::setVisited(bool visited) {
+    this->visited = visited;
+}

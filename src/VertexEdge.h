@@ -50,7 +50,6 @@ public:
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(std::string destID);
     void removeOutgoingEdges();
-    int queueIndex;
     bool operator==(const Vertex& v);
 
 protected:
@@ -91,8 +90,10 @@ public:
     Edge *getReverse() const;
     int getFlow() const;
     int getService() const;
+    bool getVisited() const;
 
     void setSelected(bool selected);
+    void setVisited(bool visited);
     void setReverse(Edge *reverse);
     void setFlow(int flow);
     void setService(enum service s);
@@ -102,6 +103,7 @@ protected:
 
     // auxiliary fields
     bool selected = false;
+    bool visited = false;
 
     // used for bidirectional edges
     Vertex *orig;
