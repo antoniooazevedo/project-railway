@@ -52,5 +52,5 @@ void ChangeMenu::pickEdgesToDisable() {
 void ChangeMenu::execute()
 {
     *(this->currMenuPage) = nextMenu;
-    if (*currMenuPage == 2) pickEdgesToDisable();
+    if (*currMenuPage == 3) pickEdgesToDisable();
 }

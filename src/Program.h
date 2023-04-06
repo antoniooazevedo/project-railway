@@ -25,6 +25,7 @@ private:
     void createMainMenu();
     void createMenu1();
     void createMenu2();
+    void createMenuReducedConnectivity();
 
 public:
     Program();

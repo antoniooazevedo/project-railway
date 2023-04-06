@@ -1,7 +1,3 @@
-//
-// Created by work on 05-04-2023.
-//
-
 #include "ReducedConnectivityMaxFlow.h"
 #include <ctime>
 
@@ -12,6 +8,8 @@ void ReducedConnectivityMaxFlow::execute() {
     auto vertexSet = railway->getVertexSet();
     int count;
     bool control_ignore = true;
+
+    // TODO: Check random generation with Antonio
 
     while (true){
         if (control_ignore) cin.ignore(2000, '\n');
