@@ -44,6 +44,7 @@ public:
 
     void costMaxFlow(const string &origin, const string &dest) const;
     int computeCost(Vertex *origin) const;
+    vector<Edge *> fetchUsedEdges(Vertex *origin);
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;

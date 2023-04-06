@@ -347,3 +347,35 @@ int Graph::computeCost(Vertex *origin) const {
 
     return totalCost;
 }
+
+vector<Edge *> Graph::fetchUsedEdges(Vertex *origin) {
+    vector<Edge *> allEdges;
+
+    queue<Vertex *> q;
+    resetNodes();
+
+    origin->setVisited(true);
+    q.push(origin);
+    Vertex *currNode;
+
+    while (!q.empty()) {
+        currNode = q.front();
+
+        for (Edge *e: currNode->getAdj()) {
+            Vertex *destNode = e->getDest();
+
+            if (e->getFlow() > 0 && !e->getVisited()) {
+                if (!destNode->isVisited()) {
+                    q.push(destNode);
+                    destNode->setVisited(true);
+                }
+                allEdges.push_back(e);
+                e->setVisited(true);
+            }
+        }
+
+        q.pop();
+    }
+
+    return allEdges;
+}
