@@ -153,16 +153,13 @@ void Graph::maxFlow(const string &origin, const string &dest) const {
 }
 
 
-void Graph::costMaxFlow(const string &origin, const string &dest) const {
+void Graph::minCostMaxFlow(Vertex *origin, Vertex *dest) const {
     resetNodes();
     resetFlow();
 
-    auto s = findVertex(origin);
-    auto t = findVertex(dest);
-
-    while (findCheapestPath(s, t)){
-        int flow = findBottleneck(t);
-        augmentFlow(t, flow);
+    while (findCheapestPath(origin, dest)){
+        int flow = findBottleneck(dest);
+        augmentFlow(dest, flow);
     }
 }
 
@@ -378,4 +375,13 @@ vector<Edge *> Graph::fetchUsedEdges(Vertex *origin) {
     }
 
     return allEdges;
+}
+
+int Graph::getVertexFlow(Vertex *v) const {
+    int totalFlow = 0;
+    for (Edge *e: v->getIncoming()) {
+        totalFlow += e->getFlow();
+    }
+
+    return totalFlow;
 }
