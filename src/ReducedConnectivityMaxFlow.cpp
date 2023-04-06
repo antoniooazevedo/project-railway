@@ -12,7 +12,7 @@ void ReducedConnectivityMaxFlow::execute() {
     auto vertexSet = railway->getVertexSet();
     int count;
     bool control_ignore = true;
-
+/*
     while (true){
         if (control_ignore) cin.ignore(2000, '\n');
         cout << "Please input desired amount: ";
@@ -55,7 +55,7 @@ void ReducedConnectivityMaxFlow::execute() {
         }
         count--;
     }
-
+*/
     while (true){
         cout << "Please input desired origin station: ";
         getline(cin, orig);

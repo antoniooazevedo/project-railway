@@ -56,38 +56,6 @@ void Graph::insertExtremeDistrict(Vertex *v) {
     extremesDistricts.insert(v);
 }
 
-bool Graph::reachDest(const string &origin, const string &dest) const {
-    auto currVertex = findVertex(origin);
-
-    if (currVertex == nullptr) return false;
-
-    currVertex->setVisited(true);
-
-    if (origin == dest){
-        findVertex(dest)->setReachedDestination(true);
-        return true;
-    }
-
-    for (auto e : currVertex->getAdj()) {
-        auto destVertex = e->getDest();
-
-        if (!destVertex->isVisited()) {
-            destVertex->setPath(e);
-            if (reachDest(destVertex->getId(), dest))
-                currVertex->setReachedDestination(true);
-        }
-
-        // Visit an already visited node that reached the destination
-        else if (destVertex->getReached()) {
-            auto edgeToParent = currVertex->getPath();
-            if (edgeToParent != nullptr && edgeToParent->getOrig() != destVertex) {
-                currVertex->setReachedDestination(true);
-            }
-        }
-    }
-
-    return currVertex->getReached();
-}
 
 
 int Graph::findBottleneck(Vertex* src) const {
