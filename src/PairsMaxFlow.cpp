@@ -35,7 +35,7 @@ void PairsMaxFlow::execute() {
     for (auto pa: result_vector) {
         auto s = pa.first.first->getId() + " <-> " + pa.first.second->getId();
         cout.clear();
-        if (pa.second == result_vector[0].second) cout << "|\033[100m   -->   " << s << string(36 - s.size(), ' ') << "\033[0m|\n";
+        if (pa.second == result_vector[0].second) cout << "|\033[100m   -->   " << s << string(36 - getLen(s), ' ') << "\033[0m|\n";
     }
     cout << "|\033[100m_____________________________________________\033[0m|\n"
          << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"

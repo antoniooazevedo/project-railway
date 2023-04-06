@@ -3,11 +3,16 @@
 
 #include <limits>
 #include "iostream"
+#include "VertexEdge.h"
+#include "Graph.h"
+
 using namespace std;
 
 template<typename type>
-bool getInput(type &input);
-int getSasdada(string str);
+bool getInput(type &);
+
+int getLen(string str);
+bool fetchStation(Vertex *v, Graph *railway, char quit = ' ');
 
 
 #endif //PROJECT_RAILWAY_UTILS_H

@@ -12,6 +12,7 @@ void MaxFlowUserInput::execute() {
         std::getline(cin, orig);
 
         if (graph.findVertex(orig) == nullptr){
+            cout << endl;
             cout << "\033[31m - Station not found - " << "\033[0m";
             cout << endl;
             cout << endl;
@@ -25,6 +26,7 @@ void MaxFlowUserInput::execute() {
         std::getline(cin, dest);
 
         if (graph.findVertex(dest) == nullptr){
+            cout << endl;
             cout << "\033[31m - Station not found - " << "\033[0m";
             cout << endl;
             cout << endl;

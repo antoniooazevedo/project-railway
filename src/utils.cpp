@@ -25,8 +25,10 @@ bool getInput(type &input){
     }
     return false;
 }
+template bool getInput<int>(int &input);
 
-int getSasdada(const string str){
+
+int getLen(const string str){
     int counter = 0;
     int neg_count = 0;
     for(auto i : str){
@@ -42,4 +44,26 @@ int getSasdada(const string str){
         }
     }
     return counter;
+}
+
+bool fetchStation(Vertex *v, Graph *railway, char quit) {
+    string input;
+    quit = tolower(quit, locale());
+
+    while (v == nullptr) {
+        getline(cin, input);
+
+        if (input == to_string(quit) && quit != ' ')
+            return false;
+
+        system("clear");
+
+        v = railway->findVertex(input);
+        if (v != nullptr)
+            break;
+        cout << "There isn't a station named: " << input << endl;
+        cout << "Input another station: ";
+    }
+
+    return true;
 }

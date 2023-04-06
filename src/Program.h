@@ -18,7 +18,7 @@
 #include "ReducedConnectivityMaxFlow.h"
 #include "TopSegmentFailure.h"
 #include "Scraper.h"
-#include "MunDistrict.h"
+#include "Municipalities.h"
 #include "utils.h"
 
 using namespace std;

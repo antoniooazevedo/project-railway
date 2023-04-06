@@ -88,7 +88,7 @@ void Program::createMenu1()
     menus[menus.size() - 1].addMenuItem(new MaxFlowUserInput(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new PairsMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new SinglePointMaxFlow(currMenuPage, railway));
-    menus[menus.size() - 1].addMenuItem(new MunDistrict(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new Municipalities(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
 
