@@ -43,8 +43,9 @@ public:
     bool addEdge(const string &source, const string &dest, double c, enum service s);
     bool addBidirectionalEdge(const string &source, const string &dest, double c, enum service s);
 
-    void costMaxFlow(const string &origin, const string &dest) const;
+    void minCostMaxFlow(Vertex *origin, Vertex *dest) const;
     int computeCost(Vertex *origin) const;
+    vector<Edge *> fetchUsedEdges(Vertex *origin);
 
     int getNumVertex() const;
     std::unordered_map<std::string, Vertex *> getVertexSet() const;
@@ -60,6 +61,8 @@ public:
     int getMaxFlow(Vertex* v1, Vertex* v2);
     int getMunMaxFlow(Vertex *v1, Vertex *v2);
     int getDistrictMaxFlow(Vertex *v1, Vertex *v2);
+
+    int getVertexFlow(Vertex *v) const;
 
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set

@@ -286,8 +286,6 @@ void Graph::maxFlow(const string &origin, const string &dest) const {
     resetNodes();
     resetFlow();
 
-    reachDest(origin, dest);
-
     auto s = findVertex(origin);
     auto t = findVertex(dest);
 
@@ -298,73 +296,53 @@ void Graph::maxFlow(const string &origin, const string &dest) const {
 }
 
 
-void Graph::costMaxFlow(const string &origin, const string &dest) const {
+void Graph::minCostMaxFlow(Vertex *origin, Vertex *dest) const {
     resetNodes();
     resetFlow();
 
-    reachDest(origin, dest);
-
-    auto s = findVertex(origin);
-    auto t = findVertex(dest);
-
-    while (findCheapestPath(s, t)){
-        int flow = findBottleneck(t);
-        augmentFlow(t, flow);
+    while (findCheapestPath(origin, dest)){
+        int flow = findBottleneck(dest);
+        augmentFlow(dest, flow);
     }
 }
 
-
+// No need to check for negative cycles in the Bellman-Ford
 bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
     resetNodes();
 
-    MutablePriorityQueue<Vertex> mq;
-    Vertex *currNode = origin;
+    origin->setPrice(0);
 
-    currNode->setPrice(0);
+    for (int i = 0; i < getVertexSet().size(); i++) {
+        for (auto v: getVertexSet()) {
+            Vertex *orig = v.second;
 
-    for (const auto& pair : vertexSet) {
-        pair.second->setInQueue(true);
-        mq.insert(pair.second);
-    }
+            for (Edge *e: orig->getAdj()) {
+                Vertex *adjNode = e->getDest();
+                Edge *reverse = e->getReverse();
 
-    while (!mq.empty()) {
-        currNode = mq.extractMin();
+                bool relaxEdge = adjNode->getPrice() > orig->getPrice() + e->getService();
+                bool isNotFull = e->getCapacity() > e->getFlow() + reverse->getFlow();
 
-        if (currNode != origin && currNode->getPath() == nullptr)
-            continue;
+                if (relaxEdge && isNotFull) {
+                    adjNode->setPrice(orig->getPrice() + e->getService());
+                    adjNode->setPath(e);
+                }
+            }
 
-        if (currNode == dest)
-            return currNode->getPath() != nullptr;
+            for (Edge *e: orig->getIncoming()) {
+                Vertex *adjNode = e->getOrig();
 
-        for (auto e: currNode->getAdj()) {
-            Vertex *adjNode = e->getDest();
-            Edge *reverse = e->getReverse();
+                bool relaxEdge = adjNode->getPrice() > orig->getPrice() - e->getService();
 
-            bool relaxEdge = adjNode->getPrice() > currNode->getPrice() + e->getService();
-            bool isNotFull = e->getCapacity() > e->getFlow() + reverse->getFlow();
-
-            if (adjNode->getInQueue() && relaxEdge && isNotFull) {
-                adjNode->setPrice(adjNode->getPrice() + e->getService());
-                adjNode->setPath(e);
-                mq.decreaseKey(adjNode);
+                if (e->getFlow() > 0 && relaxEdge) {
+                    adjNode->setPrice(orig->getPrice() - e->getService());
+                    adjNode->setPath(e);
+                }
             }
         }
-
-        for (auto e: currNode->getIncoming()) {
-            Vertex *adjNode = e->getOrig();
-
-            bool relaxEdge = adjNode->getPrice() > currNode->getPrice() - e->getService();
-
-            if (adjNode->getInQueue() && e->getFlow() > 0 && relaxEdge) {
-                adjNode->setPrice(adjNode->getPrice() - e->getService());
-                adjNode->setPath(e);
-                mq.decreaseKey(adjNode);
-            }
-        }
-        currNode->setInQueue(false);
     }
 
-    return false;
+    return dest->getPath() != nullptr;
 }
 
 bool Graph::addVertex(const string &id) {
@@ -448,8 +426,12 @@ void Graph::resetNodes() const {
     for (auto v: getVertexSet()) {
         v.second->setVisited(false);
         v.second->setPath(nullptr);
-        v.second->setPrice(INF);
+        v.second->setPrice(100000); // Can't be the maximum value of an integer as it would overflow when using the Bellman-Ford algorithm
         v.second->setInQueue(false);
+
+        for (Edge *e: v.second->getAdj()) {
+            e->setVisited(false);
+        }
     }
 }
 
@@ -512,12 +494,13 @@ int Graph::computeCost(Vertex *origin) const {
         for (Edge *e: currNode->getAdj()) {
             Vertex *destNode = e->getDest();
 
-            if (e->getFlow() > 0) {
+            if (e->getFlow() > 0 && !e->getVisited()) {
                 if (!destNode->isVisited()) {
                     q.push(destNode);
                     destNode->setVisited(true);
                 }
                 totalCost += e->getFlow() * e->getService();
+                e->setVisited(true);
             }
         }
 
@@ -525,4 +508,45 @@ int Graph::computeCost(Vertex *origin) const {
     }
 
     return totalCost;
+}
+
+vector<Edge *> Graph::fetchUsedEdges(Vertex *origin) {
+    vector<Edge *> allEdges;
+
+    queue<Vertex *> q;
+    resetNodes();
+
+    origin->setVisited(true);
+    q.push(origin);
+    Vertex *currNode;
+
+    while (!q.empty()) {
+        currNode = q.front();
+
+        for (Edge *e: currNode->getAdj()) {
+            Vertex *destNode = e->getDest();
+
+            if (e->getFlow() > 0 && !e->getVisited()) {
+                if (!destNode->isVisited()) {
+                    q.push(destNode);
+                    destNode->setVisited(true);
+                }
+                allEdges.push_back(e);
+                e->setVisited(true);
+            }
+        }
+
+        q.pop();
+    }
+
+    return allEdges;
+}
+
+int Graph::getVertexFlow(Vertex *v) const {
+    int totalFlow = 0;
+    for (Edge *e: v->getIncoming()) {
+        totalFlow += e->getFlow();
+    }
+
+    return totalFlow;
 }

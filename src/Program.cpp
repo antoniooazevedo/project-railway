@@ -88,6 +88,7 @@ void Program::createMainMenu()
     menus.emplace_back("../src/menus/mainMenu");
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 2));
+    menus[menus.size() - 1].addMenuItem(new MinCostMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, -1));
 }
 

@@ -15,7 +15,6 @@ using namespace std;
 class Edge;
 
 #define INF std::numeric_limits<int>::max()
-#define INF numeric_limits<double>::max()
 
 /************************* Vertex  **************************/
 
@@ -58,7 +57,6 @@ public:
     Edge * addEdge(Vertex *dest, double w);
     bool removeEdge(string destID);
     void removeOutgoingEdges();
-    int queueIndex;
     bool operator==(const Vertex& v);
 
 protected:
@@ -101,8 +99,11 @@ public:
     int getFlow() const;
     int getService() const;
     bool getDisabled() const;
+    bool getVisited() const;
+
 
     void setSelected(bool selected);
+    void setVisited(bool visited);
     void setReverse(Edge *reverse);
     void setFlow(int flow);
     void setService(enum service s);
@@ -114,6 +115,7 @@ protected:
     // auxiliary fields
     bool selected = false;
     bool disabled = false;
+    bool visited = false;
 
     // used for bidirectional edges
     Vertex *orig;
