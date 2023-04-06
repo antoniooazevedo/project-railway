@@ -11,6 +11,7 @@ bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pa
 }
 
 void PairsMaxFlow::execute() {
+    railway->setRegion(LINE);
     auto extremes = graph.getExtremes();
     result_vector.clear();
     int flow = 0;

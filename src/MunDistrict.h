@@ -6,16 +6,21 @@
 #define PROJECT_RAILWAY_MUNDISTRICT_H
 
 
+#include <map>
 #include "Graph.h"
 #include "MenuItem.h"
 
 class MunDistrict: public MenuItem {
 private:
     Graph graph;
-    set<pair<string , int>> result_set;
+    map<string , int> mun_map;
+    map<string , int> district_map;
 public:
     MunDistrict(int &currMenuPage, Graph &gh);
     void execute() override;
+
+    map<string,vector<int>> connectedComponents();
+    void dfs(Vertex *n, int &flow);
 };
 
 

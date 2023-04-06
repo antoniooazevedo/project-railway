@@ -38,6 +38,7 @@ public:
     unsigned int getIndegree() const;
     double getDist() const;
     int getPrice() const;
+    int getFlow() const;
     bool getInQueue() const;
     Edge *getPath() const;
     vector<Edge *> getIncoming() const;
@@ -50,6 +51,7 @@ public:
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPrice(int price);
+    void setFlow(int flow);
     void setInQueue(bool inQueue);
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
@@ -72,6 +74,7 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     int price = 0;
+    int flow = 0;
     bool inQueue;
     Edge *path = nullptr;
     string name = id, district, municipality, main_line;

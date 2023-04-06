@@ -55,6 +55,8 @@ public:
 
     void setRegion(enum region r);
     int getMaxFlow(Vertex* v1, Vertex* v2);
+    int getMunMaxFlow(Vertex *v1, Vertex *v2);
+    int getDistrictMaxFlow(Vertex *v1, Vertex *v2);
 
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet;    // vertex set
@@ -74,15 +76,20 @@ protected:
     void augmentFlow(Vertex* dest, int flow) const;
     int findBottleneck(Vertex* src) const;
     void maxFlow(const string &origin, const string &dest) const;
+    void munMaxFlow(const string &origin, const string &dest) const;
     void costMaxFlow(const string &origin, const string &dest) const;
     bool findCheapestPath(Vertex *origin, Vertex *dest) const;
     bool reachDest(const string &origin, const string &dest) const;
     bool findPath(Vertex* origin , Vertex* dest ) const;
+    bool findMunPath(Vertex* origin , Vertex* dest ) const;
+    bool findDistrictPath(Vertex *origin, Vertex *dest) const;
+    void districtMaxFlow(const string &origin, const string &dest) const;
     int computeCost(Vertex *origin) const;
     void resetNodes() const;
     void resetFlow() const;
 
     enum region region;
+
 
 };
 

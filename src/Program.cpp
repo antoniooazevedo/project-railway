@@ -15,7 +15,6 @@
  */
 Program::Program()
 {
-
     auto region_map = Scraper::scrape_stations("../src/data/stations.csv", railway);
     Scraper::scrape_networks("../src/data/network.csv", railway);
     Scraper::fix_graph(railway);
@@ -25,6 +24,12 @@ Program::Program()
     Scraper::findExtremes(region_map, railway);
     railway.setRegion(DISTRICTS);
     Scraper::findExtremes(region_map, railway);
+
+    for(auto it : railway.getExtremesDistricts()){
+        if (it->getDistrict() == "Porto"){
+            cout << it->getId();
+        }
+    }
 
 
     currMenuPage = 0;

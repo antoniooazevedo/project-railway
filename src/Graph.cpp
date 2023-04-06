@@ -137,7 +137,6 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
 
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
-
             if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
                 if (w == dest) {
                     w->setPath(e);
@@ -161,6 +160,126 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
     }
 
     return false;
+}
+
+
+bool Graph::findDistrictPath(Vertex* origin , Vertex* dest ) const {
+    resetNodes();
+
+    queue<Vertex*> q;
+    origin->setVisited(true);
+    q.push(origin);
+
+    while (!q.empty()) {
+        auto v = q.front();
+        q.pop();
+
+        for (auto e : v->getAdj()) {
+            auto w = e->getDest();
+            if(w->getDistrict() != v->getDistrict()){
+                continue;
+            }
+            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+                if (w == dest) {
+                    w->setPath(e);
+                    return true;
+                }
+
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+
+        for (auto e : v->getIncoming()) {
+            auto w = e->getOrig();
+            if(w->getDistrict() != v->getDistrict()){
+                continue;
+            }
+            if (!w->isVisited() && e->getFlow() > 0) {
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+    }
+
+    return false;
+}
+
+
+bool Graph::findMunPath(Vertex* origin , Vertex* dest ) const {
+    resetNodes();
+
+    queue<Vertex*> q;
+    origin->setVisited(true);
+    q.push(origin);
+
+    while (!q.empty()) {
+        auto v = q.front();
+        q.pop();
+
+        for (auto e : v->getAdj()) {
+            auto w = e->getDest();
+            if(w->getMunicipality() != v->getMunicipality()){
+                continue;
+            }
+            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+                if (w == dest) {
+                    w->setPath(e);
+                    return true;
+                }
+
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+
+        for (auto e : v->getIncoming()) {
+            auto w = e->getOrig();
+            if(w->getMunicipality() != v->getMunicipality()){
+                continue;
+            }
+            if (!w->isVisited() && e->getFlow() > 0) {
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+    }
+
+    return false;
+}
+
+void Graph::districtMaxFlow(const string &origin, const string &dest) const {
+    resetNodes();
+    resetFlow();
+
+    reachDest(origin, dest);
+
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    while (findDistrictPath(s, t)){
+        int flow = findBottleneck(t);
+        augmentFlow(t, flow);
+    }
+}
+
+void Graph::munMaxFlow(const string &origin, const string &dest) const {
+    resetNodes();
+    resetFlow();
+
+    reachDest(origin, dest);
+
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    while (findMunPath(s, t)){
+        int flow = findBottleneck(t);
+        augmentFlow(t, flow);
+    }
 }
 
 void Graph::maxFlow(const string &origin, const string &dest) const {
@@ -327,6 +446,20 @@ void Graph::resetNodes() const {
 
 int Graph::getMaxFlow(Vertex *v1, Vertex *v2) {
     maxFlow(v1->getId(), v2->getId());
+    int flow = 0;
+    for (auto e: v2->getIncoming()) flow += e->getFlow();
+    return flow;
+}
+
+int Graph::getMunMaxFlow(Vertex *v1, Vertex *v2) {
+    munMaxFlow(v1->getId(), v2->getId());
+    int flow = 0;
+    for (auto e: v2->getIncoming()) flow += e->getFlow();
+    return flow;
+}
+
+int Graph::getDistrictMaxFlow(Vertex *v1, Vertex *v2) {
+    districtMaxFlow(v1->getId(), v2->getId());
     int flow = 0;
     for (auto e: v2->getIncoming()) flow += e->getFlow();
     return flow;

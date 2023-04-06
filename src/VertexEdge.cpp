@@ -184,6 +184,14 @@ bool Vertex::operator==(const Vertex &v) {
     return this->getId() == v.getId();
 }
 
+int Vertex::getFlow() const {
+    return flow;
+}
+
+void Vertex::setFlow(int flow) {
+    this->flow = flow;
+}
+
 /********************** Edge  ****************************/
 
 

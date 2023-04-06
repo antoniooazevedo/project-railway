@@ -141,3 +141,28 @@ Graph ExampleGraphs::costGraph1() {
     return gh;
 }
 
+Graph ExampleGraphs::Graph7(){
+    Graph gh7;
+    for (auto i = 1; i <= 11; i++) {
+        int line = 1;
+        int municipality = 1;
+        Vertex *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(municipality), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh7.addVertex(v);
+    }
+
+    gh7.addBidirectionalEdge("V1", "V2", 3,STANDARD);
+    gh7.addBidirectionalEdge("V3", "V2", 4,STANDARD);
+
+    gh7.addBidirectionalEdge("V4", "V5", 2,STANDARD);
+    gh7.addBidirectionalEdge("V5", "V6", 1,STANDARD);
+    gh7.addBidirectionalEdge("V5", "V7", 3,STANDARD);
+
+    gh7.addBidirectionalEdge("V8", "V10", 4,STANDARD);
+    gh7.addBidirectionalEdge("V10", "V9", 5,STANDARD);
+    gh7.addBidirectionalEdge("V9", "V8", 1,STANDARD);
+    gh7.addBidirectionalEdge("V11", "V10", 3,STANDARD);
+
+
+    return gh7;
+}
+
