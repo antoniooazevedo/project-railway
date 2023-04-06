@@ -10,7 +10,7 @@ using namespace std;
 
 template<typename type>
 bool getInput(type &);
-
+bool compareValue(const pair<string,int>& a, const pair<string,int>& b);
 int getLen(string str);
 bool fetchStation(Vertex *v, Graph *railway, char quit = ' ');
 

@@ -1,8 +1,5 @@
 #include "Municipalities.h"
 
-bool compareValue(const pair<string,int>& a, const pair<string,int>& b){
-    return a.second > b.second;
-}
 
 void Municipalities::execute() {
 
@@ -14,7 +11,7 @@ void Municipalities::execute() {
     sort(mun_vector.begin(), mun_vector.end(), compareValue);
 
     // Get the number of districts and municipalities
-    int nDistricts = 0, nMunicipalities = 0;
+    int nMunicipalities = 0;
     bool is_valid = false;
 
     while(!is_valid){
@@ -45,43 +42,12 @@ void Municipalities::execute() {
 }
 
 
-
-void Municipalities::districtFind(){
-    for(auto n : graph.getVertexSet()){
-        n.second->setFlow(0);
-    }
-    auto extremesDistrict = graph.getExtremesDistricts();
-    graph.setRegion(DISTRICTS);
-    for (auto v1: extremesDistrict) {
-        for (auto v2: extremesDistrict) {
-            if (v1->getDistrict() == v2->getDistrict() && v1->getId() != v2->getId()) {
-                if(v1->getId() < v2->getId()){
-                    int flow = graph.getDistrictMaxFlow(v1, v2);
-                    if(v2->getFlow() < flow){
-                        v2->setFlow(flow);
-                    }
-                }
-            }
-        }
-    }
-    auto ConnectedDistricts = connectedComponents();
-    for (auto cc : ConnectedDistricts){
-        if(district_map.count(cc.first) == 0){
-            district_map[cc.first] = 0;
-        }
-        for (int i = 0; i < cc.second.size(); i++){
-            district_map[cc.first] += cc.second[i];
-        }
-    }
-}
-
 void Municipalities::municipalitiesFind(){
     for(auto n : graph.getVertexSet()){
         n.second->setFlow(0);
     }
 
     auto extremesMun = graph.getExtremesMunicipalities();
-    graph.setRegion(MUNICIPALITIES);
     for (auto v1: extremesMun) {
         for (auto v2: extremesMun) {
             if (v1->getMunicipality() == v2->getMunicipality() && v1->getId() != v2->getId()) {
@@ -117,21 +83,11 @@ map<string,vector<int>> Municipalities::connectedComponents() {
         if(!v.second->isVisited()){
             dfs(v.second, flow);
         }
-        if(graph.getRegion() == MUNICIPALITIES){
-            if (flows.count(v.second->getMunicipality()) == 0){
-                flows[v.second->getMunicipality()] = vector<int>();
-            }
-            if (flow > 0){
-                flows[v.second->getMunicipality()].push_back(flow);
-            }
+        if (flows.count(v.second->getMunicipality()) == 0){
+            flows[v.second->getMunicipality()] = vector<int>();
         }
-        else if(graph.getRegion() == DISTRICTS){
-            if (flows.count(v.second->getDistrict()) == 0){
-                flows[v.second->getDistrict()] = vector<int>();
-            }
-            if (flow > 0){
-                flows[v.second->getDistrict()].push_back(flow);
-            }
+        if (flow > 0){
+            flows[v.second->getMunicipality()].push_back(flow);
         }
     }
 
@@ -142,15 +98,8 @@ void Municipalities::dfs(Vertex* n, int &flow) {
     n->setVisited(true);
     for(auto e : n->getAdj()){
         auto w = e->getDest();
-        if(graph.getRegion() == MUNICIPALITIES){
-            if(n->getMunicipality() != w->getMunicipality()){
-                continue;
-            }
-        }
-        else if(graph.getRegion() == DISTRICTS){
-            if(n->getDistrict() != w->getDistrict()){
-                continue;
-            }
+        if(n->getMunicipality() != w->getMunicipality()){
+            continue;
         }
         if(w->getFlow() > flow){
             flow = w->getFlow();

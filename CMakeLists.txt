@@ -36,5 +36,8 @@ add_executable(project_railway
         src/ReducedConnectivityMaxFlow.h
         src/TopSegmentFailure.cpp
         src/TopSegmentFailure.h
-        src/Municipalities.cpp src/Municipalities.h src/District.cpp src/District.h)
+        src/Municipalities.cpp
+        src/Municipalities.h
+        src/District.cpp
+        src/District.h)
 

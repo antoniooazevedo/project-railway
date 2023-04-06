@@ -67,3 +67,7 @@ bool fetchStation(Vertex *v, Graph *railway, char quit) {
 
     return true;
 }
+
+bool compareValue(const pair<string,int>& a, const pair<string,int>& b){
+    return a.second > b.second;
+}

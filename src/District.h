@@ -1,13 +1,22 @@
-//
-// Created by tomas on 06/04/2023.
-//
-
 #ifndef PROJECT_RAILWAY_DISTRICT_H
 #define PROJECT_RAILWAY_DISTRICT_H
+#include <map>
+#include "Graph.h"
+#include "MenuItem.h"
+#include "utils.h"
 
+class District : public MenuItem{
+private:
+    Graph graph;
+    map<string , int> district_map;
+public:
+    District(int &currMenuPage, Graph &gh);
+    void execute() override;
 
-class District {
+    map<string,vector<int>> connectedComponents();
+    void dfs(Vertex *n, int &flow);
 
+    void districtFind();
 };
 
 

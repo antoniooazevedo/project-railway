@@ -38,6 +38,7 @@ private:
     void createMainMenu();
     void createMenu1();
     void createMenu2();
+    void createMenu3();
 
 public:
     Program();
