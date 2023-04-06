@@ -12,6 +12,7 @@ private:
     /** @var Menu to change to */
     int nextMenu;
     void pickEdgesToDisable();
+    void enableAllEdges();
 
 public:
     ChangeMenu(int &currMenuPage, Graph &railway, int nextMenu);

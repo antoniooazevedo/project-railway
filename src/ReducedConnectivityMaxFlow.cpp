@@ -9,51 +9,6 @@ void ReducedConnectivityMaxFlow::execute() {
     int count;
     bool control_ignore = true;
 
-    // TODO: Check random generation with Antonio
-
-    while (true){
-        if (control_ignore) cin.ignore(2000, '\n');
-        cout << "Please input desired amount: ";
-        getline(cin, amount);
-        cout << endl;
-        control_ignore = false;
-        try{
-           count = stoi(amount);
-        }catch (invalid_argument){
-            cout << "Invalid Input\n";
-            continue;
-        }catch (out_of_range){
-            cout << "Invalid Input\n";
-            continue;
-        }
-
-        if (count < 0){
-            cout << "Invalid Input\n";
-            continue;
-        }
-
-        break;
-    }
-    srand((unsigned) time(0));
-
-    while(count > 0){
-        unsigned int num1 = rand() % vertexSet.size();
-
-        for (auto &pa: vertexSet){
-            num1--;
-            if (num1 <= 0 && pa.second->getAdj().size() > 0){
-                unsigned int num2 = rand() % pa.second->getAdj().size();
-
-                if (pa.second->getAdj()[num2]->getDisabled()) continue;
-
-                pa.second->getAdj()[num2]->setDisabled(true);
-                pa.second->getAdj()[num2]->getReverse()->setDisabled(true);
-                break;
-            }
-        }
-        count--;
-    }
-
     while (true){
         cout << "Please input desired origin station: ";
         getline(cin, orig);

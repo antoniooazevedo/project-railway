@@ -11,11 +11,6 @@ ChangeMenu::ChangeMenu(int &currMenuPage, Graph &railway, int nextMenu) : MenuIt
     this->nextMenu = nextMenu;
 }
 
-/**
- * @brief Changes the current menu page to another page
- * complexity O(1)
- */
-
 void ChangeMenu::pickEdgesToDisable() {
     Vertex *orig, *dest;
     cout << "When you are done, insert 'd' as the origin or destination station" << endl;
@@ -49,8 +44,17 @@ void ChangeMenu::pickEdgesToDisable() {
     }
 }
 
+void ChangeMenu::enableAllEdges() {
+    for (const auto& v: railway->getVertexSet()) {
+        for (Edge *e: v.second->getAdj()) {
+            e->setDisabled(false);
+        }
+    }
+}
+
 void ChangeMenu::execute()
 {
+    if (nextMenu == 3) pickEdgesToDisable();
+    if (*currMenuPage == 3) enableAllEdges();
     *(this->currMenuPage) = nextMenu;
-    if (*currMenuPage == 3) pickEdgesToDisable();
 }
