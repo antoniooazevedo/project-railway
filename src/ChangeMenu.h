@@ -2,6 +2,7 @@
 #define PROJECT_RAILWAY_CHANGEMENU_H
 
 #include "MenuItem.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ class ChangeMenu : public MenuItem
 private:
     /** @var Menu to change to */
     int nextMenu;
+    void pickEdgesToDisable();
 
 public:
     ChangeMenu(int &currMenuPage, Graph &railway, int nextMenu);

@@ -16,33 +16,32 @@ ChangeMenu::ChangeMenu(int &currMenuPage, Graph &railway, int nextMenu) : MenuIt
  * complexity O(1)
  */
 
-void pickEdgesToDisable(Graph &railway) {
-    string orig, dest;
-    bool control_ignore = true;
+void ChangeMenu::pickEdgesToDisable() {
+    Vertex *orig, *dest;
     cout << "When you are done, insert 'd' as the origin or destination station" << endl;
     cin.ignore(2000, '\n');
 
     while(true){
+        orig = dest = nullptr;
+
         cout << "Insert the name of the origin station: ";
-        getline(cin, orig);
+        if (!fetchStation(&orig, railway, 'd'))
+            return;
+
         cout << "\nInsert the name of the destination station: ";
-        getline(cin, dest);
-        control_ignore = false;
+        if (!fetchStation(&dest, railway, 'd'))
+            return;
 
-        if (orig == "d" || dest == "d" || orig == "D" || dest == "D") break;
-
-        if(railway.findVertex(orig) == nullptr || railway.findVertex(dest) == nullptr){
-            cout << "Invalid station name" << endl;
-            continue;
-        }
         bool not_found = true;
-        for (auto &e: railway.findVertex(orig)->getAdj()){
-            if (e->getDest()->getId()==dest){
+        for (Edge *e: orig->getAdj()){
+            if (e->getDest() == dest){
                 e->setDisabled(true);
+                e->getReverse()->setDisabled(true);
                 not_found = false;
                 break;
             }
         }
+
         if (not_found){
             cout << "There is no edge between the two stations" << endl;
             continue;
@@ -53,5 +52,5 @@ void pickEdgesToDisable(Graph &railway) {
 void ChangeMenu::execute()
 {
     *(this->currMenuPage) = nextMenu;
-    if (*currMenuPage == 2) pickEdgesToDisable(*railway);
+    if (*currMenuPage == 2) pickEdgesToDisable();
 }

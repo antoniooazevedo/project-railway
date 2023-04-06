@@ -1,9 +1,4 @@
-//
-// Created by tomas on 05/04/2023.
-//
-
 #include "MunDistrict.h"
-#include "utils.cpp"
 
 bool compareValue(const pair<string,int>& a, const pair<string,int>& b){
     return a.second > b.second;

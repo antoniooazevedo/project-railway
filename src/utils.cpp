@@ -1,6 +1,5 @@
 #include "utils.h"
 
-
 /**Functionality: Get the input in a safer way,that is, checking if the input given by the user is valid. If it is it will return true, otherwise
         * it will return false.
 *
@@ -24,4 +23,26 @@ bool getInput(type &input){
         return true;
     }
     return false;
+}
+
+bool fetchStation(Vertex **v, Graph *railway, char quit) {
+    string input;
+    quit = tolower(quit, locale());
+
+    while (*v == nullptr) {
+        getline(cin, input);
+
+        if (input[0] == quit && quit != ' ')
+            return false;
+
+        system("clear");
+
+        *v = railway->findVertex(input);
+        if (*v != nullptr)
+            break;
+        cout << "There isn't a station named: " << input << endl;
+        cout << "Input another station: ";
+    }
+
+    return true;
 }

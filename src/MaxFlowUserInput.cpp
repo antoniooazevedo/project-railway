@@ -1,7 +1,5 @@
 #include "MaxFlowUserInput.h"
 
-#include "utils.cpp"
-
 MaxFlowUserInput::MaxFlowUserInput(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){
     this->graph = gh;
 }
