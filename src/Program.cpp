@@ -10,13 +10,25 @@
 #include "SinglePointMaxFlow.h"
 #include "ReducedConnectivityMaxFlow.h"
 #include "TopSegmentFailure.h"
+#include "Scraper.h"
+#include "MunDistrict.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
  * @brief Program's constructor
  */
-Program::Program(Graph &rw) : railway(rw)
+Program::Program()
 {
+    auto region_map = Scraper::scrape_stations("../src/data/stations.csv", railway);
+    Scraper::scrape_networks("../src/data/network.csv", railway);
+    Scraper::fix_graph(railway);
+    railway.setRegion(LINE);
+    Scraper::findExtremes(region_map, railway);
+    railway.setRegion(MUNICIPALITIES);
+    Scraper::findExtremes(region_map, railway);
+    railway.setRegion(DISTRICTS);
+    Scraper::findExtremes(region_map, railway);
+
     currMenuPage = 0;
     createMainMenu();
     createMenu1();
@@ -28,6 +40,8 @@ Program::Program(Graph &rw) : railway(rw)
  */
 void Program::run()
 {
+
+
     int option;
     while (currMenuPage != -1)
     {
@@ -87,6 +101,7 @@ void Program::createMenu1()
     menus[menus.size() - 1].addMenuItem(new MaxFlowUserInput(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new PairsMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new SinglePointMaxFlow(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new MunDistrict(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
 

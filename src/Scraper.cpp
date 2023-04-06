@@ -8,8 +8,12 @@
 
 using namespace std;
 
-unordered_map<string, vector<Vertex *>> Scraper::scrape_stations(string filename, Graph &graph) {
+vector<unordered_map<string, vector<Vertex *>>> Scraper::scrape_stations(string filename, Graph &graph) {
     unordered_map<string, vector<Vertex *>> line_map;
+    unordered_map<string, vector<Vertex *>> municipality_map;
+    unordered_map<string, vector<Vertex *>> district_map;
+    vector<unordered_map<string, vector<Vertex *>>> region_maps;
+
     ifstream file;
     file.open(filename);
 
@@ -40,12 +44,18 @@ unordered_map<string, vector<Vertex *>> Scraper::scrape_stations(string filename
         }
         vector<Vertex*> vec;
         line_map[main_line] = vec;
-
+        municipality_map[municipality] = vec;
+        district_map[district] = vec;
         auto v = new Vertex(name, district, municipality, main_line, townships);
         graph.addVertex(v);
     }
 
-    return line_map;
+    region_maps.push_back(line_map);
+    region_maps.push_back(municipality_map);
+    region_maps.push_back(district_map);
+
+
+    return region_maps;
 }
 
 list<string> Scraper::scrape_townships(string aux_string){
@@ -99,23 +109,61 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
     auto vertexSet = gh.getVertexSet();
     for (auto const &v: vertexSet){
         int count = 0;
-        auto line = v.second->getLine();
+        if(gh.getRegion() == 0){
+            auto line = v.second->getLine();
 
-        for (auto &e: v.second->getAdj()){
-            if (e->getDest()->getLine() == line) count++;
+            for (auto &e: v.second->getAdj()){
+                if (e->getDest()->getLine() == line) count++;
+            }
+
+            if (count == 1 || count > 2){
+                map[line].push_back(v.second);
+            }
         }
+        else if (gh.getRegion() == 1){
+            auto municipality = v.second->getMunicipality();
 
-        if (count == 1 || count > 2){
-            map[line].push_back(v.second);
+            for (auto &e: v.second->getAdj()){
+                if (e->getDest()->getMunicipality() == municipality) count++;
+            }
+
+            if (count == 1){
+                map[municipality].push_back(v.second);
+            }
+        }
+        else{
+            auto district = v.second->getDistrict();
+
+            for (auto &e: v.second->getAdj()){
+                if (e->getDest()->getDistrict() == district) count++;
+            }
+
+            if (count == 1 || count > 2){
+                map[district].push_back(v.second);
+            }
         }
     }
 
     for (auto &pa: map){
         if (pa.second.empty()){
             for (auto v: vertexSet){
-                if (v.second->getLine() == pa.first){
-                    pa.second.push_back(v.second);
-                    break;
+                if (gh.getRegion() == 0){
+                    if (v.second->getLine() == pa.first){
+                        pa.second.push_back(v.second);
+                        break;
+                    }
+                }
+                else if (gh.getRegion() == 1){
+                    if (v.second->getMunicipality() == pa.first){
+                        pa.second.push_back(v.second);
+                        break;
+                    }
+                }
+                else{
+                    if (v.second->getDistrict() == pa.first){
+                        pa.second.push_back(v.second);
+                        break;
+                    }
                 }
             }
         }
@@ -132,11 +180,26 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
     }
 }
 
-void Scraper::findExtremes(unordered_map<string, vector<Vertex*>> &map, Graph &gh){
-    getPrematureExtremes(map, gh);
-    for (auto &p : map){
-        findExtremesBFS(p.second[0], gh);
-        for (auto &v: p.second) gh.insertExtreme(v);
+void Scraper::findExtremes(vector<unordered_map<string, vector<Vertex *>>> &map, Graph &gh){
+    if(gh.getRegion() == 0){
+        getPrematureExtremes(map[0], gh);
+        for (auto &p : map[0]){
+            findExtremesBFS(p.second[0], gh);
+            for (auto &v: p.second) gh.insertExtreme(v);
+        }
+    }else if(gh.getRegion() == 1){
+        getPrematureExtremes(map[1], gh);
+        for (auto &p : map[1]){
+            findExtremesBFS(p.second[0], gh);
+            for (auto &v: p.second) gh.insertExtremeMunicipality(v);
+        }
+    }
+    else{
+        getPrematureExtremes(map[2], gh);
+        for (auto &p : map[2]){
+            findExtremesBFS(p.second[0], gh);
+            for (auto &v: p.second) gh.insertExtremeDistrict(v);
+        }
     }
 }
 
@@ -162,9 +225,22 @@ void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
 
         for(auto &e: v->getAdj()) {
             auto w = e->getDest();
-            if (w->getLine() != v->getLine()) {
-                continue;
+            if(gh.getRegion() == 0){
+                if (w->getLine() != v->getLine()) {
+                    continue;
+                }
             }
+            else if(gh.getRegion() == 1){
+                if (w->getMunicipality() != v->getMunicipality()) {
+                    continue;
+                }
+            }
+            else{
+                if (w->getDistrict() != v->getDistrict()) {
+                    continue;
+                }
+            }
+
             if (!w->getInQueue()) {
                 w->setInQueue(true);
                 q.push(w);

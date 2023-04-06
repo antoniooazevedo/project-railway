@@ -10,14 +10,7 @@
 
 
 int main(){
-    Graph gh;
-
-    auto line_map = Scraper::scrape_stations("../src/data/stations.csv", gh);
-    Scraper::scrape_networks("../src/data/network.csv", gh);
-    Scraper::fix_graph(gh);
-    Scraper::findExtremes(line_map, gh);
-
-    Program p(gh);
+    Program p;
     p.run();
 
     return 0;

@@ -15,6 +15,22 @@ unordered_set<Vertex*> Graph::getExtremes() const{
     return extremes;
 }
 
+unordered_set<Vertex*> Graph::getExtremesMunicipalities() const{
+    return extremesMunicipalities;
+}
+
+unordered_set<Vertex*> Graph::getExtremesDistricts() const{
+    return extremesDistricts;
+}
+
+int Graph::getRegion() const {
+    return this->region;
+}
+
+void Graph::setRegion(enum region r) {
+    this->region = r;
+}
+
 
 /*
  * Auxiliary function to find a vertex with a given content.
@@ -30,6 +46,14 @@ Vertex * Graph::findVertex(const string &id) const {
 
 void Graph::insertExtreme(Vertex *v) {
     extremes.insert(v);
+}
+
+void Graph::insertExtremeMunicipality(Vertex *v) {
+    extremesMunicipalities.insert(v);
+}
+
+void Graph::insertExtremeDistrict(Vertex *v) {
+    extremesDistricts.insert(v);
 }
 
 bool Graph::reachDest(const string &origin, const string &dest) const {
@@ -112,7 +136,6 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
 
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
-
             if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow() && !e->getDisabled()) {
                 if (w == dest) {
                     w->setPath(e);
@@ -136,6 +159,127 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
     }
 
     return false;
+}
+
+
+bool Graph::findDistrictPath(Vertex* origin , Vertex* dest ) const {
+    resetNodes();
+
+    queue<Vertex*> q;
+    origin->setVisited(true);
+    q.push(origin);
+
+    while (!q.empty()) {
+        auto v = q.front();
+        q.pop();
+
+        for (auto e : v->getAdj()) {
+            auto w = e->getDest();
+            if(w->getDistrict() != v->getDistrict()){
+                continue;
+            }
+            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+                if (w == dest) {
+                    w->setPath(e);
+                    return true;
+                }
+
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+
+        for (auto e : v->getIncoming()) {
+            auto w = e->getOrig();
+            if(w->getDistrict() != v->getDistrict()){
+                continue;
+            }
+            if (!w->isVisited() && e->getFlow() > 0) {
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+    }
+
+    return false;
+}
+
+
+bool Graph::findMunPath(Vertex* origin , Vertex* dest ) const {
+    resetNodes();
+
+    queue<Vertex*> q;
+    origin->setVisited(true);
+    q.push(origin);
+
+    while (!q.empty()) {
+        auto v = q.front();
+        q.pop();
+
+        for (auto e : v->getAdj()) {
+            auto w = e->getDest();
+            if(w->getMunicipality() != v->getMunicipality()){
+                continue;
+            }
+            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow()) {
+                if (w == dest) {
+                    w->setPath(e);
+                    return true;
+                }
+
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+
+        for (auto e : v->getIncoming()) {
+            auto w = e->getOrig();
+
+            if(w->getMunicipality() != v->getMunicipality()){
+                continue;
+            }
+            if (!w->isVisited() && e->getFlow() > 0) {
+                w->setVisited(true);
+                w->setPath(e);
+                q.push(w);
+            }
+        }
+    }
+
+    return false;
+}
+
+void Graph::districtMaxFlow(const string &origin, const string &dest) const {
+    resetNodes();
+    resetFlow();
+
+    reachDest(origin, dest);
+
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    while (findDistrictPath(s, t)){
+        int flow = findBottleneck(t);
+        augmentFlow(t, flow);
+    }
+}
+
+void Graph::munMaxFlow(const string &origin, const string &dest) const {
+    resetNodes();
+    resetFlow();
+
+    reachDest(origin, dest);
+
+    auto s = findVertex(origin);
+    auto t = findVertex(dest);
+
+    while (findMunPath(s, t)){
+        int flow = findBottleneck(t);
+        augmentFlow(t, flow);
+    }
 }
 
 void Graph::maxFlow(const string &origin, const string &dest) const {
@@ -254,6 +398,9 @@ bool Graph::removeVertex(Vertex *v) {
     if (findVertex(v->getId()) == nullptr) return false;
     v->removeOutgoingEdges();
     vertexSet.erase(v->getId());
+    auto lowerId = v->getId();
+    transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
+    vertexSet.erase(lowerId);
     return true;
 }
 /*
@@ -261,17 +408,17 @@ bool Graph::removeVertex(Vertex *v) {
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
+
 /*
-bool Graph::addEdge(const int &sourc, const int &dest, double w) {
-    auto v1 = findVertex(sourc);
+bool Graph::addEdge(const int &source, const int &dest, double w) {
+    auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
     v1->addEdge(v2, w);
     return true;
-}
+}*/
 
-  */
 bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
@@ -308,6 +455,20 @@ void Graph::resetNodes() const {
 
 int Graph::getMaxFlow(Vertex *v1, Vertex *v2) {
     maxFlow(v1->getId(), v2->getId());
+    int flow = 0;
+    for (auto e: v2->getIncoming()) flow += e->getFlow();
+    return flow;
+}
+
+int Graph::getMunMaxFlow(Vertex *v1, Vertex *v2) {
+    munMaxFlow(v1->getId(), v2->getId());
+    int flow = 0;
+    for (auto e: v2->getIncoming()) flow += e->getFlow();
+    return flow;
+}
+
+int Graph::getDistrictMaxFlow(Vertex *v1, Vertex *v2) {
+    districtMaxFlow(v1->getId(), v2->getId());
     int flow = 0;
     for (auto e: v2->getIncoming()) flow += e->getFlow();
     return flow;

@@ -1,7 +1,7 @@
 
-
 #include "PairsMaxFlow.h"
 #include <iomanip>
+#include "Scraper.h"
 
 PairsMaxFlow::PairsMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){
     this->graph = gh;

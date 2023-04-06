@@ -189,5 +189,6 @@ Graph ExampleGraphs::maxFlowSinglePointGraph1() {
     gh.addBidirectionalEdge("V12", "V14", 18, STANDARD);
 
     return gh;
+
 }
 

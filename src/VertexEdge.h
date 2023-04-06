@@ -10,9 +10,12 @@
 #include <limits>
 #include <algorithm>
 
+using namespace std;
+
 class Edge;
 
 #define INF std::numeric_limits<int>::max()
+#define INF numeric_limits<double>::max()
 
 /************************* Vertex  **************************/
 
@@ -26,6 +29,9 @@ public:
     std::string getId() const;
     std::vector<Edge *> getAdj() const;
     std::string getLine() const;
+    string getDistrict() const;
+    string getMunicipality() const;
+    
     bool isVisited() const;
     bool getHit() const;
     bool getReached() const;
@@ -33,11 +39,12 @@ public:
     unsigned int getIndegree() const;
     double getDist() const;
     int getPrice() const;
+    int getFlow() const;
     bool getInQueue() const;
     Edge *getPath() const;
-    std::vector<Edge *> getIncoming() const;
+    vector<Edge *> getIncoming() const;
 
-    void setId(std::string info);
+    void setId(string info);
     void setVisited(bool visited);
     void setReachedDestination(bool reachDestination);
     void setHit(bool hit);
@@ -45,17 +52,18 @@ public:
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPrice(int price);
+    void setFlow(int flow);
     void setInQueue(bool inQueue);
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
-    bool removeEdge(std::string destID);
+    bool removeEdge(string destID);
     void removeOutgoingEdges();
     int queueIndex;
     bool operator==(const Vertex& v);
 
 protected:
-    std::string id;                // identifier
-    std::vector<Edge *> adj;  // outgoing edges
+    string id;                // identifier
+    vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
     bool visited = false;// used by DFS, BFS, Prim ...
@@ -66,12 +74,13 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     int price = 0;
+    int flow = 0;
     bool inQueue;
     Edge *path = nullptr;
-    std::string name = id, district, municipality, main_line;
-    std::list<std::string> townships;
+    string name = id, district, municipality, main_line;
+    list<string> townships;
 
-    std::vector<Edge *> incoming; // incoming edges
+    vector<Edge *> incoming; // incoming edges
 
     void deleteEdge(Edge *edge);
 };

@@ -71,6 +71,14 @@ string Vertex::getLine() const {
     return this->main_line;
 }
 
+string Vertex::getMunicipality() const {
+    return this->municipality;
+}
+
+string Vertex::getDistrict() const {
+    return this->district;
+}
+
 std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
@@ -174,6 +182,14 @@ void Vertex::setInQueue(bool inQueue) {
 
 bool Vertex::operator==(const Vertex &v) {
     return this->getId() == v.getId();
+}
+
+int Vertex::getFlow() const {
+    return flow;
+}
+
+void Vertex::setFlow(int flow) {
+    this->flow = flow;
 }
 
 /********************** Edge  ****************************/
