@@ -8,11 +8,12 @@ void MaxFlowUserInput::execute() {
 
     cin.ignore(2000, '\n');
     while (true){
-        cout << "Origin: ";
+        cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
         std::getline(cin, orig);
 
         if (graph.findVertex(orig) == nullptr){
-            cout << "Station not found";
+            cout << "\033[31m - Station not found - " << "\033[0m";
+            cout << endl;
             cout << endl;
             continue;
         }
@@ -20,11 +21,12 @@ void MaxFlowUserInput::execute() {
     }
 
     while (true){
-        cout << "Destination: ";
+        cout << "\033[34mInsert the name of the destination station: " << "\033[0m";
         std::getline(cin, dest);
 
         if (graph.findVertex(dest) == nullptr){
-            cout << "Station not found";
+            cout << "\033[31m - Station not found - " << "\033[0m";
+            cout << endl;
             cout << endl;
             continue;
         }
@@ -32,5 +34,15 @@ void MaxFlowUserInput::execute() {
     }
 
     auto flow = graph.getMaxFlow(graph.findVertex(orig), graph.findVertex(dest));
-    cout << "\nMax flow: " << flow << endl;
+    int size = flow > 10 ? 2 : 1;
+    cout << " _____________________________________________ \n"
+         << "|\033[40m                   Results                   \033[0m|\n"
+         << "|\033[40m_____________________________________________\033[0m|\n"
+         << "|\033[100m Max-Flow: " << flow<< string(34 - size, ' ') << "\033[0m|\n"
+         << "|\033[100m\033[40m---------------------------------------------\033[0m|\n"
+         << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
+         << "|\033[40m_____________________________________________\033[0m|\n"
+         << "Input anything to continue: ";
+    string w8Input;
+    getline(cin,w8Input);
 }
