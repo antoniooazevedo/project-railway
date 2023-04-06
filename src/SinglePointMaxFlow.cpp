@@ -1,7 +1,3 @@
-//
-// Created by work on 05-04-2023.
-//
-
 #include "SinglePointMaxFlow.h"
 
 SinglePointMaxFlow::SinglePointMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){}

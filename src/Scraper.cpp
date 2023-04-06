@@ -1,12 +1,7 @@
-//
-// Created by work on 17-03-2023.
-//
-
-
 #include "Scraper.h"
-#include "Graph.h"
 
 using namespace std;
+
 
 vector<unordered_map<string, vector<Vertex *>>> Scraper::scrape_stations(string filename, Graph &graph) {
     unordered_map<string, vector<Vertex *>> line_map;
@@ -109,18 +104,18 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
     auto vertexSet = gh.getVertexSet();
     for (auto const &v: vertexSet){
         int count = 0;
-        if(gh.getRegion() == 0){
+        if(gh.getRegion() == LINE){
             auto line = v.second->getLine();
 
-            for (auto &e: v.second->getAdj()){
-                if (e->getDest()->getLine() == line) count++;
-            }
-
-            if (count == 1 || count > 2){
-                map[line].push_back(v.second);
-            }
+        for (auto &e: v.second->getAdj()){
+            if (e->getDest()->getLine() == line) count++;
         }
-        else if (gh.getRegion() == 1){
+
+        if (count == 1 || count > 2){
+            map[line].push_back(v.second);
+        }
+    }
+        else if (gh.getRegion() == MUNICIPALITIES){
             auto municipality = v.second->getMunicipality();
 
             for (auto &e: v.second->getAdj()){
@@ -147,13 +142,13 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
     for (auto &pa: map){
         if (pa.second.empty()){
             for (auto v: vertexSet){
-                if (gh.getRegion() == 0){
+                if (gh.getRegion() == LINE){
                     if (v.second->getLine() == pa.first){
                         pa.second.push_back(v.second);
                         break;
                     }
                 }
-                else if (gh.getRegion() == 1){
+                else if (gh.getRegion() == MUNICIPALITIES){
                     if (v.second->getMunicipality() == pa.first){
                         pa.second.push_back(v.second);
                         break;
@@ -181,13 +176,13 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
 }
 
 void Scraper::findExtremes(vector<unordered_map<string, vector<Vertex *>>> &map, Graph &gh){
-    if(gh.getRegion() == 0){
+    if(gh.getRegion() == LINE){
         getPrematureExtremes(map[0], gh);
         for (auto &p : map[0]){
             findExtremesBFS(p.second[0], gh);
             for (auto &v: p.second) gh.insertExtreme(v);
         }
-    }else if(gh.getRegion() == 1){
+    }else if(gh.getRegion() == MUNICIPALITIES){
         getPrematureExtremes(map[1], gh);
         for (auto &p : map[1]){
             findExtremesBFS(p.second[0], gh);
@@ -225,12 +220,12 @@ void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
 
         for(auto &e: v->getAdj()) {
             auto w = e->getDest();
-            if(gh.getRegion() == 0){
+            if(gh.getRegion() == LINE){
                 if (w->getLine() != v->getLine()) {
                     continue;
                 }
             }
-            else if(gh.getRegion() == 1){
+            else if(gh.getRegion() == MUNICIPALITIES){
                 if (w->getMunicipality() != v->getMunicipality()) {
                     continue;
                 }
@@ -251,8 +246,17 @@ void Scraper::findExtremesBFS(Vertex* origin, Graph &gh){
             }
         }
 
-        if (isExtreme)
-            gh.insertExtreme(v);
+        if (isExtreme){
+            if (gh.getRegion() == LINE){
+                gh.insertExtreme(v);
+            }
+            else if (gh.getRegion() == MUNICIPALITIES){
+                gh.insertExtremeMunicipality(v);
+            }
+            else{
+                gh.insertExtremeDistrict(v);
+            }
+        }
         v->setProcesssing(true);
     }
 }

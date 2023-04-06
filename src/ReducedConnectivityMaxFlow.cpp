@@ -1,9 +1,4 @@
-//
-// Created by work on 05-04-2023.
-//
-
 #include "ReducedConnectivityMaxFlow.h"
-#include <ctime>
 
 ReducedConnectivityMaxFlow::ReducedConnectivityMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){}
 

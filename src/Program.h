@@ -6,6 +6,20 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <limits>
+#include <set>
+#include "ExampleGraphs.h"
+#include "Menu.h"
+#include "MenuItem.h"
+#include "ChangeMenu.h"
+#include "PairsMaxFlow.h"
+#include "MaxFlowUserInput.h"
+#include "SinglePointMaxFlow.h"
+#include "ReducedConnectivityMaxFlow.h"
+#include "TopSegmentFailure.h"
+#include "Scraper.h"
+#include "MunDistrict.h"
+#include "utils.h"
 
 using namespace std;
 

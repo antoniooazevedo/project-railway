@@ -1,7 +1,5 @@
 
 #include "PairsMaxFlow.h"
-#include <iomanip>
-#include "Scraper.h"
 
 PairsMaxFlow::PairsMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){
     this->graph = gh;
@@ -12,6 +10,7 @@ bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pa
 }
 
 void PairsMaxFlow::execute() {
+    cin.ignore(2000, '\n');
     auto extremes = graph.getExtremes();
     result_vector.clear();
     int flow = 0;
@@ -38,6 +37,10 @@ void PairsMaxFlow::execute() {
         cout.clear();
         if (pa.second == result_vector[0].second) cout << "|\033[100m   -->   " << s << string(36 - s.size(), ' ') << "\033[0m|\n";
     }
-    string useless;
-    cin >> useless;
+    cout << "|\033[100m_____________________________________________\033[0m|\n"
+         << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
+         << "|\033[40m_____________________________________________\033[0m|\n"
+         << "Input anything to continue: ";
+    string w8Input;
+    getline(cin,w8Input);
 }

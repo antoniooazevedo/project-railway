@@ -1,10 +1,8 @@
+#ifndef PROJECT_RAILWAY_EXAMPLEGRAPHS_H
+#define PROJECT_RAILWAY_EXAMPLEGRAPHS_H
 #include <iostream>
 #include "Scraper.h"
 #include "Graph.h"
-
-
-#ifndef PROJECT_RAILWAY_EXAMPLEGRAPHS_H
-#define PROJECT_RAILWAY_EXAMPLEGRAPHS_H
 
 
 class ExampleGraphs {

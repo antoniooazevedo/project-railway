@@ -25,3 +25,21 @@ bool getInput(type &input){
     }
     return false;
 }
+
+int getSasdada(const string str){
+    int counter = 0;
+    int neg_count = 0;
+    for(auto i : str){
+        if (i < 0){
+            neg_count++;
+        }
+        if (neg_count > 0){
+            if (neg_count % 2 == 0){
+                counter++;
+            }
+        } else{
+            counter++;
+        }
+    }
+    return counter;
+}
