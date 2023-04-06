@@ -33,5 +33,7 @@ add_executable(project_railway
         src/SinglePointMaxFlow.cpp
         src/SinglePointMaxFlow.h
         src/ReducedConnectivityMaxFlow.cpp
-        src/ReducedConnectivityMaxFlow.h)
+        src/ReducedConnectivityMaxFlow.h
+        src/TopSegmentFailure.cpp
+        src/TopSegmentFailure.h)
 
