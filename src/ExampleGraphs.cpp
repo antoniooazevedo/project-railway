@@ -189,6 +189,23 @@ Graph ExampleGraphs::maxFlowSinglePointGraph1() {
     gh.addBidirectionalEdge("V12", "V14", 18, STANDARD);
 
     return gh;
+}
 
+Graph ExampleGraphs::maxFlowSinglePointGraph2() {
+    Graph gh;
+    for (auto i = 1; i <= 6; i++) {
+        int line = 1;
+        auto *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 6, STANDARD);
+    gh.addBidirectionalEdge("V1", "V3", 4, STANDARD);
+    gh.addBidirectionalEdge("V3", "V4", 2, STANDARD);
+    gh.addBidirectionalEdge("V1", "V5", 5, STANDARD);
+    gh.addBidirectionalEdge("V5", "V6", 8, STANDARD);
+
+
+    return gh;
 }
 

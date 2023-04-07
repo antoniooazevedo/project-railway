@@ -26,6 +26,9 @@ public:
     static Graph costGraph2();
 
     static Graph maxFlowSinglePointGraph1();
+
+    static Graph maxFlowSinglePointGraph2();
+
 };
 
 #endif //PROJECT_RAILWAY_EXAMPLEGRAPHS_H

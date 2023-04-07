@@ -10,10 +10,12 @@ void SinglePointMaxFlow::execute() {
     string station;
     auto vertexSet = railway->getVertexSet();
     auto extremes = railway->getExtremes();
-    int flow; bool control_ignore = true;
+    int flow;
+
+    cin.ignore(2000, '\n');
+
     while (true){
-        if (control_ignore) cin.ignore(2000, '\n');
-        cout << "Please input desired station: ";
+        cout << "Please input the desired station: ";
         getline(cin, station);
         cout << endl;
 
@@ -21,10 +23,9 @@ void SinglePointMaxFlow::execute() {
             break;
         }
         cout << "That station does not exist\n \n";
-        control_ignore = false;
     }
 
-    auto v = railway->findVertex(station);
+    auto dest = railway->findVertex(station);
 
     // creating super node
     railway->addVertex("Super Node");
@@ -33,11 +34,11 @@ void SinglePointMaxFlow::execute() {
 
     // adding super edges
     for (auto e: extremes){
-        if (e != v) railway->addBidirectionalEdge("Super Node", e->getId(), 9999, STANDARD);
+        if (e != dest) railway->addBidirectionalEdge("Super Node", e->getId(), 9999, STANDARD);
     }
 
     // running maxflow on super node to destiny
-    flow = railway->getMaxFlow(superNode, v);
+    flow = railway->getMaxFlow(superNode, dest);
 
     for (Vertex *extreme: extremes) {
         extreme->removeEdge("Super Node");
@@ -46,5 +47,5 @@ void SinglePointMaxFlow::execute() {
     //removing super node and super edges
     railway->removeVertex("Super Node");
 
-    cout << "flow for node: " << flow << endl;
+    cout << "Flow for node: " << flow << endl;
 }
