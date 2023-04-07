@@ -12,6 +12,7 @@ template<typename type>
 bool getInput(type &);
 bool compareValue(const pair<string,int>& a, const pair<string,int>& b);
 bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pair<Vertex*, Vertex*>, int> &p2);
+void sortVector(vector<Edge *> &aux);
 int getLen(string str);
 bool fetchStation(Vertex* *v, Graph *railway, char quit = ' ');
 template<typename Name>

@@ -29,5 +29,9 @@ void SinglePointMaxFlow::execute() {
 
     drawResults();
     drawFlow(flow);
-    drawFooter(railway->fetchUsedEdges(orig), true);
+    vector<Vertex*> vertexes;
+    for (auto e: extremes){
+        if (e != v) vertexes.push_back(e);
+    }
+    drawFooter(railway->fetchUsedEdges(vertexes));
 }

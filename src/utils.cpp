@@ -79,6 +79,14 @@ bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pa
     return (p1.second > p2.second);
 }
 
+void sortVector(vector<Edge *> &aux) {
+    sort(aux.begin(), aux.end(), [](Edge *e1, Edge *e2) {
+        return e1->getOrig()->getId() < e2->getOrig()->getId();
+    });
+}
+
+
+
 
 /** Controls the pagination of the drawn table. It allows the user to quit the menu, or jump to the next, previous or any other page directly.
      * @brief Controls the pagination of the drawn table.
@@ -196,7 +204,12 @@ void draw(vector<Name> data, int page, int nPages) {
 }
 
 void drawFlow(int flow){
-    int size = flow > 10 ? 2 : 1;
+    int size = 0;
+    int aux = flow;
+    while(aux != 0){
+        aux = aux/10;
+        size++;
+    }
     cout<< "|\033[100m Flow: " << flow<< string(38 - size, ' ') << "\033[0m|\n"
     << "|\033[100m\033[40m---------------------------------------------\033[0m|\n";
 }
@@ -238,6 +251,7 @@ void drawFooter(vector<Edge*> edges, bool yes){
                         condition=false;
                         break;
                     case 'Y':
+                        sortVector(edges);
                         paginationControllerEdge(edges);
                         condition=false;
                         break;
@@ -299,27 +313,18 @@ void drawFooterCombinations(vector<pair<pair<Vertex *, Vertex *>, int>> result_v
                     }
                     bool c = true;
                     vector<Edge*> aux;
-                    switch(path){
-                        case 1:
-                            railway->getMaxFlow(result_vector[0].first.first, result_vector[0].first.second);
-                            aux = railway->fetchUsedEdges(result_vector[0].first.first);
+
+                    for (int i = 0; i < counter; i++){
+                        vector<Vertex*> vertexes;
+                        if (i == path-1){
+                            railway->getMaxFlow(result_vector[i].first.first, result_vector[i].first.second);
+                            vertexes.push_back(result_vector[i].first.first);
+                            aux = railway->fetchUsedEdges(vertexes);
+                            sortVector(aux);
                             paginationControllerEdge(aux);
                             c = false;
                             break;
-                        case 2:
-                            railway->getMaxFlow(result_vector[1].first.first, result_vector[1].first.second);
-                            aux = railway->fetchUsedEdges(result_vector[1].first.first);
-                            paginationControllerEdge(aux);
-                            c = false;
-                            break;
-                        case 3:
-                            railway->getMaxFlow(result_vector[2].first.first, result_vector[2].first.second);
-                            aux = railway->fetchUsedEdges(result_vector[2].first.first);
-                            paginationControllerEdge(aux);
-                            c = false;
-                            break;
-                        default:
-                            c = true;
+                        }
                     }
                     condition=false;
                     break;

@@ -474,10 +474,14 @@ int Graph::computeCost(Vertex *origin) const {
     return totalCost;
 }
 
-vector<Edge *> Graph::fetchUsedEdges(Vertex *origin) {
+vector<Edge *> Graph::fetchUsedEdges(vector<Vertex *> result_vector) {
     vector<Edge *> allEdges;
 
     queue<Vertex *> q;
+    for (auto e : result_vector) {
+        q.push(e);
+    }
+    auto origin = q.front();
     resetNodes();
 
     origin->setVisited(true);

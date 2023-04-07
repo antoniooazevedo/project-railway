@@ -23,7 +23,9 @@ void MinCostMaxFlow::execute() {
         drawResults();
         drawCost(cost);
         drawFlow(flow);
-        drawFooter(railway->fetchUsedEdges(orig));
+        vector<Vertex*> vertexes;
+        vertexes.push_back(orig);
+        drawFooter(railway->fetchUsedEdges(vertexes));
     }
     else {
         cout << "\033[31mStation " << orig->getId() << " can't reach station " << dest->getId()<< "\033[0m" << endl << endl;
