@@ -20,7 +20,8 @@ template<typename Name>
 void paginationController(vector<Name> data);
 void drawFlow(int flow);
 void drawResults();
-void drawFooter(vector<Edge*> edges);
+void drawFooter(vector<Edge*> edges, bool yes = false);
+void drawFooterCombinations(vector<pair<pair<Vertex *, Vertex *>, int>> result_vector, Graph *railway);
 void drawCost(int cost);
 template<typename edge>
 void paginationControllerEdge(vector<edge> data);

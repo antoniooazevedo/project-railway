@@ -29,5 +29,6 @@ void PairsMaxFlow::execute() {
         cout.clear();
         if (pa.second == result_vector[0].second) cout << "|\033[100m   -->   " << s << string(36 - getLen(s), ' ') << "\033[0m|\n";
     }
-    drawFooter(railway->fetchUsedEdges(result_vector[0].first.first));
+
+    drawFooterCombinations(result_vector, railway);
 }

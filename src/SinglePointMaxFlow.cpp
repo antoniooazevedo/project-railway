@@ -29,5 +29,5 @@ void SinglePointMaxFlow::execute() {
 
     drawResults();
     drawFlow(flow);
-    drawFooter(railway->fetchUsedEdges(orig));
+    drawFooter(railway->fetchUsedEdges(orig), true);
 }

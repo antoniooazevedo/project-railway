@@ -14,7 +14,7 @@ void DistrictBrute::execute() {
     bool is_valid = false;
 
     while(!is_valid){
-        cout << "\033[34mInsert the number of Districts that will be displayed (máx: 18): " << "\033[0m";
+        cout << "\033[34mInsert the number of Districts that will be displayed [1-" << district_vector.size() << "]: " << "\033[0m";
         getInput(nDistricts);
 
         if (nDistricts <= 0 || nDistricts > district_vector.size()){

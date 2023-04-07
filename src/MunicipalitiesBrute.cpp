@@ -15,7 +15,7 @@ void MunicipalitiesBrute::execute() {
     bool is_valid = false;
 
     while(!is_valid){
-        cout << "\033[34mInsert the number of municipalities that will be displayed (máx: 134): " << "\033[0m";
+        cout << "\033[34mInsert the number of municipalities that will be displayed [1-" << mun_vector.size() << "]: " << "\033[0m";
         getInput(nMunicipalities);
 
         if (nMunicipalities <= 0 || nMunicipalities > mun_vector.size()){
