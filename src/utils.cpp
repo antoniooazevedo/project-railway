@@ -202,7 +202,12 @@ void drawFlow(int flow){
 }
 
 void drawCost(int cost){
-    int size = cost > 10 ? 2 : 1;
+    int size = 0;
+    int aux = cost;
+    while(aux != 0){
+        aux = aux/10;
+        size++;
+    }
     cout<< "|\033[100m Cost: " << cost<< string(38 - size, ' ') << "\033[0m|\n"
         << "|\033[100m\033[40m---------------------------------------------\033[0m|\n";
 }
