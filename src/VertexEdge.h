@@ -77,6 +77,11 @@ protected:
     int price = 0;
     int flow = 0;
     int maxFlow;
+    int disabledFlow;
+public:
+    int getDisabledFlow() const;
+
+    void setDisabledFlow(int disabledFlow);
 
 protected:
     bool inQueue;
@@ -128,6 +133,7 @@ protected:
     Edge *reverse = nullptr;
 
     int flow; // for flow-related problems
+
 
     enum service service;
 };

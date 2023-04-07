@@ -138,7 +138,7 @@ bool Graph::findPath(Vertex* origin , Vertex* dest, bool checkDisabled) const {
             auto w = e->getDest();
 
             bool isNotFull = e->getCapacity() > e->getFlow() + e->getReverse()->getFlow();
-            bool isNotDisabled = !checkDisabled || checkDisabled && !e->getDisabled();
+            bool isNotDisabled = !checkDisabled || (!e->getDisabled() && checkDisabled);
 
             if (!w->isVisited() && isNotFull && isNotDisabled) {
                 if (w == dest) {

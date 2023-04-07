@@ -12,7 +12,14 @@
 class TopSegmentFailure : public MenuItem{
 private:
     int currMenuPage;
-    void fullGraphMaxFlow();
+    void disabledEdgesMaxFlow(bool disabled);
+    set<Edge*> fetchDisabledEdges();
+    void enableEdges();
+    void disableEdges();
+    void getAllStations();
+
+    set<Edge*> disabledEdges;
+    vector<Vertex*> stations;
 public:
     TopSegmentFailure(int &currMenuPage, Graph &gh);
     void execute() override;
