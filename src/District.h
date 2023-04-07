@@ -15,11 +15,16 @@ public:
      * @param gh - The railway graph
      */
     District(int &currMenuPage, Graph &gh);
+
+    /**
+     * Runs the districtFind() function and draws a simple paginated menu to display all the districts and their respective flows;
+     */
     void execute() override;
 
     /**
-     *
-     * @return
+     * Finds the connected components of the graph based on the district of the vertices and calculates the max flow of each component;
+     * Time Complexity: O(V(V+E)), where V is the number of vertices in the graph and E is the number of edges in the graph;
+     * @return a map of the districts and their respective max flows;
      */
     map<string,vector<int>> connectedComponents();
 
@@ -32,7 +37,9 @@ public:
     void dfs(Vertex *n, int &flow);
 
     /**
-     *
+     * Calculates the maximum flow for each possible extremes pair of a certain district and stores it in the vertex's flow attribute;
+     * After that, it calls the connectedComponents() function to calculate the maximum flow of each district;
+     * Time Complexity: O(V*E²*P), where V is the number of vertices in the graph, E is the number of edges in the graph and P is the number of possible vertex pairs;
      */
     void districtFind();
 };

@@ -8,7 +8,7 @@ void SinglePointMaxFlow::execute() {
     auto extremes = railway->getExtremes();
     int flow; bool control_ignore = true;
     if (control_ignore) cin.ignore(2000, '\n');
-    cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
+    cout << "\033[34mInsert the name of the station: " << "\033[0m";
     fetchStation(&orig,railway);
 
     auto v = orig;

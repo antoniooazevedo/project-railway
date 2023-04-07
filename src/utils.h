@@ -9,6 +9,7 @@
 using namespace std;
 
 template<typename type>
+
 bool getInput(type &);
 bool compareValue(const pair<string,int>& a, const pair<string,int>& b);
 bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pair<Vertex*, Vertex*>, int> &p2);

@@ -4,12 +4,10 @@ void District::execute() {
 
     district_map.clear();
 
-    // Get all the municipalities
     districtFind();
     vector<pair<string, int>> district_vector(district_map.begin(), district_map.end());
     sort(district_vector.begin(), district_vector.end(), compareValue);
 
-    // Get the number of districts and municipalities
     int nDistricts = 0;
     bool is_valid = false;
 
@@ -52,12 +50,10 @@ void District::districtFind(){
     auto extremesDistrict = railway->getExtremesDistricts();
     for (auto v1: extremesDistrict) {
         for (auto v2: extremesDistrict) {
-            if (v1->getDistrict() == v2->getDistrict() && v1->getId() != v2->getId()) {
-                if(v1->getId() < v2->getId()){
-                    int flow = railway->getDistrictMaxFlow(v1, v2);
-                    if(v2->getFlow() < flow){
-                        v2->setFlow(flow);
-                    }
+            if (v1->getDistrict() == v2->getDistrict() && v1->getId() < v2->getId()) {
+                int flow = railway->getDistrictMaxFlow(v1, v2);
+                if(v2->getFlow() < flow){
+                    v2->setFlow(flow);
                 }
             }
         }
