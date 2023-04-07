@@ -25,7 +25,9 @@ void drawFooter(vector<Edge*> edges, bool yes = false);
 void drawFooterCombinations(vector<pair<pair<Vertex *, Vertex *>, int>> result_vector, Graph *railway);
 void drawCost(int cost);
 template<typename edge>
-void paginationControllerEdge(vector<edge> data);
+void paginationControllerEdge(vector<edge> data, bool cost = false);
+template<typename edge>
+void drawEdgeCost(vector<edge> data, int page, int nPages);
 template<typename edge>
 void drawEdge(vector<edge> data, int page, int nPages);
 
