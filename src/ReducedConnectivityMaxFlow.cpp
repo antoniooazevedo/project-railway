@@ -6,8 +6,6 @@ ReducedConnectivityMaxFlow::ReducedConnectivityMaxFlow(int &currMenuPage, Graph 
 void ReducedConnectivityMaxFlow::execute() {
     string amount, orig, dest;
     auto vertexSet = railway->getVertexSet();
-    int count;
-    bool control_ignore = true;
 
     while (true){
         cout << "Please input desired origin station: ";
@@ -33,11 +31,4 @@ void ReducedConnectivityMaxFlow::execute() {
     auto v1 = railway->findVertex(orig), v2 = railway->findVertex(dest);
     int flow = railway->getMaxFlow(v1,v2);
     cout << "flow with restricted graph: " << flow << endl;
-
-    for (auto &pa: railway->getVertexSet()){
-        for (auto &e : pa.second->getAdj()){
-            e->setDisabled(false);
-            e->getReverse()->setDisabled(false);
-        }
-    }
 }

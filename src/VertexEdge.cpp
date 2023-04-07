@@ -196,6 +196,14 @@ void Vertex::removeLastEdgeCreated() {
     adj.pop_back();
 }
 
+int Vertex::getMaxFlow() const {
+    return maxFlow;
+}
+
+void Vertex::setMaxFlow(int maxFlow) {
+    this->maxFlow = maxFlow;
+}
+
 /********************** Edge  ****************************/
 
 

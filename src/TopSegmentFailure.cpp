@@ -1,7 +1,3 @@
-//
-// Created by work on 06-04-2023.
-//
-
 #include "TopSegmentFailure.h"
 
 TopSegmentFailure::TopSegmentFailure(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){}
@@ -10,10 +6,9 @@ bool sortResultVector(const pair<Vertex*, int> &p1, const pair<Vertex*, int> &p2
     return (p1.second > p2.second);
 }
 
-vector<pair<Vertex*, int>> TopSegmentFailure::fullGraphMaxFlow() {
+void TopSegmentFailure::fullGraphMaxFlow() {
     auto vertexSet = railway->getVertexSet();
     auto extremes = railway->getExtremes();
-    vector<pair<Vertex*, int>> results;
 
     for (auto &pa: vertexSet){
         // creating super node
@@ -25,14 +20,15 @@ vector<pair<Vertex*, int>> TopSegmentFailure::fullGraphMaxFlow() {
         }
 
         // running maxflow on super node to destiny
-        results.emplace_back(pa.second,railway->getMaxFlow(railway->findVertex("Super Node"), pa.second));
+        pa.second->setMaxFlow(railway->getMaxFlow(railway->findVertex("Super Node"), pa.second));
+
+        for (Vertex *extreme: extremes) {
+            extreme->removeEdge("Super Node");
+        }
 
         //removing super node and super edges
         railway->removeVertex("Super Node");
     }
-
-    std::sort(results.begin(), results.end(), sortResultVector);
-    return results;
 }
 
 vector<pair<Vertex*, int>> getDelta(const vector<pair<Vertex*, int>> &original_v, const vector<pair<Vertex*, int>> &particular_v){
@@ -52,7 +48,6 @@ vector<pair<Vertex*, int>> getDelta(const vector<pair<Vertex*, int>> &original_v
 
 void TopSegmentFailure::execute() {
     auto vertexSet = railway->getVertexSet();
-    auto original_results = fullGraphMaxFlow();
-
+    fullGraphMaxFlow();
 
 }

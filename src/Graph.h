@@ -58,7 +58,7 @@ public:
     int getRegion() const;
 
     void setRegion(enum region r);
-    int getMaxFlow(Vertex* v1, Vertex* v2);
+    int getMaxFlow(Vertex* v1, Vertex* v2, bool checkDisabled = false);
     int getMunMaxFlow(Vertex *v1, Vertex *v2);
     int getDistrictMaxFlow(Vertex *v1, Vertex *v2);
 
@@ -81,10 +81,10 @@ protected:
     int findVertexIdx(const int &id) const;
     void augmentFlow(Vertex* dest, int flow) const;
     int findBottleneck(Vertex* src) const;
-    void maxFlow(const string &origin, const string &dest) const;
+    void maxFlow(const string &origin, const string &dest, bool checkDisabled) const;
     bool findCheapestPath(Vertex *origin, Vertex *dest) const;
     bool reachDest(const string &origin, const string &dest) const;
-    bool findPath(Vertex* origin , Vertex* dest ) const;
+    bool findPath(Vertex* origin , Vertex* dest, bool checkDisabled) const;
     void munMaxFlow(const string &origin, const string &dest) const;
     bool findMunPath(Vertex* origin , Vertex* dest ) const;
     bool findDistrictPath(Vertex *origin, Vertex *dest) const;

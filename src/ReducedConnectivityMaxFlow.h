@@ -11,7 +11,7 @@
 
 class ReducedConnectivityMaxFlow : public MenuItem{
 private:
-    int currMenuPage;
+    int currMenuPage{};
 
 public:
     ReducedConnectivityMaxFlow(int &currMenuPage, Graph &gh);

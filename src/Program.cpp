@@ -138,6 +138,6 @@ void Program::cleanMenus()
 void Program::createMenuReducedConnectivity() {
     menus.emplace_back("../src/menus/reducedConnectivity");
     menus[menus.size() - 1].addMenuItem(new ReducedConnectivityMaxFlow(currMenuPage, railway));
-    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
+    menus[menus.size() - 1].addMenuItem(new TopSegmentFailure(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }

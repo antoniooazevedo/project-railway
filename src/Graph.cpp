@@ -123,7 +123,7 @@ void Graph::augmentFlow(Vertex* dest, int flow) const {
     }
 }
 
-bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
+bool Graph::findPath(Vertex* origin , Vertex* dest, bool checkDisabled) const {
     resetNodes();
 
     queue<Vertex*> q;
@@ -136,7 +136,11 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
 
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
-            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow() && !e->getDisabled()) {
+
+            bool isNotFull = e->getCapacity() > e->getFlow() + e->getReverse()->getFlow();
+            bool isNotDisabled = !checkDisabled || checkDisabled && !e->getDisabled();
+
+            if (!w->isVisited() && isNotFull && isNotDisabled) {
                 if (w == dest) {
                     w->setPath(e);
                     return true;
@@ -282,14 +286,14 @@ void Graph::munMaxFlow(const string &origin, const string &dest) const {
     }
 }
 
-void Graph::maxFlow(const string &origin, const string &dest) const {
+void Graph::maxFlow(const string &origin, const string &dest, bool checkDisabled) const {
     resetNodes();
     resetFlow();
 
     auto s = findVertex(origin);
     auto t = findVertex(dest);
 
-    while (findPath(s, t)){
+    while (findPath(s, t, checkDisabled)){
         int flow = findBottleneck(t);
         augmentFlow(t, flow);
     }
@@ -437,8 +441,8 @@ void Graph::resetNodes() const {
     }
 }
 
-int Graph::getMaxFlow(Vertex *v1, Vertex *v2) {
-    maxFlow(v1->getId(), v2->getId());
+int Graph::getMaxFlow(Vertex *v1, Vertex *v2, bool checkDisabled) {
+    maxFlow(v1->getId(), v2->getId(), checkDisabled);
     int flow = 0;
     for (auto e: v2->getIncoming()) flow += e->getFlow();
     return flow;

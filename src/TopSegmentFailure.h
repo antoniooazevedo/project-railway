@@ -12,7 +12,7 @@
 class TopSegmentFailure : public MenuItem{
 private:
     int currMenuPage;
-    vector<pair<Vertex*, int>> fullGraphMaxFlow();
+    void fullGraphMaxFlow();
 public:
     TopSegmentFailure(int &currMenuPage, Graph &gh);
     void execute() override;

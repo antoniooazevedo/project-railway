@@ -31,7 +31,7 @@ public:
     std::string getLine() const;
     string getDistrict() const;
     string getMunicipality() const;
-    
+
     bool isVisited() const;
     bool getHit() const;
     bool getReached() const;
@@ -40,6 +40,7 @@ public:
     double getDist() const;
     int getPrice() const;
     int getFlow() const;
+    int getMaxFlow() const;
     bool getInQueue() const;
     Edge *getPath() const;
     vector<Edge *> getIncoming() const;
@@ -53,6 +54,7 @@ public:
     void setDist(double dist);
     void setPrice(int price);
     void setFlow(int flow);
+    void setMaxFlow(int maxFlow);
     void setInQueue(bool inQueue);
     void setPath(Edge *path);
     Edge * addEdge(Vertex *dest, double w);
@@ -74,6 +76,9 @@ protected:
     double dist = 0;
     int price = 0;
     int flow = 0;
+    int maxFlow;
+
+protected:
     bool inQueue;
     Edge *path = nullptr;
     string name = id, district, municipality, main_line;
