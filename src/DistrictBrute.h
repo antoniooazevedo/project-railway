@@ -1,15 +1,14 @@
-#ifndef PROJECT_RAILWAY_DISTRICT_H
-#define PROJECT_RAILWAY_DISTRICT_H
+#ifndef PROJECT_RAILWAY_DISTRICTBRUTE_H
+#define PROJECT_RAILWAY_DISTRICTBRUTE_H
 #include <map>
 #include "Graph.h"
 #include "MenuItem.h"
 #include "utils.h"
 
-class District : public MenuItem{
-private:
+class DistrictBrute: public MenuItem {
     map<string , int> district_map;
 public:
-    District(int &currMenuPage, Graph &gh);
+    DistrictBrute(int &currMenuPage, Graph &gh);
     void execute() override;
 
     map<string,vector<int>> connectedComponents();
@@ -19,4 +18,4 @@ public:
 };
 
 
-#endif //PROJECT_RAILWAY_DISTRICT_H
+#endif //PROJECT_RAILWAY_DISTRICTBRUTE_H

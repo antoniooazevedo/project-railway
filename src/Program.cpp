@@ -1,4 +1,6 @@
 #include "Program.h"
+#include "DistrictBrute.h"
+#include "MunicipalitiesBrute.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
@@ -21,6 +23,8 @@ Program::Program()
     createMenu1();
     createMenu2();
     createMenu3();
+    createMenu4();
+    createMenu5();
 }
 
 /**
@@ -88,8 +92,8 @@ void Program::createMenu1()
     menus.emplace_back("../src/menus/menu1");
     menus[menus.size() - 1].addMenuItem(new MaxFlowUserInput(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new PairsMaxFlow(currMenuPage, railway));
-    menus[menus.size() - 1].addMenuItem(new District(currMenuPage, railway));
-    menus[menus.size() - 1].addMenuItem(new Municipalities(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 4));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 5));
     menus[menus.size() - 1].addMenuItem(new SinglePointMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
@@ -114,6 +118,22 @@ void Program::createMenu3() {
     menus[menus.size() - 1].addMenuItem(new ReducedConnectivityMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new TopSegmentFailure(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
+}
+
+void Program::createMenu4() {
+    menus.emplace_back("../src/menus/menu4");
+
+    menus[menus.size() - 1].addMenuItem(new DistrictBrute(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new District(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
+}
+
+void Program::createMenu5() {
+    menus.emplace_back("../src/menus/menu5");
+
+    menus[menus.size() - 1].addMenuItem(new MunicipalitiesBrute(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new Municipalities(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
 }
 
 /**
