@@ -79,6 +79,15 @@ bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pa
     return (p1.second > p2.second);
 }
 
+void sortVector(vector<Edge *> &aux) {
+    sort(aux.begin(), aux.end(), [](Edge *e1, Edge *e2) {
+        return e1->getOrig()->getId() < e2->getOrig()->getId();
+    });
+}
+
+
+
+
 /** Controls the pagination of the drawn table. It allows the user to quit the menu, or jump to the next, previous or any other page directly.
      * @brief Controls the pagination of the drawn table.
      * @see show::draw(vector<Name> data, int page, int nPages)
@@ -98,7 +107,7 @@ void paginationController(vector<Name> data) {
         while (cond)
         {
             cout << endl
-                 << "\033[32mChoose an option[n/p/q] or the number of the page you would want to go[1-"<<ceil((float)data.size()/10.0)<<"]: ";
+                 << "\033[33mChoose an option[n/p/q] or the number of the page you would want to go[1-"<<ceil((float)data.size()/10.0)<<"]: ";
             cond = true;
             cin >> option;
 
@@ -153,7 +162,6 @@ void paginationController(vector<Name> data) {
 template void paginationController<pair<string,int>>(vector<pair<string,int>> data);
 
 
-
 /**
  * @brief Draws a table to display values, uses a system of pagination that displays 10 values per page
  * @tparam Name type of the value we want to display
@@ -196,7 +204,12 @@ void draw(vector<Name> data, int page, int nPages) {
 }
 
 void drawFlow(int flow){
-    int size = flow > 10 ? 2 : 1;
+    int size = 0;
+    int aux = flow;
+    while(aux != 0){
+        aux = aux/10;
+        size++;
+    }
     cout<< "|\033[100m Flow: " << flow<< string(38 - size, ' ') << "\033[0m|\n"
     << "|\033[100m\033[40m---------------------------------------------\033[0m|\n";
 }
@@ -218,10 +231,242 @@ void drawResults(){
          << "|\033[40m_____________________________________________\033[0m|\n";
 }
 
-void drawFooter(){
+void drawFooter(vector<Edge*> edges, bool yes){
     cout << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
-         << "|\033[40m_____________________________________________\033[0m|\n"
-         << "Input anything to continue: ";
-    string w8Input;
-    getline(cin,w8Input);
+         << "|\033[40m_____________________________________________\033[0m|\n";
+        string option;
+        bool condition = true;
+        while(condition){
+            cout << endl;
+            cout << "\033[33mMore deitailed information? [y/n]: ";
+            cin >> option;
+            condition = true;
+            if (option.length() == 1)
+            {
+                option= ::toupper(option[0]);
+                switch (option[0])
+                {
+                    case 'N':
+                        condition=false;
+                        break;
+                    case 'Y':
+                        sortVector(edges);
+                        paginationControllerEdge(edges,yes);
+                        condition=false;
+                        break;
+                    default:
+                        condition = true;
+                }
+                if (condition)
+                    cout << "\033[31mInvalid input! Please enter a valid input: \033[0m";
+                cin.clear();
+            }
+        }
+}
+
+void drawFooterCombinations(vector<pair<pair<Vertex *, Vertex *>, int>> result_vector, Graph *railway){
+    cout << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
+         << "|\033[40m_____________________________________________\033[0m|\n";
+
+    string option;
+    bool condition = true;
+    while(condition){
+        cout << endl;
+        cout << "\033[33mMore deitailed information? [y/n]: ";
+        cin >> option;
+        condition = true;
+        if (option.length() == 1)
+        {
+            option= ::toupper(option[0]);
+            switch (option[0])
+            {
+                case 'N':
+                    condition=false;
+                    break;
+                case 'Y':
+                    int path;
+                    int counter = 0;
+                    for (auto i : result_vector) {
+                        if (i.second == result_vector[0].second){
+                            counter++;
+                        }else{
+                            break;
+                        }
+                    }
+                    cout << "\033[33mChoose which path you want to consider"<<"[1-"<<counter<<"]"<<": \033[0m";
+                    getInput(path);
+                    while (true){
+                        if (path <= 0 || path > counter){
+                            cout << "\033[31mInvalid input! Please enter a valid input: \033[0m";
+                            getInput(path);
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                    bool c = true;
+                    vector<Edge*> aux;
+
+                    for (int i = 0; i < counter; i++){
+                        vector<Vertex*> vertexes;
+                        if (i == path-1){
+                            railway->getMaxFlow(result_vector[i].first.first, result_vector[i].first.second);
+                            vertexes.push_back(result_vector[i].first.first);
+                            aux = railway->fetchUsedEdges(vertexes);
+                            sortVector(aux);
+                            paginationControllerEdge(aux);
+                            c = false;
+                            break;
+                        }
+                    }
+                    condition=false;
+                    break;
+            }
+            if (condition){
+                cout << endl;
+                cout << "\033[31m -Invalid input! - \033[0m";
+                cout << endl;
+            }
+            cin.clear();
+        }
+    }
+}
+
+
+template<typename edge>
+void paginationControllerEdge(vector<edge> data, bool cost) {
+    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
+    int page = 0;
+    while (page >= 0 and page < (float)data.size() / 10.0)
+    {
+        string option;
+        if (cost){
+            drawEdgeCost(data,page,ceil((float)data.size()/10.0));
+        }
+        else {drawEdge(data,page,ceil((float)data.size()/10.0));}
+        bool cond = true;
+        while (cond)
+        {
+            cout << endl
+                 << "\033[33mChoose an option[n/p/q] or the number of the page you would want to go[1-"<<ceil((float)data.size()/10.0)<<"]: ";
+            cond = true;
+            cin >> option;
+
+            if (option.length() == 1)
+            {
+                option= ::toupper(option[0]);
+                switch (option[0])
+                {
+                    case 'N':
+                        page++;
+                        cond=false;
+                        break;
+                    case 'P':
+                        page--;
+                        cond=false;
+                        break;
+                    case 'Q':
+                        page = -1;
+                        cond=false;
+                        break;
+
+                    default:
+                        cond = true;
+                }
+            }
+            if(cond){
+                int test;
+                try{
+                    cond=false;
+                    test= stoi(option);
+                }catch (invalid_argument){
+                    cond=true;
+                }
+                if(!cond){
+                    cond=true;
+                    if(to_string(test).length()==option.length()){
+                        if(test>0 and test <=ceil((float)data.size()/10.0)) {
+                            page=test-1;
+                            cond= false;
+                        }
+                    }
+
+                }
+            }
+            if (cond)
+                cout << "\033[31mInvalid input! Please enter a valid input: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
+
+template void paginationControllerEdge<Edge*>(vector<Edge*> data, bool cost);
+
+template<typename edge>
+void drawEdge(vector<edge> data, int page, int nPages) {
+    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
+    system("clear");
+    cout << "\033[0m";
+    cout << " _________________________________________________________________________________________________________ " << endl;
+    cout << "|\033[40m                                                  Page(" << page + 1 << "/" << nPages << ")";
+    for (int i = 0; i < 8 - to_string(page + 1).length() - to_string(nPages).length(); i++)
+        cout << ' ';
+
+    cout << "                                        \033[0m|" << endl;
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m   Flow   |                    Origin                    |                   Destination                 \033[0m|" << endl;
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    for (int i = 10 * page; i < 10 * page + 10; i++) {
+        if (i == data.size())
+            break;
+        cout<<"|";
+        if (i % 2 == 0)
+            cout << "\033[47m"
+                 << "\033[30m";
+        else
+            cout << "\033[100m";
+        auto aux = data[i];
+        cout << "    " << aux->getFlow() << string( 6- getLen(to_string(aux->getFlow())), ' ') << "| " << aux->getOrig()->getId() << string(45 - getLen(aux->getOrig()->getId()), ' ') << "| " << aux->getDest()->getId() << string(45 - getLen(aux->getDest()->getId()), ' ') << " \033[0m";
+        cout<<"\033[0m|"<<endl;
+
+    }
+
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m                                 [n]Next      [p]Previous    [q]Go Back                                  \033[0m|" << endl;
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+}
+
+template<typename edge>
+void drawEdgeCost(vector<edge> data, int page, int nPages) {
+    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
+    system("clear");
+    cout << "\033[0m";
+    cout << " ____________________________________________________________________________________________________________________ " << endl;
+    cout << "|\033[40m                                                     Page(" << page + 1 << "/" << nPages << ")";
+    for (int i = 0; i < 8 - to_string(page + 1).length() - to_string(nPages).length(); i++)
+        cout << ' ';
+
+    cout << "                                                \033[0m|" << endl;
+    cout << "|\033[40m____________________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m   Flow   |   Cost   |                    Origin                    |                   Destination                 \033[0m|" << endl;
+    cout << "|\033[40m____________________________________________________________________________________________________________________\033[0m|" << endl;
+    for (int i = 10 * page; i < 10 * page + 10; i++) {
+        if (i == data.size())
+            break;
+        cout<<"|";
+        if (i % 2 == 0)
+            cout << "\033[47m"
+                 << "\033[30m";
+        else
+            cout << "\033[100m";
+        auto aux = data[i];
+        cout << "    " << aux->getFlow() << string( 6- getLen(to_string(aux->getFlow())), ' ') << "|    " << aux->getService()*aux->getFlow() << string( 6- getLen(to_string(aux->getService()*aux->getFlow())), ' ') << "| " << aux->getOrig()->getId() << string(45 - getLen(aux->getOrig()->getId()), ' ') << "| " << aux->getDest()->getId() << string(45 - getLen(aux->getDest()->getId()), ' ') << " \033[0m";
+        cout<<"\033[0m|"<<endl;
+
+    }
+
+    cout << "|\033[40m____________________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m                                       [n]Next      [p]Previous    [q]Go Back                                       \033[0m|" << endl;
+    cout << "|\033[40m____________________________________________________________________________________________________________________\033[0m|" << endl;
 }

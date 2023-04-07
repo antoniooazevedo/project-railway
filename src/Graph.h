@@ -111,7 +111,7 @@ public:
      * @param origin - the origin vertex;
      * @return a vector containing all the edges fetched.
      */
-    vector<Edge *> fetchUsedEdges(Vertex *origin);
+    vector<Edge *> fetchUsedEdges(vector<Vertex *> origin);
 
 
     int getNumVertex() const;
