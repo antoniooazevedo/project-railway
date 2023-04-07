@@ -1,17 +1,17 @@
-#ifndef PROJECT_RAILWAY_MUNICIPALITIES_H
-#define PROJECT_RAILWAY_MUNICIPALITIES_H
-
+#ifndef PROJECT_RAILWAY_MUNICIPALITIESBRUTE_H
+#define PROJECT_RAILWAY_MUNICIPALITIESBRUTE_H
 
 #include <map>
 #include "Graph.h"
 #include "MenuItem.h"
 #include "utils.h"
 
-class Municipalities: public MenuItem {
+class MunicipalitiesBrute: public MenuItem {
 private:
+    Graph graph;
     map<string , int> mun_map;
 public:
-    Municipalities(int &currMenuPage, Graph &gh);
+    MunicipalitiesBrute(int &currMenuPage, Graph &gh);
     void execute() override;
 
     map<string,vector<int>> connectedComponents();
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //PROJECT_RAILWAY_MUNICIPALITIES_H
+#endif //PROJECT_RAILWAY_MUNICIPALITIESBRUTE_H

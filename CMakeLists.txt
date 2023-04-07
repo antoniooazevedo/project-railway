@@ -41,5 +41,5 @@ add_executable(project_railway
         src/Municipalities.cpp
         src/Municipalities.h
         src/District.cpp
-        src/District.h)
+        src/District.h src/DistrictBrute.cpp src/DistrictBrute.h src/MunicipalitiesBrute.cpp src/MunicipalitiesBrute.h)
 

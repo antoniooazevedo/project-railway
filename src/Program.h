@@ -42,6 +42,8 @@ private:
     void createMenu1();
     void createMenu2();
     void createMenu3();
+    void createMenu4();
+    void createMenu5();
 
 public:
     Program();

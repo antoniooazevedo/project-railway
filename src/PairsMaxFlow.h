@@ -11,7 +11,6 @@ using namespace std;
 
 class PairsMaxFlow : public MenuItem{
 private:
-    Graph graph;
     vector<pair<pair<Vertex*, Vertex*>, int>> result_vector;
 public:
     PairsMaxFlow(int &currMenuPage, Graph &gh);

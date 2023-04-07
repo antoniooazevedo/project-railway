@@ -8,8 +8,6 @@ using namespace std;
 
 
 class MaxFlowUserInput : public MenuItem{
-private:
-    Graph graph;
 public:
     MaxFlowUserInput(int &currMenuPage, Graph &gh);
 
