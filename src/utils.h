@@ -22,6 +22,10 @@ void drawFlow(int flow);
 void drawResults();
 void drawFooter();
 void drawCost(int cost);
+template<typename edge>
+void paginationControllerEdge(vector<edge> data);
+template<typename edge>
+void drawEdge(vector<edge> data, int page, int nPages);
 
 
 #endif //PROJECT_RAILWAY_UTILS_H

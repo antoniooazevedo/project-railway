@@ -14,5 +14,6 @@ void MaxFlowUserInput::execute() {
     auto flow = railway->getMaxFlow(orig, dest);
     drawResults();
     drawFlow(flow);
-    drawFooter();
+    paginationControllerEdge(railway->fetchUsedEdges(orig));
+    //drawFooter();
 }
