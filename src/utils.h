@@ -20,7 +20,7 @@ template<typename Name>
 void paginationController(vector<Name> data);
 void drawFlow(int flow);
 void drawResults();
-void drawFooter();
+void drawFooter(vector<Edge*> edges);
 void drawCost(int cost);
 template<typename edge>
 void paginationControllerEdge(vector<edge> data);

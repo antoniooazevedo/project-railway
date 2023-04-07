@@ -218,12 +218,38 @@ void drawResults(){
          << "|\033[40m_____________________________________________\033[0m|\n";
 }
 
-void drawFooter(){
+void drawFooter(vector<Edge*> edges){
     cout << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
-         << "|\033[40m_____________________________________________\033[0m|\n"
-         << "Input anything to continue: ";
-    string w8Input;
-    getline(cin,w8Input);
+         << "|\033[40m_____________________________________________\033[0m|\n";
+
+    string option;
+    bool condition = true;
+    while(condition){
+        cout << endl;
+        cout << "\033[32mMore deitailed information? [y/n]: ";
+        cin >> option;
+        condition = true;
+        if (option.length() == 1)
+        {
+            option= ::toupper(option[0]);
+            switch (option[0])
+            {
+                case 'N':
+                    condition=false;
+                    break;
+                case 'Y':
+                    paginationControllerEdge(edges);
+                    condition=false;
+                    break;
+                default:
+                    condition = true;
+            }
+            if (condition)
+                cout << "\033[31mInvalid input! Please enter a valid input: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
 }
 
 
@@ -304,9 +330,9 @@ void drawEdge(vector<edge> data, int page, int nPages) {
         cout << ' ';
 
     cout << "           \033[0m|" << endl;
-    cout << "|\033[40m__________________________________________\033[0m|" << endl;
-    cout << "|\033[40m   Flow   |              Name             \033[0m|" << endl;
-    cout << "|\033[40m__________________________________________\033[0m|" << endl;
+    cout << "|\033[40m_____________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m   Flow   |            Origin             |            Destination           \033[0m|" << endl;
+    cout << "|\033[40m_____________________________________________________________________________\033[0m|" << endl;
     for (int i = 10 * page; i < 10 * page + 10; i++) {
         if (i == data.size())
             break;
@@ -317,7 +343,7 @@ void drawEdge(vector<edge> data, int page, int nPages) {
         else
             cout << "\033[100m";
         auto aux = data[i];
-        cout << "    " << aux->getFlow() << string( 6- getLen(to_string(aux->getFlow())), ' ') << "| " << aux->getOrig()->getId() << string(30 - getLen(aux->getOrig()->getId()), ' ');
+        cout << "    " << aux->getFlow() << string( 6- getLen(to_string(aux->getFlow())), ' ') << "| " << aux->getOrig()->getId() << string(30 - getLen(aux->getOrig()->getId()), ' ') << "| " << aux->getDest()->getId() << string(30 - getLen(aux->getDest()->getId()), ' ') << " \033[0m";
         cout<<"\033[0m|"<<endl;
 
     }
