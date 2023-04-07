@@ -368,14 +368,16 @@ bool Graph::removeVertex(const std::string &id) {
     if (findVertex(id) == nullptr) return false;
     auto v = findVertex(id);
     v->removeOutgoingEdges();
-    vertexSet.erase(id);
+    auto lowerId = v->getId();
+    transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
+    int i = vertexSet.erase(lowerId);
+    auto aaa = findVertex("Super Node");
     return true;
 }
 
 bool Graph::removeVertex(Vertex *v) {
     if (findVertex(v->getId()) == nullptr) return false;
     v->removeOutgoingEdges();
-    vertexSet.erase(v->getId());
     auto lowerId = v->getId();
     transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
     vertexSet.erase(lowerId);

@@ -27,6 +27,7 @@ public:
 
     std::string getId() const;
     std::vector<Edge *> getAdj() const;
+    void removeLastEdgeCreated();
     std::string getLine() const;
     string getDistrict() const;
     string getMunicipality() const;

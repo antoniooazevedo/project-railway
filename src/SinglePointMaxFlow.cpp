@@ -29,17 +29,22 @@ void SinglePointMaxFlow::execute() {
     // creating super node
     railway->addVertex("Super Node");
 
+    Vertex *superNode = railway->findVertex("Super Node");
+
     // adding super edges
     for (auto e: extremes){
         if (e != v) railway->addBidirectionalEdge("Super Node", e->getId(), 9999, STANDARD);
     }
 
     // running maxflow on super node to destiny
-    flow = railway->getMaxFlow(railway->findVertex("Super Node"), v);
+    flow = railway->getMaxFlow(superNode, v);
+
+    for (Vertex *extreme: extremes) {
+        extreme->removeEdge("Super Node");
+    }
 
     //removing super node and super edges
     railway->removeVertex("Super Node");
-
 
     cout << "flow for node: " << flow << endl;
 }

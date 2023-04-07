@@ -192,6 +192,10 @@ void Vertex::setFlow(int flow) {
     this->flow = flow;
 }
 
+void Vertex::removeLastEdgeCreated() {
+    adj.pop_back();
+}
+
 /********************** Edge  ****************************/
 
 
