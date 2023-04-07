@@ -1,17 +1,4 @@
-#include <limits>
-#include <set>
-#include "ExampleGraphs.h"
 #include "Program.h"
-#include "Menu.h"
-#include "MenuItem.h"
-#include "ChangeMenu.h"
-#include "PairsMaxFlow.h"
-#include "MaxFlowUserInput.h"
-#include "SinglePointMaxFlow.h"
-#include "ReducedConnectivityMaxFlow.h"
-#include "TopSegmentFailure.h"
-#include "Scraper.h"
-#include "MunDistrict.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus
@@ -33,6 +20,7 @@ Program::Program()
     createMainMenu();
     createMenu1();
     createMenu2();
+    createMenu3();
 }
 
 /**
@@ -88,7 +76,7 @@ void Program::createMainMenu()
     menus.emplace_back("../src/menus/mainMenu");
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 2));
-    menus[menus.size() - 1].addMenuItem(new MinCostMaxFlow(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 3));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, -1));
 }
 
@@ -98,21 +86,31 @@ void Program::createMainMenu()
 void Program::createMenu1()
 {
     menus.emplace_back("../src/menus/menu1");
-    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 2));
     menus[menus.size() - 1].addMenuItem(new MaxFlowUserInput(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new PairsMaxFlow(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new District(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new Municipalities(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new SinglePointMaxFlow(currMenuPage, railway));
-    menus[menus.size() - 1].addMenuItem(new MunDistrict(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
+}
+
+/**
+ * @brief Creates menu for the direct flights and reachable destinations
+ */
+
+void Program::createMenu2()
+{
+    menus.emplace_back("../src/menus/menu2");
+    menus[menus.size() - 1].addMenuItem(new MinCostMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }
 
 /**
  * @brief Creates the show menu
  */
+void Program::createMenu3() {
+    menus.emplace_back("../src/menus/menu3");
 
-void Program::createMenu2() {
-    menus.emplace_back("../src/menus/menu2");
-    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
     menus[menus.size() - 1].addMenuItem(new ReducedConnectivityMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new TopSegmentFailure(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));

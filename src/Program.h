@@ -7,6 +7,22 @@
 #include <vector>
 #include <iostream>
 #include "MinCostMaxFlow.h"
+#include <limits>
+#include <set>
+#include "ExampleGraphs.h"
+#include "Menu.h"
+#include "MenuItem.h"
+#include "ChangeMenu.h"
+#include "PairsMaxFlow.h"
+#include "MaxFlowUserInput.h"
+#include "SinglePointMaxFlow.h"
+#include "ReducedConnectivityMaxFlow.h"
+#include "TopSegmentFailure.h"
+#include "Scraper.h"
+#include "Municipalities.h"
+#include "utils.h"
+#include "District.h"
+
 
 using namespace std;
 
@@ -25,6 +41,7 @@ private:
     void createMainMenu();
     void createMenu1();
     void createMenu2();
+    void createMenu3();
 
 public:
     Program();

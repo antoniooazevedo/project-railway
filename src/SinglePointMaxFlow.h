@@ -1,12 +1,9 @@
-//
-// Created by work on 05-04-2023.
-//
-
 #ifndef PROJECT_RAILWAY_SINGLEPOINTMAXFLOW_H
 #define PROJECT_RAILWAY_SINGLEPOINTMAXFLOW_H
 
 
 #include "MenuItem.h"
+#include "utils.h"
 
 class SinglePointMaxFlow : public MenuItem{
 private:

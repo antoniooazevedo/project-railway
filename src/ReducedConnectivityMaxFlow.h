@@ -1,11 +1,7 @@
-//
-// Created by work on 05-04-2023.
-//
-
 #ifndef PROJECT_RAILWAY_REDUCEDCONNECTIVITYMAXFLOW_H
 #define PROJECT_RAILWAY_REDUCEDCONNECTIVITYMAXFLOW_H
 
-
+#include <ctime>
 #include "Graph.h"
 #include "MenuItem.h"
 

@@ -1,6 +1,6 @@
-Go to menu 2
-Calculate Maxflow between two stations
-Execute function for maxflow on pairs
-Single Point Max-Flow
-Top-k Municipalities and districts
-Return to main menu
+Maxflow between two stations
+Pair with the highest maxflow
+Top-k districts needing investment
+Top-k municipalities needing investment
+Maxflow to a certain station
+Return to the main menu

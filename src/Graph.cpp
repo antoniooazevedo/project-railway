@@ -59,7 +59,7 @@ void Graph::insertExtremeDistrict(Vertex *v) {
 
 
 int Graph::findBottleneck(Vertex* src) const {
-    int cap = numeric_limits<double>::max();
+    int cap = numeric_limits<int>::max();
     int tmp;
     auto v = src;
     auto e = v->getPath();
@@ -224,8 +224,6 @@ void Graph::districtMaxFlow(const string &origin, const string &dest) const {
     resetNodes();
     resetFlow();
 
-    reachDest(origin, dest);
-
     auto s = findVertex(origin);
     auto t = findVertex(dest);
 
@@ -238,8 +236,6 @@ void Graph::districtMaxFlow(const string &origin, const string &dest) const {
 void Graph::munMaxFlow(const string &origin, const string &dest) const {
     resetNodes();
     resetFlow();
-
-    reachDest(origin, dest);
 
     auto s = findVertex(origin);
     auto t = findVertex(dest);

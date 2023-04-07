@@ -53,5 +53,5 @@ void pickEdgesToDisable(Graph &railway) {
 void ChangeMenu::execute()
 {
     *(this->currMenuPage) = nextMenu;
-    if (*currMenuPage == 2) pickEdgesToDisable(*railway);
+    if (*currMenuPage == 3) pickEdgesToDisable(*railway);
 }

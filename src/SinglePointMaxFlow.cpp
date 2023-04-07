@@ -1,30 +1,17 @@
-//
-// Created by work on 05-04-2023.
-//
-
 #include "SinglePointMaxFlow.h"
 
-SinglePointMaxFlow::SinglePointMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){}
+SinglePointMaxFlow::SinglePointMaxFlow(int &currMenuPage, Graph &railway) : MenuItem(currMenuPage, railway){}
 
 void SinglePointMaxFlow::execute() {
-    string station;
+    Vertex *orig = nullptr;
     auto vertexSet = railway->getVertexSet();
     auto extremes = railway->getExtremes();
     int flow; bool control_ignore = true;
-    while (true){
-        if (control_ignore) cin.ignore(2000, '\n');
-        cout << "Please input desired station: ";
-        getline(cin, station);
-        cout << endl;
+    if (control_ignore) cin.ignore(2000, '\n');
+    cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
+    fetchStation(&orig,railway);
 
-        if (railway->findVertex(station) != nullptr){
-            break;
-        }
-        cout << "That station does not exist\n \n";
-        control_ignore = false;
-    }
-
-    auto v = railway->findVertex(station);
+    auto v = orig;
 
     // creating super node
     railway->addVertex("Super Node");
@@ -40,6 +27,7 @@ void SinglePointMaxFlow::execute() {
     //removing super node and super edges
     railway->removeVertex("Super Node");
 
-
-    cout << "flow for node: " << flow << endl;
+    drawResults();
+    drawFlow(flow);
+    drawFooter();
 }

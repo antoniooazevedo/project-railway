@@ -1,39 +1,18 @@
 #include "MaxFlowUserInput.h"
-
-#include "utils.cpp"
-
-MaxFlowUserInput::MaxFlowUserInput(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){
-    this->graph = gh;
-}
+MaxFlowUserInput::MaxFlowUserInput(int &currMenuPage, Graph &railway) :  MenuItem(currMenuPage, railway) {}
 
 void MaxFlowUserInput::execute() {
-    string orig = "", dest = "";
+    Vertex *orig = nullptr, *dest = nullptr;
 
     cin.ignore(2000, '\n');
-    while (true){
-        cout << "Origin: ";
-        std::getline(cin, orig);
+    cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
+    fetchStation(&orig,railway);
 
-        if (graph.findVertex(orig) == nullptr){
-            cout << "Station not found";
-            cout << endl;
-            continue;
-        }
-        break;
-    }
+    cout << "\033[34mInsert the name of the destination station: " << "\033[0m";
+    fetchStation(&dest,railway);
 
-    while (true){
-        cout << "Destination: ";
-        std::getline(cin, dest);
-
-        if (graph.findVertex(dest) == nullptr){
-            cout << "Station not found";
-            cout << endl;
-            continue;
-        }
-        break;
-    }
-
-    auto flow = graph.getMaxFlow(graph.findVertex(orig), graph.findVertex(dest));
-    cout << "\nMax flow: " << flow << endl;
+    auto flow = railway->getMaxFlow(orig, dest);
+    drawResults();
+    drawFlow(flow);
+    drawFooter();
 }

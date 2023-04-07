@@ -4,16 +4,15 @@ MinCostMaxFlow::MinCostMaxFlow(int &currMenuPage, Graph &railway) : MenuItem(cur
 
 void MinCostMaxFlow::execute() {
     system("clear");
-    Vertex *orig, *dest;
-    string dummy;
+    Vertex *orig = nullptr, *dest = nullptr;
     int cost, flow;
 
     cin.ignore(2000, '\n');
-    cout << "Input the origin station: ";
-    orig = fetchStation();
+    cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
+    fetchStation(&orig,railway);
 
-    cout << "Input the destination station: ";
-    dest = fetchStation();
+    cout << "\033[34mInsert the name of the destination station: " << "\033[0m";
+    fetchStation(&dest,railway);
 
     railway->minCostMaxFlow(orig, dest);
 
@@ -21,32 +20,14 @@ void MinCostMaxFlow::execute() {
     flow = railway->getVertexFlow(dest);
 
     if (flow > 0) {
-        cout << "Total cost: " << cost << endl;
-        cout << "Total flow: " << flow << endl << endl;
+        drawResults();
+        drawCost(cost);
+        drawFlow(flow);
+        drawFooter();
     }
     else {
-        cout << "Station " << orig->getId() << " can't reach station " << dest->getId() << endl << endl;
+        cout << "\033[31mStation " << orig->getId() << " can't reach station " << dest->getId()<< "\033[0m" << endl << endl;
     }
 
-    cout << "Input anything to go back ";
-    getline(cin, dummy);
 }
 
-Vertex *MinCostMaxFlow::fetchStation() const {
-    Vertex *v;
-    string input;
-
-    while (true) {
-        getline(cin, input);
-
-        system("clear");
-
-        v = railway->findVertex(input);
-        if (v != nullptr)
-            break;
-        cout << "There isn't a station named: " << input << endl;
-        cout << "Input another station: ";
-    }
-
-    return v;
-}

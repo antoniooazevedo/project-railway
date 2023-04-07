@@ -1,7 +1,3 @@
-//
-// Created by work on 06-04-2023.
-//
-
 #include "TopSegmentFailure.h"
 
 TopSegmentFailure::TopSegmentFailure(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){}

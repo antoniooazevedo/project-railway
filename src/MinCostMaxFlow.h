@@ -3,6 +3,7 @@
 
 #include "Graph.h"
 #include "MenuItem.h"
+#include "utils.h"
 
 class MinCostMaxFlow : public MenuItem {
 public:
@@ -10,7 +11,6 @@ public:
     void execute() override;
 
 private:
-    Vertex* fetchStation() const;
 };
 
 
