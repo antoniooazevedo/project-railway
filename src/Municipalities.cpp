@@ -29,12 +29,15 @@ void Municipalities::execute() {
         }
     }
 
-    for (auto i = 0; i < nMunicipalities; i++) {
-        if (i == 0){
-            cout << "\nMunicipalities: " << endl;
-        }
-        cout << mun_vector[i].first << " " << mun_vector[i].second << endl;
+    vector<pair<string,int>> aux;
+    for(auto i = 0; i < nMunicipalities; i++){
+        pair<string,int> p;
+        p.first = mun_vector[i].first;
+        p.second = mun_vector[i].second;
+        aux.push_back(p);
     }
+
+    paginationController(aux);
 
     for(auto n : graph.getVertexSet()){
         n.second->setVisited(false);

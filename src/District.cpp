@@ -6,8 +6,8 @@ void District::execute() {
 
     // Get all the municipalities
     districtFind();
-    vector<pair<string, int>> mun_vector(district_map.begin(), district_map.end());
-    sort(mun_vector.begin(), mun_vector.end(), compareValue);
+    vector<pair<string, int>> district_vector(district_map.begin(), district_map.end());
+    sort(district_vector.begin(), district_vector.end(), compareValue);
 
     // Get the number of districts and municipalities
     int nDistricts = 0;
@@ -17,7 +17,7 @@ void District::execute() {
         cout << "\033[34mInsert the number of Districts that will be displayed (máx: 18): " << "\033[0m";
         getInput(nDistricts);
 
-        if (nDistricts <= 0 || nDistricts > mun_vector.size()){
+        if (nDistricts <= 0 || nDistricts > district_vector.size()){
             cout << endl;
             cout << "\033[31m - Invalid input - " << "\033[0m";
             cout << endl;
@@ -28,12 +28,15 @@ void District::execute() {
         }
     }
 
-    for (auto i = 0; i < nDistricts; i++) {
-        if (i == 0){
-            cout << "\nnDistricts: " << endl;
-        }
-        cout << mun_vector[i].first << " " << mun_vector[i].second << endl;
+    vector<pair<string,int>> aux;
+    for(auto i = 0; i < nDistricts; i++){
+        pair<string,int> p;
+        p.first = district_vector[i].first;
+        p.second = district_vector[i].second;
+        aux.push_back(p);
     }
+
+    paginationController(aux);
 
     for(auto n : graph.getVertexSet()){
         n.second->setVisited(false);
