@@ -7,14 +7,19 @@
 
 class ReducedConnectivityMaxFlow : public MenuItem{
 private:
-    int currMenuPage;
+    int currMenuPage; /**< The current menu page */
 
 public:
+    /**
+     * Constructor
+     * @param currMenuPage - The current menu page
+     * @param gh - The railway graph
+     */
     ReducedConnectivityMaxFlow(int &currMenuPage, Graph &gh);
 
-    /*
-     * Calculates the max flow between all possible pairs of stations belonging to the extremes vector;
-     * Time Complexity: O(V*E²*P²), where V is the number of vertices, E is the number of edges and P is the number of extreme vertices.
+    /**
+     * Calculates the max flow between two stations when some of the edges were set as disabled;
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     void execute() override;
 
