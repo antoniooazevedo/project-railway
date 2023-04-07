@@ -20,53 +20,60 @@ using namespace std;
 class Scraper {
 public:
 
-    /*
+    /**
      * Scrapes the stations from the file specified in the filename parameter and adds them to the graph;
      * @param filename - the name of the file to be scraped
      * @param gh - the graph to which the stations will be added
-     * Returns a vector of unordered_maps, each map containing the stations of a certain region (line, municipality or district);
+     * @return a vector of unordered_maps, each map containing the stations of a certain region (line, municipality or district);
+     * Time Complexity: O(L), where L is the number of lines in the file;
      */
     static vector<unordered_map<string, vector<Vertex *>>> scrape_stations(string filename, Graph &gh);
 
-    /*
+    /**
      * Scrapes the networks from the file specified in the filename parameter and adds them to the graph, connecting the stations;
      * @param filename - the name of the file to be scraped
      * @param gh - the graph to which the networks will be added
+     * Time Complexity: O(L), where L is the number of lines in the file;
      */
     static void scrape_networks(string filename, Graph &gh);
 
-    /*
+    /**
      * Scrapes the townships from the string specified in the aux parameter and returns a list of them;
      * @param aux - the string to be scraped
-     * Returns a list of the townships in the string;
+     * @return a list of the townships in the string;
+     * Time Complexity: O(T), where T is the number of townships in the string;
      */
     static list<string> scrape_townships(string aux);
 
-    /*
+    /**
      * Removes all stations from the graph that have no adjacent edges
      * @param gh - the graph to be fixed
+     * Time Complexity: O(V), where V is the number of vertices in the graph;
      */
     static void fix_graph(Graph &gh);
 
-    /*
+    /**
      * Finds the extremes of the graph according to lines, municipalities and districts, and adds them to the different extreme vectors;
      * @param map - the vector of unordered_maps containing all the stations of the graph;
      * @param gh - the graph used to find the extremes;
+     * Time Complexity: O(P*(V+E)), where V is the number of vertices in the graph, E is the number of edges in the graph and P is the number of extreme vertices;
      */
     static void findExtremes(vector<unordered_map<string, vector<Vertex *>>> &map, Graph &gh);
 
 private:
-    /*
+    /**
      * Finds the extremes based on only if a vertex only has one adjacent edge, or if it has more than two adjacent edges;
      * @param map - the unordered_map containing all the stations of the graph;
      * @param gh - the graph used to find the extremes;
+     * Time Complexity: O(V+E), where V is the number of vertices in the graph and E is the number of edges in the graph; //TODO: check this
      */
     static void getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map, Graph &gh);
 
-    /*
+    /**
      * Runs a BFS starting at the node origin and finds all the remaining extremes of the graph, adding them to the extreme vectors;
      * @param origin - the vertex from which the BFS will start;
      * @param gh - the graph used to find the extremes;
+     * Time Complexity: O(V+E), where V is the number of vertices in the graph and E is the number of edges in the graph;
      */
     static void findExtremesBFS(Vertex *origin, Graph &gh);
 };
