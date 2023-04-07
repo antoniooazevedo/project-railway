@@ -91,25 +91,25 @@ public:
     /**
      * Calculates all the cheapest paths that augment flow from the origin vertex to the destination vertex.
      * It then calculates the max flow between those two vertices and also displays the minimum cost of the path.
+     * Time Complexity: O(V*E*F) where V is the number of vertices, E is the number of edges and F is the max flow.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
-     * Time Complexity: O(V*E*F) where V is the number of vertices, E is the number of edges and F is the max flow.
      */
     void minCostMaxFlow(Vertex *origin, Vertex *dest) const;
 
     /**
      * Calculates the cost of all paths with flow originating from the origin vertex.
+     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @return the cost of all paths with flow originating from the origin vertex.
-     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      */
     int computeCost(Vertex *origin) const;
 
     /**
      * Fetches all the edges that have flow originating from the origin vertex.
+     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @return a vector containing all the edges fetched.
-     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      */
     vector<Edge *> fetchUsedEdges(Vertex *origin);
 
@@ -172,36 +172,36 @@ public:
 
     /**
      * Calculates and returns the max flow between two vertices (v1 and v2) of a graph (this).
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param v1 - the starting vertex;
      * @param v2 - the sink/target vertex;
      * @return the max flow between v1 and v2.
-     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     int getMaxFlow(Vertex* v1, Vertex* v2);
 
     /**
      * Calculates and returns the max flow between two vertices (v1 and v2) of a graph (this), that belong to the same municipality.
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param v1 - the starting vertex;
      * @param v2 - the sink/target vertex;
      * @return the max flow between v1 and v2.
-     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     int getMunMaxFlow(Vertex *v1, Vertex *v2);
 
     /**
      * Calculates and returns the max flow between two vertices (v1 and v2) of a graph (this), that belong to the same district.
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param v1 - the starting vertex;
      * @param v2 - the sink/target vertex;
      * @return the max flow between v1 and v2.
-     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     int getDistrictMaxFlow(Vertex *v1, Vertex *v2);
 
     /**
      * Returns the flow of a vertex (v) of a graph (this).
+     * Time Complexity: O(E), where E is the number of edges of a certain vertex.
      * @param v - the vertex;
      * @return the flow of the vertex.
-     * Time Complexity: O(E), where E is the number of edges of a certain vertex.
      */
     int getVertexFlow(Vertex *v) const;
 
@@ -225,78 +225,77 @@ protected:
 
     /**
      * Augments the flow of all edges of a path ending in a given vertex (dest) by a given flow (flow).
+     * Time Complexity: O(E), where E is the number of edges.
      * @param dest - the destination vertex;
      * @param flow - the flow to be augmented.
-     * Time Complexity: O(E), where E is the number of edges.
      */
     void augmentFlow(Vertex* dest, int flow) const;
 
     /**
      * Finds the bottleneck of a flow path ending in a given vertex (dest).
+     * Time Complexity: O(E), where E is the number of edges.
      * @param dest - the destination vertex;
      * @return the bottleneck of the flow path.
-     * Time Complexity: O(E), where E is the number of edges.
      */
     int findBottleneck(Vertex* dest) const;
 
     /**
      * Calculates the max flow between two vertices (v1 and v2) of a graph (this).
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param origin - the id of the starting vertex;
      * @param dest - the id of the sink/target vertex;
-     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     void maxFlow(const string &origin, const string &dest) const;
 
     /**
      * Finds the cheapest path between two vertices (origin and dest) of a graph (this).
+     * Time Complexity: O(V*E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
      * @return true if a path was found, and false otherwise.
-     * Time Complexity: O(V*E), where V is the number of vertices and E is the number of edges.
      */
     bool findCheapestPath(Vertex *origin, Vertex *dest) const;
 
     /**
      * BFS used to find a path between two vertices (origin and dest) of a graph (this).
+     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
      * @return true if a path was found, and false otherwise.
-     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      */
     bool findPath(Vertex* origin , Vertex* dest ) const;
 
     /**
      * Finds the max flow between two vertices (origin and dest) of a graph (this), that belong to the same municipality.
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param origin - the id of starting vertex;
      * @param dest - the id of the sink/target vertex;
-     *
-     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     void munMaxFlow(const string &origin, const string &dest) const;
 
     /**
      * Finds the path between two vertices (origin and dest) of a graph (this), that belong to the same municipality.
+     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
      * @return true if a path was found, and false otherwise.
-     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      */
     bool findMunPath(Vertex* origin , Vertex* dest ) const;
 
     /**
      * Finds the max flow between two vertices (origin and dest) of a graph (this), that belong to the same district.
+     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
      * @return true if a path was found, and false otherwise.
-     * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      */
     bool findDistrictPath(Vertex *origin, Vertex *dest) const;
 
     /**
      * Finds the max flow between two vertices (origin and dest) of a graph (this), that belong to the same district.
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param origin - the id of the origin vertex;
      * @param dest - the id of the destination vertex;
-     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     void districtMaxFlow(const string &origin, const string &dest) const;
 

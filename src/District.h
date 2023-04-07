@@ -25,9 +25,9 @@ public:
 
     /**
      * Applies a DFS to the graph, starting at the vertex n, and returns the maximum flow of the graph;
+     * Time Complexity: O(V+E), where V is the number of vertices in the graph and E is the number of edges in the graph;
      * @param n - the vertex to start the DFS
      * @param flow - the maximum flow of the graph
-     * Time Complexity: O(V+E), where V is the number of vertices in the graph and E is the number of edges in the graph;
      */
     void dfs(Vertex *n, int &flow);
 
