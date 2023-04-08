@@ -121,8 +121,6 @@ void drawEdges(vector<Edge*> data, int page, int nPages) {
 
     cout << "                                        \033[0m|" << endl;
     cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
-    cout << "|\033[40m                      Origin                         |                       Destination                 \033[0m|" << endl;
-    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
     for (int i = 10 * page; i < 10 * page + 10; i++) {
         if (i == data.size())
             break;
@@ -134,7 +132,7 @@ void drawEdges(vector<Edge*> data, int page, int nPages) {
             cout << "\033[100m";
         auto aux = data[i];
         // TODO: Use getLen after merging
-        cout << "    " << aux->getOrig()->getId() << string(49 - aux->getOrig()->getId().size(), ' ') << "| " << aux->getDest()->getId() << string(49 - aux->getDest()->getId().size(), ' ') << " \033[0m";
+        cout << "    Edge " << i % 10 + 1 << ": " << aux->getOrig()->getId() << " <--> " << aux->getDest()->getId() << string(87 - to_string(i%10 + 1).size() - aux->getDest()->getId().size() - aux->getOrig()->getId().size(), ' ') << " \033[0m";
         cout<<"\033[0m|"<<endl;
 
     }
