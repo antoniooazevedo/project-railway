@@ -209,3 +209,36 @@ Graph ExampleGraphs::maxFlowSinglePointGraph2() {
     return gh;
 }
 
+Graph ExampleGraphs::topSegmentFailureGraph1() {
+    Graph gh;
+    for (auto i = 1; i <= 7; i++) {
+        int line = 1;
+        auto *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 8, STANDARD);
+    gh.addBidirectionalEdge("V2", "V3", 8, STANDARD);
+    gh.addBidirectionalEdge("V2", "V4", 2, STANDARD);
+    gh.addBidirectionalEdge("V2", "V5", 3, STANDARD);
+    gh.addBidirectionalEdge("V2", "V6", 3, STANDARD);
+    gh.addBidirectionalEdge("V1", "V7", 8, STANDARD);
+
+    return gh;
+}
+
+Graph ExampleGraphs::topSegmentFailureGraph2() {
+    Graph gh;
+    for (auto i = 1; i <= 4; i++) {
+        int line = 1;
+        auto *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 4, STANDARD);
+    gh.addBidirectionalEdge("V2", "V3", 6, STANDARD);
+    gh.addBidirectionalEdge("V3", "V4", 6, STANDARD);
+
+    return gh;
+}
+

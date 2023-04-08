@@ -29,6 +29,10 @@ public:
 
     static Graph maxFlowSinglePointGraph2();
 
+    static Graph topSegmentFailureGraph1();
+
+    static Graph topSegmentFailureGraph2();
+
 };
 
 #endif //PROJECT_RAILWAY_EXAMPLEGRAPHS_H

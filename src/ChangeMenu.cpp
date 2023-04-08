@@ -54,8 +54,7 @@ void ChangeMenu::enableAllEdges() {
     }
 }
 
-void ChangeMenu::execute()
-{
+void ChangeMenu::execute() {
     if (nextMenu == 3) pickEdgesToDisable();
     if (*currMenuPage == 3) enableAllEdges();
     *(this->currMenuPage) = nextMenu;
