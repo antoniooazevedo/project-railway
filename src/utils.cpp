@@ -32,7 +32,7 @@ bool fetchStation(Vertex **v, Graph *railway, char quit) {
     while (*v == nullptr) {
         getline(cin, input);
 
-        if (input[0] == quit && quit != ' ')
+        if (input.size() == 1 && input[0] == quit && quit != ' ')
             return false;
 
         system("clear");
@@ -45,4 +45,100 @@ bool fetchStation(Vertex **v, Graph *railway, char quit) {
     }
 
     return true;
+}
+
+Edge* pickAnEdge(const vector<Edge*>& data) {
+    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
+    int page = 0;
+    while (page >= 0 and page < (float)data.size() / 10.0)
+    {
+        string option;
+        drawEdges(data,page,ceil((float)data.size()/10.0));
+        bool cond = true;
+        while (cond)
+        {
+            cout << endl
+                 << "\033[33mChoose an option[n/p] or the number of the edge you want to choose[1-"<<
+                 ((page + 1) * 10 > data.size() ? data.size() - (page * 10) : 10) <<"]: ";
+            cond = true;
+            cin >> option;
+
+            if (option.length() == 1)
+            {
+                option= ::toupper(option[0]);
+                switch (option[0])
+                {
+                    case 'N':
+                        page++;
+                        cond=false;
+                        break;
+                    case 'P':
+                        page--;
+                        cond=false;
+                        break;
+
+                    default:
+                        cond = true;
+                }
+            }
+            if(cond){
+                int test;
+                try{
+                    cond = false;
+                    test = stoi(option);
+                }catch (invalid_argument){
+                    cond=true;
+                }
+                if (!cond) {
+                    cond=true;
+                    if (to_string(test).length()==option.length()) {
+                        if (test>0 && test <= 10 && page * 10 + test <= data.size()) {
+                            return data[page*10 + test - 1];
+                        }
+                    }
+
+                }
+            }
+            if (cond)
+                cout << "\033[31mInvalid input! Please enter a valid input: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
+
+void drawEdges(vector<Edge*> data, int page, int nPages) {
+    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
+    system("clear");
+    cout << " _________________________________________________________________________________________________________ " << endl;
+    cout << "|\033[40m                                              Select an Edge                                             \033[0m|" << endl;
+    cout << "\033[0m";
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m                                                 Page(" << page + 1 << "/" << nPages << ") ";
+    for (int i = 0; i < 8 - to_string(page + 1).length() - to_string(nPages).length(); i++)
+        cout << ' ';
+
+    cout << "                                        \033[0m|" << endl;
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m                      Origin                         |                       Destination                 \033[0m|" << endl;
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    for (int i = 10 * page; i < 10 * page + 10; i++) {
+        if (i == data.size())
+            break;
+        cout<<"|";
+        if (i % 2 == 0)
+            cout << "\033[47m"
+                 << "\033[30m";
+        else
+            cout << "\033[100m";
+        auto aux = data[i];
+        // TODO: Use getLen after merging
+        cout << "    " << aux->getOrig()->getId() << string(49 - aux->getOrig()->getId().size(), ' ') << "| " << aux->getDest()->getId() << string(49 - aux->getDest()->getId().size(), ' ') << " \033[0m";
+        cout<<"\033[0m|"<<endl;
+
+    }
+
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
+    cout << "|\033[40m                                        [n]Next      [p]Previous                                         \033[0m|" << endl;
+    cout << "|\033[40m_________________________________________________________________________________________________________\033[0m|" << endl;
 }

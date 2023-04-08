@@ -44,6 +44,14 @@ void TopSegmentFailure::execute() {
     // TODO: Change this to calculate only one edge
 
     disabledEdges = fetchDisabledEdges();
+
+    vector<Edge*> v;
+
+    for (auto e: disabledEdges) {
+        v.push_back(e);
+    }
+
+    Edge *e = pickAnEdge(v);
     auto vertexSet = railway->getVertexSet();
     enableEdges();
     disabledEdgesMaxFlow(false);

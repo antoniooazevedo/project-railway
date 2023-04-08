@@ -8,6 +8,7 @@
 
 #include "Graph.h"
 #include "MenuItem.h"
+#include "utils.h"
 
 class TopSegmentFailure : public MenuItem{
 private:
