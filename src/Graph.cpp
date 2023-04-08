@@ -91,7 +91,7 @@ void Graph::augmentFlow(Vertex* dest, int flow) const {
     }
 }
 
-bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
+bool Graph::findPath(Vertex* origin , Vertex* dest) const {
     resetNodes();
 
     queue<Vertex*> q;
@@ -104,7 +104,10 @@ bool Graph::findPath(Vertex* origin , Vertex* dest ) const {
 
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
-            if (!w->isVisited() && e->getCapacity() > e->getFlow() + e->getReverse()->getFlow() && !e->getDisabled()) {
+
+            bool isNotFull = e->getCapacity() > e->getFlow() + e->getReverse()->getFlow();
+
+            if (!w->isVisited() && isNotFull && !e->getDisabled()) {
                 if (w == dest) {
                     w->setPath(e);
                     return true;
@@ -332,14 +335,16 @@ bool Graph::removeVertex(const std::string &id) {
     if (findVertex(id) == nullptr) return false;
     auto v = findVertex(id);
     v->removeOutgoingEdges();
-    vertexSet.erase(id);
+    auto lowerId = v->getId();
+    transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
+    int i = vertexSet.erase(lowerId);
+    auto aaa = findVertex("Super Node");
     return true;
 }
 
 bool Graph::removeVertex(Vertex *v) {
     if (findVertex(v->getId()) == nullptr) return false;
     v->removeOutgoingEdges();
-    vertexSet.erase(v->getId());
     auto lowerId = v->getId();
     transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
     vertexSet.erase(lowerId);

@@ -2,15 +2,16 @@
 #define PROJECT_RAILWAY_UTILS_H
 
 #include <limits>
-#include "iostream"
+
+#include <iostream>
 #include "VertexEdge.h"
 #include "Graph.h"
+#include <cmath>
 
 using namespace std;
 
 template<typename type>
-
-bool getInput(type &);
+bool getInput(type &input);
 bool compareValue(const pair<string,int>& a, const pair<string,int>& b);
 bool sortResultVector(const pair<pair<Vertex*, Vertex*>, int> &p1, const pair<pair<Vertex*, Vertex*>, int> &p2);
 void sortVector(vector<Edge *> &aux);
@@ -31,6 +32,7 @@ template<typename edge>
 void drawEdgeCost(vector<edge> data, int page, int nPages);
 template<typename edge>
 void drawEdge(vector<edge> data, int page, int nPages);
-
+Edge* pickAnEdge(const vector<Edge*>& data);
+void drawEdges(vector<Edge*> data, int page, int nPages);
 
 #endif //PROJECT_RAILWAY_UTILS_H

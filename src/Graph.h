@@ -271,6 +271,7 @@ protected:
      * @param origin - the id of starting vertex;
      * @param dest - the id of the sink/target vertex;
      */
+
     void munMaxFlow(const string &origin, const string &dest) const;
 
     /**

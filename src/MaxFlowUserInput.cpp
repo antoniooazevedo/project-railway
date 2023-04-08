@@ -1,4 +1,5 @@
 #include "MaxFlowUserInput.h"
+
 MaxFlowUserInput::MaxFlowUserInput(int &currMenuPage, Graph &railway) :  MenuItem(currMenuPage, railway) {}
 
 void MaxFlowUserInput::execute() {

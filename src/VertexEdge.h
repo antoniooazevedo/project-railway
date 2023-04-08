@@ -57,6 +57,7 @@ public:
     /**
      * Returns the district of the vertex;
      */
+    void removeLastEdgeCreated();
     string getDistrict() const;
 
     /**
@@ -99,6 +100,7 @@ public:
      * @return true - if the vertex is in the queue;
      *         false - if the vertex is not in the queue;
      */
+    int getMaxFlow() const;
     bool getInQueue() const;
 
     /**
@@ -148,6 +150,7 @@ public:
      * @param inQueue - true if the vertex is in the queue, false if otherwise;
      */
     void setInQueue(bool inQueue);
+    void setMaxFlow(int maxFlow);
 
     /**
      * Sets the path attribute of the vertex;
@@ -171,6 +174,9 @@ public:
     void removeOutgoingEdges();
     bool operator==(const Vertex& v);
 
+    int getDisabledFlow() const;
+    void setDisabledFlow(int disabledFlow);
+
 protected:
     string id; /**< The id of the vertex */
     vector<Edge *> adj; /**< The adjacency vector of the vertex */
@@ -189,6 +195,8 @@ protected:
     Edge *path = nullptr; /**< Edge path of the vertex */
     string name = id, district, municipality, main_line; /**< Name (id), district, municipality and main line of the vertex */
     list<string> townships; /**< Townships list of the vertex */
+    int maxFlow;
+    int disabledFlow;
 
     vector<Edge *> incoming; /**< Vector of incoming edges of the vertex */
 
@@ -321,6 +329,7 @@ protected:
     int flow; /**< Flow of the edge */
 
     enum service service; /**< Service of the edge */
+
 };
 
 #endif /* DA_TP_CLASSES_VERTEX_EDGE */

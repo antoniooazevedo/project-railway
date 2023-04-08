@@ -44,6 +44,7 @@ private:
     void createMenu3();
     void createMenu4();
     void createMenu5();
+    void createMenuReducedConnectivity();
 
 public:
     Program();

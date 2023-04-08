@@ -11,38 +11,34 @@ ChangeMenu::ChangeMenu(int &currMenuPage, Graph &railway, int nextMenu) : MenuIt
     this->nextMenu = nextMenu;
 }
 
-/**
- * @brief Changes the current menu page to another page
- * complexity O(1)
- */
+void ChangeMenu::pickEdgesToDisable() {
+    system("clear");
 
-void pickEdgesToDisable(Graph &railway) {
-    string orig, dest;
-    bool control_ignore = true;
-    cout << "When you are done, insert 'd' as the origin or destination station" << endl;
+    Vertex *orig, *dest;
+    cout << "When you are done, insert d/D!\n" << endl;
     cin.ignore(2000, '\n');
 
     while(true){
+        orig = dest = nullptr;
+
         cout << "Insert the name of the origin station: ";
-        getline(cin, orig);
-        cout << "\nInsert the name of the destination station: ";
-        getline(cin, dest);
-        control_ignore = false;
+        if (!fetchStation(&orig, railway, 'd'))
+            return;
 
-        if (orig == "d" || dest == "d" || orig == "D" || dest == "D") break;
+        cout << "Insert the name of the destination station: ";
+        if (!fetchStation(&dest, railway, 'd'))
+            return;
 
-        if(railway.findVertex(orig) == nullptr || railway.findVertex(dest) == nullptr){
-            cout << "Invalid station name" << endl;
-            continue;
-        }
         bool not_found = true;
-        for (auto &e: railway.findVertex(orig)->getAdj()){
-            if (e->getDest()->getId()==dest){
+        for (Edge *e: orig->getAdj()){
+            if (e->getDest() == dest){
                 e->setDisabled(true);
+                e->getReverse()->setDisabled(true);
                 not_found = false;
                 break;
             }
         }
+
         if (not_found){
             cout << "There is no edge between the two stations" << endl;
             continue;
@@ -50,8 +46,16 @@ void pickEdgesToDisable(Graph &railway) {
     }
 }
 
-void ChangeMenu::execute()
-{
+void ChangeMenu::enableAllEdges() {
+    for (const auto& v: railway->getVertexSet()) {
+        for (Edge *e: v.second->getAdj()) {
+            e->setDisabled(false);
+        }
+    }
+}
+
+void ChangeMenu::execute() {
+    if (nextMenu == 3) pickEdgesToDisable();
+    if (*currMenuPage == 3) enableAllEdges();
     *(this->currMenuPage) = nextMenu;
-    if (*currMenuPage == 3) pickEdgesToDisable(*railway);
 }

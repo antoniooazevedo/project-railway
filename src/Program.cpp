@@ -25,6 +25,7 @@ Program::Program()
     createMenu3();
     createMenu4();
     createMenu5();
+    createMenuReducedConnectivity();
 }
 
 /**
@@ -79,7 +80,7 @@ void Program::createMainMenu()
 {
     menus.emplace_back("../src/menus/mainMenu");
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 1));
-    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 2));
+    menus[menus.size() - 1].addMenuItem(new MinCostMaxFlow(currMenuPage, railway));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 3));
     menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, -1));
 }
@@ -149,4 +150,11 @@ void Program::cleanMenus()
             delete menuItem;
         }
     }
+}
+
+void Program::createMenuReducedConnectivity() {
+    menus.emplace_back("../src/menus/reducedConnectivity");
+    menus[menus.size() - 1].addMenuItem(new ReducedConnectivityMaxFlow(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new TopSegmentFailure(currMenuPage, railway));
+    menus[menus.size() - 1].addMenuItem(new ChangeMenu(currMenuPage, railway, 0));
 }

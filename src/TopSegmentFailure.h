@@ -4,6 +4,7 @@
 
 #include "Graph.h"
 #include "MenuItem.h"
+#include "utils.h"
 
 class TopSegmentFailure : public MenuItem{
 private:
@@ -15,7 +16,14 @@ private:
      * Time Complexity: O(V²*E²), where V is the number of vertices and E is the number of edges.
      * @return
      */
-    vector<pair<Vertex*, int>> fullGraphMaxFlow();
+    void disabledEdgesMaxFlow(bool disabled);
+    set<Edge*> fetchDisabledEdges();
+    void enableEdges();
+    void disableEdges();
+    void getAllStations();
+
+    set<Edge*> disabledEdges;
+    vector<Vertex*> stations;
 public:
     /**
      * Constructor

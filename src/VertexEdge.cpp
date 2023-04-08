@@ -192,6 +192,26 @@ void Vertex::setFlow(int flow) {
     this->flow = flow;
 }
 
+void Vertex::removeLastEdgeCreated() {
+    adj.pop_back();
+}
+
+int Vertex::getMaxFlow() const {
+    return maxFlow;
+}
+
+void Vertex::setMaxFlow(int maxFlow) {
+    this->maxFlow = maxFlow;
+}
+
+int Vertex::getDisabledFlow() const {
+    return disabledFlow;
+}
+
+void Vertex::setDisabledFlow(int disabledFlow) {
+    this->disabledFlow = disabledFlow;
+}
+
 /********************** Edge  ****************************/
 
 
