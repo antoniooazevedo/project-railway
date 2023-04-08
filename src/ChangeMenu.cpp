@@ -12,8 +12,10 @@ ChangeMenu::ChangeMenu(int &currMenuPage, Graph &railway, int nextMenu) : MenuIt
 }
 
 void ChangeMenu::pickEdgesToDisable() {
+    system("clear");
+
     Vertex *orig, *dest;
-    cout << "When you are done, insert 'd' as the origin or destination station" << endl;
+    cout << "When you are done, insert d/D!\n" << endl;
     cin.ignore(2000, '\n');
 
     while(true){
@@ -23,7 +25,7 @@ void ChangeMenu::pickEdgesToDisable() {
         if (!fetchStation(&orig, railway, 'd'))
             return;
 
-        cout << "\nInsert the name of the destination station: ";
+        cout << "Insert the name of the destination station: ";
         if (!fetchStation(&dest, railway, 'd'))
             return;
 

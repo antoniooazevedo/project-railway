@@ -37,10 +37,10 @@ void TopSegmentFailure::disabledEdgesMaxFlow(bool disabled) {
 }
 
 void TopSegmentFailure::execute() {
-    vector<pair<Edge*, vector<Vertex*>>> topResults;
-    vector<Vertex*> topResultsPerEdge;
+    pair<Edge*, vector<Vertex*>> edgeReport;
+    vector<Vertex*> topVertexes;
+    int topK;
 
-    // TODO: Ask the user for the edge he wants to get the report of
     // TODO: Change this to calculate only one edge
 
     disabledEdges = fetchDisabledEdges();
@@ -51,32 +51,31 @@ void TopSegmentFailure::execute() {
         v.push_back(e);
     }
 
-    Edge *e = pickAnEdge(v);
+    cout << "Please input how many stations you would like the top-k report to have (1-" << stations.size() << "): ";
+    while (getInput(topK) && 0 <= topK && topK <= stations.size()) {
+        cout << "Please input a valid number (1-" << stations.size() << "): ";
+    }
+
+    topVertexes.reserve(topK);
+    Edge *pickedEdge = pickAnEdge(v);
     auto vertexSet = railway->getVertexSet();
     enableEdges();
     disabledEdgesMaxFlow(false);
 
-    for (Edge *e: disabledEdges) {
-        topResultsPerEdge.clear();
+    pickedEdge->setDisabled(true);
+    pickedEdge->getReverse()->setDisabled(true);
 
-        e->setDisabled(true);
-        e->getReverse()->setDisabled(true);
+    disabledEdgesMaxFlow(true);
 
-        disabledEdgesMaxFlow(true);
+    sort(stations.begin(), stations.end(), [](Vertex* s1, Vertex* s2) {
+        return s1->getMaxFlow() - s1->getDisabledFlow() > s2->getMaxFlow() - s2->getDisabledFlow();
+    });
 
-        sort(stations.begin(), stations.end(), [](Vertex* s1, Vertex* s2) {
-            return s1->getMaxFlow() - s1->getDisabledFlow() > s2->getMaxFlow() - s2->getDisabledFlow();
-        });
-
-        for (int i = 0; i < 10; i++) {
-            topResultsPerEdge.push_back(stations[i]);
-        }
-
-        topResults.emplace_back(e, topResultsPerEdge);
-
-        e->setDisabled(false);
-        e->getReverse()->setDisabled(false);
+    for (int i = 0; i < topK; i++) {
+        topVertexes.push_back(stations[i]);
     }
+
+    edgeReport = {pickedEdge, topVertexes};
 
     disableEdges();
 }

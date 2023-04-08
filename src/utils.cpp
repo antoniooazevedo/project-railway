@@ -25,6 +25,8 @@ bool getInput(type &input){
     return false;
 }
 
+template bool getInput<int>(int &input);
+
 bool fetchStation(Vertex **v, Graph *railway, char quit) {
     string input;
     quit = tolower(quit, locale());
@@ -48,9 +50,8 @@ bool fetchStation(Vertex **v, Graph *railway, char quit) {
 }
 
 Edge* pickAnEdge(const vector<Edge*>& data) {
-    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
     int page = 0;
-    while (page >= 0 and page < (float)data.size() / 10.0)
+    while (true)
     {
         string option;
         drawEdges(data,page,ceil((float)data.size()/10.0));
@@ -59,7 +60,7 @@ Edge* pickAnEdge(const vector<Edge*>& data) {
         {
             cout << endl
                  << "\033[33mChoose an option[n/p] or the number of the edge you want to choose[1-"<<
-                 ((page + 1) * 10 > data.size() ? data.size() - (page * 10) : 10) <<"]: ";
+                 ((page + 1) * 10 > data.size() ? data.size() - (page * 10) : 10) <<"]: \033[0m";
             cond = true;
             cin >> option;
 
@@ -69,11 +70,11 @@ Edge* pickAnEdge(const vector<Edge*>& data) {
                 switch (option[0])
                 {
                     case 'N':
-                        page++;
+                        if (page + 1 < (float)data.size() / 10.0) page++;
                         cond=false;
                         break;
                     case 'P':
-                        page--;
+                        if (page > 0) page--;
                         cond=false;
                         break;
 
