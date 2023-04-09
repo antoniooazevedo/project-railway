@@ -3,32 +3,32 @@
 ReducedConnectivityMaxFlow::ReducedConnectivityMaxFlow(int &currMenuPage, Graph &gh) : MenuItem(currMenuPage, gh){}
 
 void ReducedConnectivityMaxFlow::execute() {
-    string amount, orig, dest;
+    string amount;
+    Vertex *orig = nullptr, *dest = nullptr;
     auto vertexSet = railway->getVertexSet();
     cin.ignore(2000, '\n');
 
     while (true){
-        cout << "Please input desired origin station: ";
-        getline(cin, orig);
-        cout << endl;
+        cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
+        fetchStation(&orig,railway);
 
-        if (railway->findVertex(orig) == nullptr){
-            cout << "That station does not exist\n \n";
-            continue;
-        }
-
-        cout << "Please input desired destination station: ";
-        getline(cin, dest);
-        cout << endl;
-
-        if (railway->findVertex(dest) == nullptr){
-            cout << "That station does not exist\n \n";
-            continue;
-        }
-
+        cout << "\033[34mInsert the name of the destination station: " << "\033[0m";
+        fetchStation(&dest,railway);
         break;
     }
-    auto v1 = railway->findVertex(orig), v2 = railway->findVertex(dest);
-    int flow = railway->getMaxFlow(v1,v2);
-    cout << "flow with restricted graph: " << flow << endl;
+    int flow = railway->getMaxFlow(orig,dest);
+    drawResults();
+    drawFlow(flow);
+    vector<Vertex*> vertexes;
+    vertexes.push_back(orig);
+    if (flow > 0){
+        drawFooter(railway->fetchUsedEdges(vertexes));
+    }
+    else{
+        cout << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
+             << "|\033[40m_____________________________________________\033[0m|\n";
+        string dummy;
+        cout << "\033[33mInput anything to continue: \033[0m";
+        getline(cin, dummy);
+    }
 }

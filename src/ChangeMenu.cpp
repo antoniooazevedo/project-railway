@@ -15,17 +15,19 @@ void ChangeMenu::pickEdgesToDisable() {
     system("clear");
 
     Vertex *orig, *dest;
-    cout << "When you are done, insert d/D!\n" << endl;
     cin.ignore(2000, '\n');
 
     while(true){
         orig = dest = nullptr;
 
-        cout << "Insert the name of the origin station: ";
+        cout << "\033[33mWhen you are done, insert d/D on any of the stations!\033[0m";
+
+        cout << endl;
+        cout << "\033[34mInsert the name of the origin station: \033[0m";
         if (!fetchStation(&orig, railway, 'd'))
             return;
 
-        cout << "Insert the name of the destination station: ";
+        cout << "\033[34mInsert the name of the destination station: \033[0m";
         if (!fetchStation(&dest, railway, 'd'))
             return;
 
@@ -40,7 +42,8 @@ void ChangeMenu::pickEdgesToDisable() {
         }
 
         if (not_found){
-            cout << "There is no edge between the two stations" << endl;
+            cout << "\033[31mThere is no edge between the two stations\033[0m"  << endl;
+            cout << endl;
             continue;
         }
     }

@@ -4,6 +4,7 @@
 #include <ctime>
 #include "Graph.h"
 #include "MenuItem.h"
+#include "Utils.h"
 
 class ReducedConnectivityMaxFlow : public MenuItem{
 private:

@@ -34,5 +34,7 @@ template<typename edge>
 void drawEdge(vector<edge> data, int page, int nPages);
 Edge* pickAnEdge(const vector<Edge*>& data);
 void drawEdges(vector<Edge*> data, int page, int nPages);
+void topNode(const vector<Vertex*>& data);
+void drawNode(vector<Vertex*> data, int page, int nPages);
 
 #endif //PROJECT_RAILWAY_UTILS_H

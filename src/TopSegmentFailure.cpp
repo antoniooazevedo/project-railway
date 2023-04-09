@@ -51,9 +51,11 @@ void TopSegmentFailure::execute() {
         v.push_back(e);
     }
 
-    cout << "Please input how many stations you would like the top-k report to have (1-" << stations.size() << "): ";
-    while (getInput(topK) && 0 <= topK && topK <= stations.size()) {
-        cout << "Please input a valid number (1-" << stations.size() << "): ";
+    cout << "\033[34mPlease input how many stations you would like the top-k report to have (1-" << stations.size() << "): \033[0m";
+    getInput(topK);
+    while ( 0 >= topK || topK > stations.size()) {
+        cout << "\033[31mPlease input a valid number (1-" << stations.size() << "): \033[0m";
+        getInput(topK);
     }
 
     topVertexes.reserve(topK);
@@ -75,6 +77,7 @@ void TopSegmentFailure::execute() {
         topVertexes.push_back(stations[i]);
     }
 
+    topNode(topVertexes);
     edgeReport = {pickedEdge, topVertexes};
 
     disableEdges();
