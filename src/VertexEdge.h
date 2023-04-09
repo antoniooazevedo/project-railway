@@ -101,6 +101,11 @@ public:
      *         false - if the vertex is not in the queue;
      */
     int getMaxFlow() const;
+
+    /**
+     * Gets the attribute inQueue;
+     * @return the vertex's inQueue;
+     */
     bool getInQueue() const;
 
     /**
@@ -174,7 +179,16 @@ public:
     void removeOutgoingEdges();
     bool operator==(const Vertex& v);
 
+    /**
+     * Gets the attribute disabledFlow;
+     * @return the vertex's disabled flow;
+     */
     int getDisabledFlow() const;
+
+    /**
+     * Sets the attribute disabledFlow;
+     * @param disabledFlow - the amount to set;
+     */
     void setDisabledFlow(int disabledFlow);
 
 protected:
@@ -195,8 +209,8 @@ protected:
     Edge *path = nullptr; /**< Edge path of the vertex */
     string name = id, district, municipality, main_line; /**< Name (id), district, municipality and main line of the vertex */
     list<string> townships; /**< Townships list of the vertex */
-    int maxFlow;
-    int disabledFlow;
+    int maxFlow; /**< Vertex's max flow */
+    int disabledFlow; /**< Vertex's disabled flow */
 
     vector<Edge *> incoming; /**< Vector of incoming edges of the vertex */
 

@@ -17,13 +17,34 @@ private:
      * @return
      */
     void disabledEdgesMaxFlow(bool disabled);
+
+    /**
+     * Fetches all disabled edges of the graph;
+     * Time Complexity: O(E), where E is the number of edges.
+     * @return a set containing all disabled edges
+     */
     set<Edge*> fetchDisabledEdges();
+
+    /**
+     * Enables certain disabled edges;
+     * Time Complexity: O(D), where D is the number of edges in the disabled edges set.
+     */
     void enableEdges();
+
+    /**
+     * Disables certain enabled edges;
+     * Time Complexity: O(D), where D is the number of edges in the disabled edges set.
+     */
     void disableEdges();
+
+    /**
+     * Fetches all stations and adds them to the stations vector.
+     * Time Complexity: O(V), where V is the number of nodes in the graph.
+     */
     void getAllStations();
 
-    set<Edge*> disabledEdges;
-    vector<Vertex*> stations;
+    set<Edge*> disabledEdges; /**< Set containing the disabled edges */
+    vector<Vertex*> stations; /**< Vector containing the stations of the graph */
 public:
     /**
      * Constructor
