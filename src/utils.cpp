@@ -205,6 +205,7 @@ void draw(vector<Name> data, int page, int nPages) {
 
 void drawFlow(int flow){
     int size = 0;
+    flow == 0 ? size = 1 : size = 0;
     int aux = flow;
     while(aux != 0){
         aux = aux/10;
@@ -215,7 +216,8 @@ void drawFlow(int flow){
 }
 
 void drawCost(int cost){
-    int size = 0;
+    int size = 1;
+    cost == 0 ? size = 1 : size = 0;
     int aux = cost;
     while(aux != 0){
         aux = aux/10;
