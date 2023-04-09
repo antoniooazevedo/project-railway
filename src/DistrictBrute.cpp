@@ -3,7 +3,7 @@
 void DistrictBrute::execute() {
 
     district_map.clear();
-
+    system("clear");
     // Get all the municipalities
     districtFind();
     vector<pair<string, int>> district_vector(district_map.begin(), district_map.end());

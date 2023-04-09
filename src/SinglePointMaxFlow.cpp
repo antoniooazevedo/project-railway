@@ -3,6 +3,7 @@
 SinglePointMaxFlow::SinglePointMaxFlow(int &currMenuPage, Graph &railway) : MenuItem(currMenuPage, railway){}
 
 void SinglePointMaxFlow::execute() {
+    system("clear");
     Vertex *dest = nullptr;
     auto vertexSet = railway->getVertexSet();
     auto extremes = railway->getExtremes();

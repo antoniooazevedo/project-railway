@@ -4,6 +4,7 @@ ReducedConnectivityMaxFlow::ReducedConnectivityMaxFlow(int &currMenuPage, Graph 
 
 void ReducedConnectivityMaxFlow::execute() {
     string amount;
+    system("clear");
     Vertex *orig = nullptr, *dest = nullptr;
     auto vertexSet = railway->getVertexSet();
     cin.ignore(2000, '\n');

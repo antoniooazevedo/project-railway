@@ -40,6 +40,7 @@ void TopSegmentFailure::execute() {
     pair<Edge*, vector<Vertex*>> edgeReport;
     vector<Vertex*> topVertexes;
     int topK;
+    system("clear");
 
     // TODO: Change this to calculate only one edge
 

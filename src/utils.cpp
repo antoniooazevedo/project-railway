@@ -63,8 +63,7 @@ bool fetchStation(Vertex **v, Graph *railway, char quit) {
         if (*v != nullptr)
             break;
 
-        cout<<endl;
-        cout << "\033[31m - Station not found - " << input << "\033[0m";
+        cout << "\033[31mStation not found: " << input << "\033[0m";
         cout<<endl;
         cout<<endl;
         cout << "\033[34mInput another station: " << "\033[0m";

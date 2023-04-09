@@ -6,6 +6,7 @@ PairsMaxFlow::PairsMaxFlow(int &currMenuPage, Graph &railway) : MenuItem(currMen
 
 void PairsMaxFlow::execute() {
     cin.ignore(2000, '\n');
+    system("clear");
     auto extremes = railway->getExtremes();
     result_vector.clear();
     int flow = 0;

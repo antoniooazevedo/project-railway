@@ -3,7 +3,7 @@
 void District::execute() {
 
     district_map.clear();
-
+    system("clear");
     districtFind();
     vector<pair<string, int>> district_vector(district_map.begin(), district_map.end());
     sort(district_vector.begin(), district_vector.end(), compareValue);

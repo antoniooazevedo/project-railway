@@ -4,7 +4,7 @@
 void MunicipalitiesBrute::execute() {
 
     mun_map.clear();
-
+    system("clear");
     // Get all the municipalities
     municipalitiesFind();
     vector<pair<string, int>> mun_vector(mun_map.begin(), mun_map.end());

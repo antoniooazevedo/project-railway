@@ -6,6 +6,7 @@ void MaxFlowUserInput::execute() {
     Vertex *orig = nullptr, *dest = nullptr;
 
     cin.ignore(2000, '\n');
+    system("clear");
     cout << "\033[34mInsert the name of the origin station: " << "\033[0m";
     fetchStation(&orig,railway);
 
