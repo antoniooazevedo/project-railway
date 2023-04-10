@@ -18,7 +18,7 @@ public:
 
     /**
      * Asks for user input for the name of both the origin and destination stations and calculates the max flow between the two stations;
-     * Time Complexity: O(V*E*F), where V is the number of vertices, E is the number of edges and F is the max flow.
+     * Time Complexity: O(V*E²), where V is the number of vertices, E is the number of edges of the graph
      */
     void execute() override;
 

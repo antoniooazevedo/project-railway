@@ -8,7 +8,7 @@ bool sortResultVector(const pair<Vertex*, int> &p1, const pair<Vertex*, int> &p2
     return (p1.second > p2.second);
 }
 
-void TopSegmentFailure::disabledEdgesMaxFlow(bool disabled) {
+void TopSegmentFailure::disabledEdgesMaxFlow() {
     auto vertexSet = railway->getVertexSet();
     auto extremes = railway->getExtremes();
 
@@ -54,7 +54,7 @@ void TopSegmentFailure::execute() {
     pickedEdge->setDisabled(true);
     pickedEdge->getReverse()->setDisabled(true);
 
-    disabledEdgesMaxFlow(true);
+    disabledEdgesMaxFlow();
 
     sort(stations.begin(), stations.end(), [](Vertex* s1, Vertex* s2) {
         return s1->getMaxFlow() - s1->getDisabledFlow() > s2->getMaxFlow() - s2->getDisabledFlow();

@@ -160,6 +160,12 @@ public:
      * @return the edge created;
      */
     Edge * addEdge(Vertex *dest, double w);
+
+    /**
+     * Auxiliary function to remove an outgoing edge (with a given destination (d))
+     * from a vertex (this).
+     * Returns true if successful, and false if such edge does not exist.
+     */
     bool removeEdge(string destID);
 
     /**
@@ -181,6 +187,18 @@ public:
      */
     void setDisabledFlow(int disabledFlow);
 
+    /**
+     * Gets the attribute component
+     * @return the connected component the vertex is in
+     */
+    int getComponent() const;
+
+    /**
+     * Sets the attribute component of the vertex
+     * @param component - the connected component the vertex is in
+     */
+    void setComponent(int component);
+
 protected:
     string id; /**< The id of the vertex */
     vector<Edge *> adj; /**< The adjacency vector of the vertex */
@@ -193,10 +211,6 @@ protected:
     int flow = 0; /**< Flow of the vertex */
     bool inQueue; /**< InQueue state of the vertex */
     int component;
-public:
-    int getComponent() const;
-
-    void setComponent(int component);
 
 protected:
     Edge *path = nullptr; /**< Edge path of the vertex */

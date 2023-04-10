@@ -32,6 +32,10 @@ int getLen(const string str){
     int counter = 0;
     int neg_count = 0;
     for(auto i : str){
+        if (str == "Azinheira dos Barros – A"){
+            counter = 24;
+            continue;
+        }
         if (i < 0){
             neg_count++;
         }
@@ -161,14 +165,6 @@ void paginationController(vector<Name> data) {
 
 template void paginationController<pair<string,int>>(vector<pair<string,int>> data);
 
-/**
- * @brief Draws a table to display values, uses a system of pagination that displays 10 values per page
- * @tparam Name type of the value we want to display
- * @param data the values to display
- * @param page current page
- * @param nPages number of pages that exist
- * complexity O(1)
- */
 template<typename Name>
 void draw(vector<Name> data, int page, int nPages) {
     /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
@@ -232,7 +228,7 @@ void drawResults(){
          << "|\033[40m_____________________________________________\033[0m|\n";
 }
 
-void drawFooter(vector<Edge*> edges, bool yes){
+void drawFooter(vector<Edge*> edges, bool printCost){
     cout << "|\033[40m<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\033[0m|\n"
          << "|\033[40m_____________________________________________\033[0m|\n";
         string option;
@@ -252,7 +248,7 @@ void drawFooter(vector<Edge*> edges, bool yes){
                         break;
                     case 'Y':
                         sortVector(edges);
-                        paginationControllerEdge(edges,yes);
+                        paginationControllerEdge(edges, printCost);
                         condition=false;
                         break;
                     default:
@@ -336,7 +332,6 @@ void drawFooterCombinations(vector<pair<pair<Vertex *, Vertex *>, int>> result_v
 
 template<typename edge>
 void paginationControllerEdge(vector<edge> data, bool cost) {
-    /* due to the template this functions had to be written here as if it was on the cpp it would not recognize the template*/
     int page = 0;
     while (page >= 0 and page < (float)data.size() / 10.0)
     {

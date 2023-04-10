@@ -22,11 +22,6 @@ Edge * Vertex::addEdge(Vertex *d, double w) {
     return newEdge;
 }
 
-/*
- * Auxiliary function to remove an outgoing edge (with a given destination (d))
- * from a vertex (this).
- * Returns true if successful, and false if such edge does not exist.
- */
 bool Vertex::removeEdge(string destID) {
     bool removedEdge = false;
     auto it = adj.begin();

@@ -9,14 +9,13 @@
 class TopSegmentFailure : public MenuItem{
 private:
     int currMenuPage; /**< The current menu page */
-
-
+    
     /**
      * Calculates the max flow on a single station for all stations of the graph;
-     * Time Complexity: O(V²*E²), where V is the number of vertices and E is the number of edges.
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @return
      */
-    void disabledEdgesMaxFlow(bool disabled);
+    void disabledEdgesMaxFlow();
 
     /**
      * Fetches all disabled edges of the graph;
@@ -55,7 +54,7 @@ public:
 
     /**
      * Calculates which stations would be most affected by the selected edges being disabled;
-     * Time Complexity: O(V³*E²), where V is the number of vertices and E is the number of edges.
+     * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      */
     void execute() override;
 };
