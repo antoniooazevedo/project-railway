@@ -17,10 +17,10 @@ void ChangeMenu::pickEdgesToDisable() {
 
     Vertex *orig, *dest;
     cin.ignore(2000, '\n');
+    cout << "\033[33mPlease input origin/destination stations for the edges you want to disable!\033[0m\n";
 
     while(true){
         orig = dest = nullptr;
-
         cout << "\033[33mWhen you are done, insert d/D on any of the stations!\033[0m";
 
         cout << endl;
