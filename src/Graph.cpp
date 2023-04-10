@@ -414,27 +414,7 @@ int Graph::getDistrictMaxFlow(Vertex *v1, Vertex *v2) {
     return flow;
 }
 
-void deleteMatrix(int **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
-void deleteMatrix(double **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
 Graph::~Graph() {
-    deleteMatrix(distMatrix, vertexSet.size());
-    deleteMatrix(pathMatrix, vertexSet.size());
 }
 
 int Graph::computeCost(Vertex *origin) const {

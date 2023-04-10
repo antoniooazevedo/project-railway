@@ -197,10 +197,6 @@ protected:
     unordered_set<Vertex*> extremesDistricts; /**< The extremes set of the districts of the graph. */
     vector<unordered_map<string,vector<Vertex*>>> region_map; /**< The vector of all extreme sets of the graph. */
 
-
-    double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
-    int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
-
     /**
      * Augments the flow of all edges of a path ending in a given vertex (dest) by a given flow (flow).
      * Time Complexity: O(E), where E is the number of edges.
@@ -292,8 +288,5 @@ protected:
 
     enum region region; /**< The region of the graph. */
 };
-
-void deleteMatrix(int **m, int n);
-void deleteMatrix(double **m, int n);
 
 #endif /** DA_TP_CLASSES_GRAPH */
