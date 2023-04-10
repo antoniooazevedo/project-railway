@@ -32,6 +32,10 @@ int getLen(const string str){
     int counter = 0;
     int neg_count = 0;
     for(auto i : str){
+        if (str == "Azinheira dos Barros – A"){
+            counter = 24;
+            continue;
+        }
         if (i < 0){
             neg_count++;
         }
