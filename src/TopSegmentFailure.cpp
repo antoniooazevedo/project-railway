@@ -15,10 +15,7 @@ void TopSegmentFailure::disabledEdgesMaxFlow(bool disabled) {
     for (auto &pa: vertexSet){
         Vertex *superSource = railway->addSuperSource(pa.second);
 
-        if (disabled)
-            pa.second->setDisabledFlow(railway->getMaxFlow(superSource, pa.second));
-        else
-            pa.second->setMaxFlow(railway->getMaxFlow(superSource, pa.second));
+        pa.second->setDisabledFlow(railway->getMaxFlow(superSource, pa.second));
 
         for (Vertex *extreme: extremes) {
             extreme->removeEdge("Super Node");
@@ -53,7 +50,6 @@ void TopSegmentFailure::execute() {
     Edge *pickedEdge = pickAnEdge(v);
     auto vertexSet = railway->getVertexSet();
     enableEdges();
-    disabledEdgesMaxFlow(false);
 
     pickedEdge->setDisabled(true);
     pickedEdge->getReverse()->setDisabled(true);
