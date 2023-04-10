@@ -2,7 +2,7 @@
 #define PROJECT_RAILWAY_EXAMPLEGRAPHS_H
 #include <iostream>
 #include "Scraper.h"
-#include "Graph.h"
+#include "graph/Graph.h"
 
 
 class ExampleGraphs {

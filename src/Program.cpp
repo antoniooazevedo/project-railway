@@ -1,6 +1,6 @@
 #include "Program.h"
-#include "DistrictBrute.h"
-#include "MunicipalitiesBrute.h"
+#include "menuItems/basicServices/DistrictBrute.h"
+#include "menuItems/basicServices/MunicipalitiesBrute.h"
 
 /**
  * Program's constructor responsible for initializing the database and the menus

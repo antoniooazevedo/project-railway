@@ -1,8 +1,8 @@
 #ifndef PROJECT_RAILWAY_DISTRICTBRUTE_H
 #define PROJECT_RAILWAY_DISTRICTBRUTE_H
 #include <map>
-#include "Graph.h"
-#include "MenuItem.h"
+#include "graph/Graph.h"
+#include "menuItems/general/MenuItem.h"
 #include "utils.h"
 
 class DistrictBrute: public MenuItem {

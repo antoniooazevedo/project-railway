@@ -1,8 +1,8 @@
 #ifndef PROJECT_RAILWAY_MAXFLOWUSERINPUT_H
 #define PROJECT_RAILWAY_MAXFLOWUSERINPUT_H
 
-#include "Graph.h"
-#include "MenuItem.h"
+#include "graph/Graph.h"
+#include "menuItems/general/MenuItem.h"
 #include "utils.h"
 using namespace std;
 

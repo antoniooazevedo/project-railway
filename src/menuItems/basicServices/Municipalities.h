@@ -1,21 +1,21 @@
-#ifndef PROJECT_RAILWAY_MUNICIPALITIESBRUTE_H
-#define PROJECT_RAILWAY_MUNICIPALITIESBRUTE_H
-
+#ifndef PROJECT_RAILWAY_MUNICIPALITIES_H
+#define PROJECT_RAILWAY_MUNICIPALITIES_H
 #include <map>
-#include "Graph.h"
-#include "MenuItem.h"
+#include "graph/Graph.h"
+#include "menuItems/general/MenuItem.h"
 #include "utils.h"
 
-class MunicipalitiesBrute: public MenuItem {
+class Municipalities: public MenuItem {
 private:
     map<string , int> mun_map; /**< Map of municipalities and their respective ids */
 public:
+
     /**
      * Constructor
      * @param currMenuPage - The current menu page
      * @param gh - The railway graph
      */
-    MunicipalitiesBrute(int &currMenuPage, Graph &gh);
+    Municipalities(int &currMenuPage, Graph &gh);
 
     /**
      * Runs the municipalitiesFind() function and draws a simple paginated menu to display all the municipalities and their respective flows;
@@ -38,7 +38,7 @@ public:
     void dfs(Vertex *n, int &flow);
 
     /**
-     * Calculates the maximum flow for each possible vertex pair of a certain municipality and stores it in the vertex's flow attribute;
+     * Calculates the maximum flow for each possible extremes pair of a certain municipality and stores it in the vertex's flow attribute;
      * After that, it calls the connectedComponents() function to calculate the maximum flow of each municipality;
      * Time Complexity: O(V*E²*P), where V is the number of vertices in the graph, E is the number of edges in the graph and P is the number of possible vertex pairs;
      */
@@ -46,4 +46,4 @@ public:
 };
 
 
-#endif //PROJECT_RAILWAY_MUNICIPALITIESBRUTE_H
+#endif //PROJECT_RAILWAY_MUNICIPALITIES_H

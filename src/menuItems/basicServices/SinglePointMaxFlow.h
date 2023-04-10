@@ -2,7 +2,7 @@
 #define PROJECT_RAILWAY_SINGLEPOINTMAXFLOW_H
 
 
-#include "MenuItem.h"
+#include "menuItems/general/MenuItem.h"
 #include "utils.h"
 
 class SinglePointMaxFlow : public MenuItem{

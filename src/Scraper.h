@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_set>
 #include <map>
-#include "Graph.h"
+#include "graph/Graph.h"
 
 
 using namespace std;

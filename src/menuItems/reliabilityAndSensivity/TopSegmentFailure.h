@@ -2,8 +2,8 @@
 #define PROJECT_RAILWAY_TOPSEGMENTFAILURE_H
 
 
-#include "Graph.h"
-#include "MenuItem.h"
+#include "graph/Graph.h"
+#include "menuItems/general/MenuItem.h"
 #include "utils.h"
 
 class TopSegmentFailure : public MenuItem{

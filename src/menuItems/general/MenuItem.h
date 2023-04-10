@@ -1,7 +1,7 @@
 #ifndef PROJECT_RAILWAY_MENUITEM_H
 #define PROJECT_RAILWAY_MENUITEM_H
 
-#include "Graph.h"
+#include "graph/Graph.h"
 
 using namespace std;
 

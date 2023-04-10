@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "Scraper.h"
-#include "Graph.h"
+#include "graph/Graph.h"
 #include "Program.h"
 #include "ExampleGraphs.h"
 

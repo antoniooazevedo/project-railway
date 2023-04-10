@@ -1,27 +1,27 @@
 #ifndef PROJECT_RAILWAY_PROGRAM_H
 #define PROJECT_RAILWAY_PROGRAM_H
 
-#include "Graph.h"
-#include "Menu.h"
+#include "graph/Graph.h"
+#include "menuItems/general/Menu.h"
 #include <string>
 #include <vector>
 #include <iostream>
-#include "MinCostMaxFlow.h"
+#include "menuItems/costOptimization/MinCostMaxFlow.h"
 #include <limits>
 #include <set>
 #include "ExampleGraphs.h"
-#include "Menu.h"
-#include "MenuItem.h"
-#include "ChangeMenu.h"
-#include "PairsMaxFlow.h"
-#include "MaxFlowUserInput.h"
-#include "SinglePointMaxFlow.h"
-#include "ReducedConnectivityMaxFlow.h"
-#include "TopSegmentFailure.h"
+#include "menuItems/general/Menu.h"
+#include "menuItems/general/MenuItem.h"
+#include "menuItems/general/ChangeMenu.h"
+#include "menuItems/basicServices/PairsMaxFlow.h"
+#include "menuItems/basicServices/MaxFlowUserInput.h"
+#include "menuItems/basicServices/SinglePointMaxFlow.h"
+#include "menuItems/reliabilityAndSensivity/ReducedConnectivityMaxFlow.h"
+#include "menuItems/reliabilityAndSensivity/TopSegmentFailure.h"
 #include "Scraper.h"
-#include "Municipalities.h"
+#include "menuItems/basicServices/Municipalities.h"
 #include "utils.h"
-#include "District.h"
+#include "menuItems/basicServices/District.h"
 
 
 using namespace std;

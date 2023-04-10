@@ -4,8 +4,8 @@
 #include <limits>
 
 #include <iostream>
-#include "VertexEdge.h"
-#include "Graph.h"
+#include "graph/VertexEdge.h"
+#include "graph/Graph.h"
 #include <cmath>
 
 using namespace std;
