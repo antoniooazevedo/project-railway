@@ -205,9 +205,15 @@ public:
      */
     int getVertexFlow(Vertex *v) const;
 
+    // TODO: Add documentation
+
     Vertex* addSuperSource(Vertex *dest);
 
     void removeSuperSource(Vertex *superSource);
+
+    void connectedComponentsDfs(Vertex *src, int i);
+
+    void setConnectedComponents();
 
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet; /**< The vertex set of the graph. */

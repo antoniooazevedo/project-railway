@@ -212,6 +212,14 @@ void Vertex::setDisabledFlow(int disabledFlow) {
     this->disabledFlow = disabledFlow;
 }
 
+int Vertex::getComponent() const {
+    return component;
+}
+
+void Vertex::setComponent(int component) {
+    this->component = component;
+}
+
 /********************** Edge  ****************************/
 
 

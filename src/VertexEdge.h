@@ -206,6 +206,13 @@ protected:
     int price = 0; /**< Price of the vertex */
     int flow = 0; /**< Flow of the vertex */
     bool inQueue; /**< InQueue state of the vertex */
+    int component;
+public:
+    int getComponent() const;
+
+    void setComponent(int component);
+
+protected:
     Edge *path = nullptr; /**< Edge path of the vertex */
     string name = id, district, municipality, main_line; /**< Name (id), district, municipality and main line of the vertex */
     list<string> townships; /**< Townships list of the vertex */
@@ -223,7 +230,7 @@ protected:
 
 /********************** Edge  ****************************/
 
-enum service{STANDARD = 2,ALFA_PENDULAR = 4}; /**< Enum for the service of the edge */
+enum service{STANDARD = 2, ALFA_PENDULAR = 4}; /**< Enum for the service of the edge */
 
 class Edge {
 public:

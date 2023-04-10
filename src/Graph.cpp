@@ -105,6 +105,9 @@ bool Graph::findPath(Vertex* origin , Vertex* dest) const {
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
 
+            if (v->getComponent() != 0 && w->getComponent() != v->getComponent())
+                continue;
+
             bool isNotFull = e->getCapacity() > e->getFlow() + e->getReverse()->getFlow();
 
             if (!w->isVisited() && isNotFull && !e->getDisabled()) {
@@ -289,6 +292,9 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
             for (Edge *e: orig->getAdj()) {
                 Vertex *adjNode = e->getDest();
                 Edge *reverse = e->getReverse();
+
+                if (orig->getComponent() != 0 && adjNode->getComponent() != orig->getComponent())
+                    continue;
 
                 bool relaxEdge = adjNode->getPrice() > orig->getPrice() + e->getService();
                 bool isNotFull = e->getCapacity() > e->getFlow() + reverse->getFlow();
@@ -540,6 +546,8 @@ Vertex *Graph::addSuperSource(Vertex* dest) {
         if (e != dest) addBidirectionalEdge(superNode, e->getId(), 9999, STANDARD);
     }
 
+    findVertex(superNode)->setComponent(0);
+
     return findVertex(superNode);
 }
 
@@ -549,4 +557,31 @@ void Graph::removeSuperSource(Vertex* superSource) {
     }
 
     removeVertex(superSource->getId());
+}
+
+void Graph::connectedComponentsDfs(Vertex *src, int i) {
+    src->setVisited(true);
+    src->setComponent(i);
+
+    for (Edge *e: src->getAdj()) {
+        Vertex *dest = e->getDest();
+
+        if (!dest->isVisited()) {
+            connectedComponentsDfs(dest, i);
+        }
+    }
+}
+
+void Graph::setConnectedComponents() {
+    resetNodes();
+    int i = 1;
+
+    for (const auto& v: vertexSet) {
+        Vertex *vertex = v.second;
+
+        if (!vertex->isVisited()) {
+            connectedComponentsDfs(vertex, i);
+            i++;
+        }
+    }
 }
