@@ -205,6 +205,10 @@ public:
      */
     int getVertexFlow(Vertex *v) const;
 
+    Vertex* addSuperSource(Vertex *dest);
+
+    void removeSuperSource(Vertex *superSource);
+
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet; /**< The vertex set of the graph. */
     unordered_set<Vertex*> extremes; /**< The extremes set of the lines of the graph. */

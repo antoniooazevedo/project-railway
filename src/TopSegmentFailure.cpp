@@ -13,25 +13,17 @@ void TopSegmentFailure::disabledEdgesMaxFlow(bool disabled) {
     auto extremes = railway->getExtremes();
 
     for (auto &pa: vertexSet){
-        // creating super node
-        railway->addVertex("Super Node");
+        Vertex *superSource = railway->addSuperSource(pa.second);
 
-        // adding super edges
-        for (auto e: extremes){
-            if (e != pa.second) railway->addBidirectionalEdge("Super Node", e->getId(), 9999, STANDARD);
-        }
-
-        // running maxflow on super node to destiny
         if (disabled)
-            pa.second->setDisabledFlow(railway->getMaxFlow(railway->findVertex("Super Node"), pa.second));
+            pa.second->setDisabledFlow(railway->getMaxFlow(superSource, pa.second));
         else
-            pa.second->setMaxFlow(railway->getMaxFlow(railway->findVertex("Super Node"), pa.second));
+            pa.second->setMaxFlow(railway->getMaxFlow(superSource, pa.second));
 
         for (Vertex *extreme: extremes) {
             extreme->removeEdge("Super Node");
         }
 
-        //removing super node and super edges
         railway->removeVertex("Super Node");
     }
 }
@@ -41,8 +33,6 @@ void TopSegmentFailure::execute() {
     vector<Vertex*> topVertexes;
     int topK;
     system("clear");
-
-    // TODO: Change this to calculate only one edge
 
     disabledEdges = fetchDisabledEdges();
 
@@ -79,7 +69,6 @@ void TopSegmentFailure::execute() {
     }
 
     topNode(topVertexes);
-    edgeReport = {pickedEdge, topVertexes};
 
     disableEdges();
 }

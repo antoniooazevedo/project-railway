@@ -283,7 +283,7 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
     for (int i = 0; i < getVertexSet().size(); i++) {
         relaxedAnEdge = false;
 
-        for (auto v: getVertexSet()) {
+        for (const auto& v: getVertexSet()) {
             Vertex *orig = v.second;
 
             for (Edge *e: orig->getAdj()) {
@@ -345,8 +345,7 @@ bool Graph::removeVertex(const std::string &id) {
     v->removeOutgoingEdges();
     auto lowerId = v->getId();
     transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
-    int i = vertexSet.erase(lowerId);
-    auto aaa = findVertex("Super Node");
+    vertexSet.erase(lowerId);
     return true;
 }
 
@@ -530,4 +529,24 @@ int Graph::getVertexFlow(Vertex *v) const {
     }
 
     return totalFlow;
+}
+
+Vertex *Graph::addSuperSource(Vertex* dest) {
+    string superNode = "Super Node";
+
+    addVertex(superNode);
+
+    for (auto e: extremes){
+        if (e != dest) addBidirectionalEdge(superNode, e->getId(), 9999, STANDARD);
+    }
+
+    return findVertex(superNode);
+}
+
+void Graph::removeSuperSource(Vertex* superSource) {
+    for (Vertex *extreme: extremes) {
+        extreme->removeEdge(superSource->getId());
+    }
+
+    removeVertex(superSource->getId());
 }
