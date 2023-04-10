@@ -141,9 +141,9 @@ void Scraper::getPrematureExtremes(unordered_map<string, vector<Vertex *>> &map,
 
     for (auto &pa: map){
         if (pa.second.empty()){
-            for (auto v: vertexSet){
+            for (const auto& v: vertexSet){
                 if (gh.getRegion() == LINE){
-                    if (v.second->getLine() == pa.first){
+                    if (v.second->getLine() == pa.first) {
                         pa.second.push_back(v.second);
                         break;
                     }

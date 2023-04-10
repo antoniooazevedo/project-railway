@@ -16,7 +16,7 @@ Menu::Menu(string path)
 /**
  * @brief Adds a MenuItem to the menu's actions
  * @param menuItem
- * complexity O(1)
+ * Time complexity: O(1)
  */
 void Menu::addMenuItem(MenuItem *menuItem)
 {
