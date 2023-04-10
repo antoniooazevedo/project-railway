@@ -522,6 +522,8 @@ Edge* pickAnEdge(const vector<Edge*>& data) {
 
                 }
             }
+            else
+                break;
             if (cond)
                 cout << "\033[31mInvalid input! Please enter a valid input: \033[0m";
             cin.clear();

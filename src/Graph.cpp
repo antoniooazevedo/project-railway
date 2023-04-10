@@ -276,10 +276,13 @@ void Graph::minCostMaxFlow(Vertex *origin, Vertex *dest) const {
 // No need to check for negative cycles in the Bellman-Ford
 bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
     resetNodes();
+    bool relaxedAnEdge;
 
     origin->setPrice(0);
 
     for (int i = 0; i < getVertexSet().size(); i++) {
+        relaxedAnEdge = false;
+
         for (auto v: getVertexSet()) {
             Vertex *orig = v.second;
 
@@ -293,6 +296,7 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
                 if (relaxEdge && isNotFull) {
                     adjNode->setPrice(orig->getPrice() + e->getService());
                     adjNode->setPath(e);
+                    relaxedAnEdge = true;
                 }
             }
 
@@ -304,9 +308,13 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
                 if (e->getFlow() > 0 && relaxEdge) {
                     adjNode->setPrice(orig->getPrice() - e->getService());
                     adjNode->setPath(e);
+                    relaxedAnEdge = true;
                 }
             }
         }
+
+        if (!relaxedAnEdge)
+            break;
     }
 
     return dest->getPath() != nullptr;
