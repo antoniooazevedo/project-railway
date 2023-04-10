@@ -14,7 +14,6 @@
 #include <unordered_set>
 
 #include "VertexEdge.h"
-#include "MutablePriorityQueue.h"
 
 using namespace std;
 
@@ -63,17 +62,6 @@ public:
      */
     bool removeVertex(Vertex *v);
 
-    /**
-     * Adds an edge to a graph (this), given the IDs of the source and
-     * destination vertices and the edge capacity (c), as well as the edges service (s).
-     * @param source - the id of the source vertex;
-     * @param dest - the id of the destination vertex;
-     * @param c - the capacity of the edge;
-     * @param s - the service of the edge;
-     * @return true - if successful
-     *         false - if the source or destination vertex does not exist.
-     */
-    bool addEdge(const string &source, const string &dest, double c, enum service s);
 
     /**
      * Adds an edge to a graph (this), given the source and destination vertices
@@ -112,9 +100,6 @@ public:
      * @return a vector containing all the edges fetched.
      */
     vector<Edge *> fetchUsedEdges(vector<Vertex *> origin);
-
-
-    int getNumVertex() const;
 
     /**
      * Gets the vertex set of a graph (this).
@@ -215,13 +200,6 @@ protected:
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
-
-    /**
-     * Finds the index of the vertex with a given content.
-     * @param id - the content of the vertex;
-     * @return the index of the vertex.
-     */
-    int findVertexIdx(const int &id) const;
 
     /**
      * Augments the flow of all edges of a path ending in a given vertex (dest) by a given flow (flow).

@@ -57,7 +57,6 @@ public:
     /**
      * Returns the district of the vertex;
      */
-    void removeLastEdgeCreated();
     string getDistrict() const;
 
     /**
@@ -71,8 +70,6 @@ public:
      *         false - if the vertex is not visited;
      */
     bool isVisited() const;
-    bool getHit() const;
-    bool getReached() const;
 
     /**
      * Checks if the vertex is being processed;
@@ -80,8 +77,6 @@ public:
      *         false - if the vertex is not being processed;
      */
     bool isProcessing() const;
-    unsigned int getIndegree() const;
-    double getDist() const;
 
     /**
      * Retrieves the price of the vertex;
@@ -120,23 +115,18 @@ public:
      */
     vector<Edge *> getIncoming() const;
 
-    void setId(string info);
 
     /**
      * Sets the visited attribute of the vertex;
      * @param visited - true if the vertex is visited, false if otherwise;
      */
     void setVisited(bool visited);
-    void setReachedDestination(bool reachDestination);
-    void setHit(bool hit);
 
     /**
      * Sets the processing attribute of the vertex;
      * @param processing - true if the vertex is being processed, false if otherwise;
      */
     void setProcesssing(bool processing);
-    void setIndegree(unsigned int indegree);
-    void setDist(double dist);
 
     /**
      * Sets the price attribute of the vertex;
@@ -197,12 +187,8 @@ protected:
 
     // auxiliary fields
     bool visited = false; /**< Visited state of the vertex */  // used by DFS, BFS, Prim ...
-    bool reachDestination = false; /**< idk yet */ //TODO: update this
-    bool hit = false;
     // used by Dijkstra
     bool processing = false;  /**< Processing state of the vertex */
-    unsigned int indegree; /**< Indegree of the vertex */
-    double dist = 0; /**< Distance of the vertex */
     int price = 0; /**< Price of the vertex */
     int flow = 0; /**< Flow of the vertex */
     bool inQueue; /**< InQueue state of the vertex */
@@ -247,12 +233,6 @@ public:
      */
     int getCapacity() const;
 
-    /**
-     * Checks if the edge is selected;
-     * @return true - if the edge is selected;
-     *         false - if the edge is not selected;
-     */
-    bool isSelected() const;
 
     /**
      * Gets the origin vertex of the edge;
@@ -292,11 +272,6 @@ public:
      */
     bool getVisited() const;
 
-    /**
-     * Sets the selected attribute of the edge;
-     * @param selected - true if the edge is selected, false if otherwise;
-     */
-    void setSelected(bool selected);
 
     /**
      * Sets the visited attribute of the edge;
