@@ -9,7 +9,7 @@
 class TopSegmentFailure : public MenuItem{
 private:
     int currMenuPage; /**< The current menu page */
-
+    
     /**
      * Calculates the max flow on a single station for all stations of the graph;
      * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.

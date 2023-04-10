@@ -1,11 +1,7 @@
 // By: Gonçalo Leão
 
-//#include <wsman.h>
 #include "Graph.h"
 
-int Graph::getNumVertex() const {
-    return vertexSet.size();
-}
 
 std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
     return vertexSet;
@@ -363,21 +359,6 @@ bool Graph::removeVertex(Vertex *v) {
     vertexSet.erase(lowerId);
     return true;
 }
-/*
- * Adds an edge to a graph (this), given the contents of the source and
- * destination vertices and the edge weight (w).
- * Returns true if successful, and false if the source or destination vertex does not exist.
- */
-
-/*
-bool Graph::addEdge(const int &source, const int &dest, double w) {
-    auto v1 = findVertex(source);
-    auto v2 = findVertex(dest);
-    if (v1 == nullptr || v2 == nullptr)
-        return false;
-    v1->addEdge(v2, w);
-    return true;
-}*/
 
 bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
@@ -438,27 +419,7 @@ int Graph::getDistrictMaxFlow(Vertex *v1, Vertex *v2) {
     return flow;
 }
 
-void deleteMatrix(int **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
-void deleteMatrix(double **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
 Graph::~Graph() {
-    deleteMatrix(distMatrix, vertexSet.size());
-    deleteMatrix(pathMatrix, vertexSet.size());
 }
 
 int Graph::computeCost(Vertex *origin) const {

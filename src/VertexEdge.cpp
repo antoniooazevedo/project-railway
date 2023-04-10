@@ -1,5 +1,3 @@
-// By: Gonçalo Leão
-
 #include "VertexEdge.h"
 
 using namespace std;
@@ -78,30 +76,12 @@ std::vector<Edge*> Vertex::getAdj() const {
     return this->adj;
 }
 
-bool Vertex::getReached() const {
-    return this->reachDestination;
-}
-
-bool Vertex::getHit() const {
-    return this->hit;
-}
-
-
-
 bool Vertex::isVisited() const {
     return this->visited;
 }
 
 bool Vertex::isProcessing() const {
     return this->processing;
-}
-
-unsigned int Vertex::getIndegree() const {
-    return this->indegree;
-}
-
-double Vertex::getDist() const {
-    return this->dist;
 }
 
 Edge *Vertex::getPath() const {
@@ -112,32 +92,12 @@ std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
-void Vertex::setId(string id) {
-    this->id = id;
-}
-
 void Vertex::setVisited(bool visited) {
     this->visited = visited;
 }
 
-void Vertex::setReachedDestination(bool reachDestination) {
-    this->reachDestination = reachDestination;
-}
-
-void Vertex::setHit(bool hit) {
-    this->hit = hit;
-}
-
 void Vertex::setProcesssing(bool processing) {
     this->processing = processing;
-}
-
-void Vertex::setIndegree(unsigned int indegree) {
-    this->indegree = indegree;
-}
-
-void Vertex::setDist(double dist) {
-    this->dist = dist;
 }
 
 void Vertex::setPath(Edge *path) {
@@ -187,9 +147,6 @@ void Vertex::setFlow(int flow) {
     this->flow = flow;
 }
 
-void Vertex::removeLastEdgeCreated() {
-    adj.pop_back();
-}
 
 int Vertex::getMaxFlow() const {
     return maxFlow;
@@ -236,9 +193,6 @@ Edge *Edge::getReverse() const {
     return this->reverse;
 }
 
-bool Edge::isSelected() const {
-    return this->selected;
-}
 
 int Edge::getFlow() const {
     return this->flow;
@@ -252,9 +206,6 @@ bool Edge::getDisabled() const {
     return this->disabled;
 }
 
-void Edge::setSelected(bool selected) {
-    this->selected = selected;
-}
 
 void Edge::setReverse(Edge *reverse) {
     this->reverse = reverse;
