@@ -1,7 +1,5 @@
 #ifndef PROJECT_RAILWAY_MUNICIPALITIES_H
 #define PROJECT_RAILWAY_MUNICIPALITIES_H
-
-
 #include <map>
 #include "Graph.h"
 #include "MenuItem.h"

@@ -1,7 +1,3 @@
-//
-// Created by work on 17-03-2023.
-//
-
 #ifndef PROJECT_RAILWAY_SCRAPER_H
 #define PROJECT_RAILWAY_SCRAPER_H
 
