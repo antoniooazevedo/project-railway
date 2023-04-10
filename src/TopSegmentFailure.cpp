@@ -8,30 +8,19 @@ bool sortResultVector(const pair<Vertex*, int> &p1, const pair<Vertex*, int> &p2
     return (p1.second > p2.second);
 }
 
-void TopSegmentFailure::disabledEdgesMaxFlow(bool disabled) {
+void TopSegmentFailure::disabledEdgesMaxFlow() {
     auto vertexSet = railway->getVertexSet();
     auto extremes = railway->getExtremes();
 
     for (auto &pa: vertexSet){
-        // creating super node
-        railway->addVertex("Super Node");
+        Vertex *superSource = railway->addSuperSource(pa.second);
 
-        // adding super edges
-        for (auto e: extremes){
-            if (e != pa.second) railway->addBidirectionalEdge("Super Node", e->getId(), 9999, STANDARD);
-        }
-
-        // running maxflow on super node to destiny
-        if (disabled)
-            pa.second->setDisabledFlow(railway->getMaxFlow(railway->findVertex("Super Node"), pa.second));
-        else
-            pa.second->setMaxFlow(railway->getMaxFlow(railway->findVertex("Super Node"), pa.second));
+        pa.second->setDisabledFlow(railway->getMaxFlow(superSource, pa.second));
 
         for (Vertex *extreme: extremes) {
             extreme->removeEdge("Super Node");
         }
 
-        //removing super node and super edges
         railway->removeVertex("Super Node");
     }
 }
@@ -41,8 +30,6 @@ void TopSegmentFailure::execute() {
     vector<Vertex*> topVertexes;
     int topK;
     system("clear");
-
-    // TODO: Change this to calculate only one edge
 
     disabledEdges = fetchDisabledEdges();
 
@@ -63,12 +50,11 @@ void TopSegmentFailure::execute() {
     Edge *pickedEdge = pickAnEdge(v);
     auto vertexSet = railway->getVertexSet();
     enableEdges();
-    disabledEdgesMaxFlow(false);
 
     pickedEdge->setDisabled(true);
     pickedEdge->getReverse()->setDisabled(true);
 
-    disabledEdgesMaxFlow(true);
+    disabledEdgesMaxFlow();
 
     sort(stations.begin(), stations.end(), [](Vertex* s1, Vertex* s2) {
         return s1->getMaxFlow() - s1->getDisabledFlow() > s2->getMaxFlow() - s2->getDisabledFlow();
@@ -79,7 +65,6 @@ void TopSegmentFailure::execute() {
     }
 
     topNode(topVertexes);
-    edgeReport = {pickedEdge, topVertexes};
 
     disableEdges();
 }

@@ -5,12 +5,10 @@ void MunicipalitiesBrute::execute() {
 
     mun_map.clear();
     system("clear");
-    // Get all the municipalities
     municipalitiesFind();
     vector<pair<string, int>> mun_vector(mun_map.begin(), mun_map.end());
     sort(mun_vector.begin(), mun_vector.end(), compareValue);
 
-    // Get the number of districts and municipalities
     int nMunicipalities = 0;
     bool is_valid = false;
 

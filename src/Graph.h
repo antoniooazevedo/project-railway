@@ -14,7 +14,6 @@
 #include <unordered_set>
 
 #include "VertexEdge.h"
-#include "MutablePriorityQueue.h"
 
 using namespace std;
 
@@ -25,12 +24,14 @@ public:
      * Default constructor for the Graph class;
      */
     ~Graph();
+
     /**
      * Auxiliary function to find a vertex with a given ID.
      * @param id - the id of the vertex;
      * @return the vertex with the given id;
     */
     Vertex *findVertex(const string &id) const;
+
     /**
      *  Adds a vertex with a given string id to a graph (this).
      *  @param id - the id of the vertex;
@@ -63,21 +64,10 @@ public:
      */
     bool removeVertex(Vertex *v);
 
-    /**
-     * Adds an edge to a graph (this), given the IDs of the source and
-     * destination vertices and the edge capacity (c), as well as the edges service (s).
-     * @param source - the id of the source vertex;
-     * @param dest - the id of the destination vertex;
-     * @param c - the capacity of the edge;
-     * @param s - the service of the edge;
-     * @return true - if successful
-     *         false - if the source or destination vertex does not exist.
-     */
-    bool addEdge(const string &source, const string &dest, double c, enum service s);
 
     /**
      * Adds an edge to a graph (this), given the source and destination vertices
-     * and the edge capacity (c), as well as the edges service (s).
+     * and the edge capacity (c), as well as the edge's service (s).
      * It also adds a reverse edge from the destination to the source.
      * @param source - the id of the source vertex;
      * @param dest - the id of the destination vertex;
@@ -89,8 +79,8 @@ public:
     bool addBidirectionalEdge(const string &source, const string &dest, double c, enum service s);
 
     /**
-     * Calculates all the cheapest paths that augment flow from the origin vertex to the destination vertex.
-     * It then calculates the max flow between those two vertices and also displays the minimum cost of the path.
+     * Calculates the max flow between two vertices that minimizes the cost of the paths chosen. The price of each segment
+     * is given by the multiplication of the service's cost and the flow that passes through that segment.
      * Time Complexity: O(V*E*F) where V is the number of vertices, E is the number of edges and F is the max flow.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
@@ -112,9 +102,6 @@ public:
      * @return a vector containing all the edges fetched.
      */
     vector<Edge *> fetchUsedEdges(vector<Vertex *> origin);
-
-
-    int getNumVertex() const;
 
     /**
      * Gets the vertex set of a graph (this).
@@ -180,7 +167,7 @@ public:
     int getMaxFlow(Vertex* v1, Vertex* v2);
 
     /**
-     * Calculates and returns the max flow between two vertices (v1 and v2) of a graph (this), that belong to the same municipality.
+     * Calculates and returns the max flow between two vertices (v1 and v2) of a graph (this) that belong to the same municipality.
      * Time Complexity: O(V*E²), where V is the number of vertices and E is the number of edges.
      * @param v1 - the starting vertex;
      * @param v2 - the sink/target vertex;
@@ -205,23 +192,40 @@ public:
      */
     int getVertexFlow(Vertex *v) const;
 
+    /**
+     * Adds a new temporary vertex to the graph that acts as a super source for the max flow algorithms. This super
+     * source connects to all the extremes of the graph
+     * @param dest - the vertex that will be the destination of the max flow algorithm
+     * @return super source vertex
+     */
+    Vertex* addSuperSource(Vertex *dest);
+
+    /**
+     * Removes the temporary super source vertex from the graph
+     * @param superSource
+     */
+    void removeSuperSource(Vertex *superSource);
+
+    /**
+     * Depth first search that gives each vertex the number of the connected component it is in
+     * Time Complexity: O(V+E) where V is the number of vertexes and E the number of edges of the graph (this)
+     * @param src - Vertex we are in
+     * @param i - number of the connected component
+     */
+    void connectedComponentsDfs(Vertex *src, int i);
+
+    /**
+     * Calls the function connectedComponentsDfs to give each vertex the number of its corresponding connected component
+     * Time Complexity: O(V+E) where V is the number of vertexes and E the number of edges of the graph (this)
+     */
+    void setConnectedComponents();
+
 protected:
     std::unordered_map<std::string, Vertex *> vertexSet; /**< The vertex set of the graph. */
     unordered_set<Vertex*> extremes; /**< The extremes set of the lines of the graph. */
     unordered_set<Vertex*> extremesMunicipalities; /**< The extremes set of the municipalities of the graph. */
     unordered_set<Vertex*> extremesDistricts; /**< The extremes set of the districts of the graph. */
     vector<unordered_map<string,vector<Vertex*>>> region_map; /**< The vector of all extreme sets of the graph. */
-
-
-    double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
-    int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
-
-    /**
-     * Finds the index of the vertex with a given content.
-     * @param id - the content of the vertex;
-     * @return the index of the vertex.
-     */
-    int findVertexIdx(const int &id) const;
 
     /**
      * Augments the flow of all edges of a path ending in a given vertex (dest) by a given flow (flow).
@@ -257,7 +261,7 @@ protected:
     bool findCheapestPath(Vertex *origin, Vertex *dest) const;
 
     /**
-     * BFS used to find a path between two vertices (origin and dest) of a graph (this).
+     * BFS used to find the shortest path, in terms of number of edges, between two vertices (origin and dest) of a graph (this).
      * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      * @param origin - the origin vertex;
      * @param dest - the destination vertex;
@@ -301,7 +305,7 @@ protected:
     void districtMaxFlow(const string &origin, const string &dest) const;
 
     /**
-     * Resets the visited, path, price and inqueue attributes of all vertices of a graph (this), as well as the visited attribute of all edges.
+     * Resets the visited, path, price and inQueue attributes of all vertices of a graph (this), as well as the visited attribute of all edges.
      * Time Complexity: O(V+E), where V is the number of vertices and E is the number of edges.
      */
     void resetNodes() const;
@@ -314,8 +318,5 @@ protected:
 
     enum region region; /**< The region of the graph. */
 };
-
-void deleteMatrix(int **m, int n);
-void deleteMatrix(double **m, int n);
 
 #endif /** DA_TP_CLASSES_GRAPH */

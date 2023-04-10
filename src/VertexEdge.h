@@ -57,7 +57,6 @@ public:
     /**
      * Returns the district of the vertex;
      */
-    void removeLastEdgeCreated();
     string getDistrict() const;
 
     /**
@@ -71,8 +70,6 @@ public:
      *         false - if the vertex is not visited;
      */
     bool isVisited() const;
-    bool getHit() const;
-    bool getReached() const;
 
     /**
      * Checks if the vertex is being processed;
@@ -80,8 +77,6 @@ public:
      *         false - if the vertex is not being processed;
      */
     bool isProcessing() const;
-    unsigned int getIndegree() const;
-    double getDist() const;
 
     /**
      * Retrieves the price of the vertex;
@@ -101,6 +96,11 @@ public:
      *         false - if the vertex is not in the queue;
      */
     int getMaxFlow() const;
+
+    /**
+     * Gets the attribute inQueue;
+     * @return the vertex's inQueue;
+     */
     bool getInQueue() const;
 
     /**
@@ -115,23 +115,18 @@ public:
      */
     vector<Edge *> getIncoming() const;
 
-    void setId(string info);
 
     /**
      * Sets the visited attribute of the vertex;
      * @param visited - true if the vertex is visited, false if otherwise;
      */
     void setVisited(bool visited);
-    void setReachedDestination(bool reachDestination);
-    void setHit(bool hit);
 
     /**
      * Sets the processing attribute of the vertex;
      * @param processing - true if the vertex is being processed, false if otherwise;
      */
     void setProcesssing(bool processing);
-    void setIndegree(unsigned int indegree);
-    void setDist(double dist);
 
     /**
      * Sets the price attribute of the vertex;
@@ -165,6 +160,12 @@ public:
      * @return the edge created;
      */
     Edge * addEdge(Vertex *dest, double w);
+
+    /**
+     * Auxiliary function to remove an outgoing edge (with a given destination (d))
+     * from a vertex (this).
+     * Returns true if successful, and false if such edge does not exist.
+     */
     bool removeEdge(string destID);
 
     /**
@@ -174,8 +175,29 @@ public:
     void removeOutgoingEdges();
     bool operator==(const Vertex& v);
 
+    /**
+     * Gets the attribute disabledFlow;
+     * @return the vertex's disabled flow;
+     */
     int getDisabledFlow() const;
+
+    /**
+     * Sets the attribute disabledFlow;
+     * @param disabledFlow - the amount to set;
+     */
     void setDisabledFlow(int disabledFlow);
+
+    /**
+     * Gets the attribute component
+     * @return the connected component the vertex is in
+     */
+    int getComponent() const;
+
+    /**
+     * Sets the attribute component of the vertex
+     * @param component - the connected component the vertex is in
+     */
+    void setComponent(int component);
 
 protected:
     string id; /**< The id of the vertex */
@@ -183,20 +205,19 @@ protected:
 
     // auxiliary fields
     bool visited = false; /**< Visited state of the vertex */  // used by DFS, BFS, Prim ...
-    bool reachDestination = false; /**< idk yet */ //TODO: update this
-    bool hit = false;
     // used by Dijkstra
     bool processing = false;  /**< Processing state of the vertex */
-    unsigned int indegree; /**< Indegree of the vertex */
-    double dist = 0; /**< Distance of the vertex */
     int price = 0; /**< Price of the vertex */
     int flow = 0; /**< Flow of the vertex */
     bool inQueue; /**< InQueue state of the vertex */
+    int component;
+
+protected:
     Edge *path = nullptr; /**< Edge path of the vertex */
     string name = id, district, municipality, main_line; /**< Name (id), district, municipality and main line of the vertex */
     list<string> townships; /**< Townships list of the vertex */
-    int maxFlow;
-    int disabledFlow;
+    int maxFlow; /**< Vertex's max flow */
+    int disabledFlow; /**< Vertex's disabled flow */
 
     vector<Edge *> incoming; /**< Vector of incoming edges of the vertex */
 
@@ -209,7 +230,7 @@ protected:
 
 /********************** Edge  ****************************/
 
-enum service{STANDARD = 2,ALFA_PENDULAR = 4}; /**< Enum for the service of the edge */
+enum service{STANDARD = 2, ALFA_PENDULAR = 4}; /**< Enum for the service of the edge */
 
 class Edge {
 public:
@@ -233,12 +254,6 @@ public:
      */
     int getCapacity() const;
 
-    /**
-     * Checks if the edge is selected;
-     * @return true - if the edge is selected;
-     *         false - if the edge is not selected;
-     */
-    bool isSelected() const;
 
     /**
      * Gets the origin vertex of the edge;
@@ -278,11 +293,6 @@ public:
      */
     bool getVisited() const;
 
-    /**
-     * Sets the selected attribute of the edge;
-     * @param selected - true if the edge is selected, false if otherwise;
-     */
-    void setSelected(bool selected);
 
     /**
      * Sets the visited attribute of the edge;

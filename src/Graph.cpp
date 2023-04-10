@@ -1,11 +1,7 @@
 // By: Gonçalo Leão
 
-//#include <wsman.h>
 #include "Graph.h"
 
-int Graph::getNumVertex() const {
-    return vertexSet.size();
-}
 
 std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
     return vertexSet;
@@ -104,6 +100,9 @@ bool Graph::findPath(Vertex* origin , Vertex* dest) const {
 
         for (auto e : v->getAdj()) {
             auto w = e->getDest();
+
+            if (v->getComponent() != 0 && w->getComponent() != v->getComponent())
+                continue;
 
             bool isNotFull = e->getCapacity() > e->getFlow() + e->getReverse()->getFlow();
 
@@ -276,16 +275,22 @@ void Graph::minCostMaxFlow(Vertex *origin, Vertex *dest) const {
 // No need to check for negative cycles in the Bellman-Ford
 bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
     resetNodes();
+    bool relaxedAnEdge;
 
     origin->setPrice(0);
 
     for (int i = 0; i < getVertexSet().size(); i++) {
-        for (auto v: getVertexSet()) {
+        relaxedAnEdge = false;
+
+        for (const auto& v: getVertexSet()) {
             Vertex *orig = v.second;
 
             for (Edge *e: orig->getAdj()) {
                 Vertex *adjNode = e->getDest();
                 Edge *reverse = e->getReverse();
+
+                if (orig->getComponent() != 0 && adjNode->getComponent() != orig->getComponent())
+                    continue;
 
                 bool relaxEdge = adjNode->getPrice() > orig->getPrice() + e->getService();
                 bool isNotFull = e->getCapacity() > e->getFlow() + reverse->getFlow();
@@ -293,6 +298,7 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
                 if (relaxEdge && isNotFull) {
                     adjNode->setPrice(orig->getPrice() + e->getService());
                     adjNode->setPath(e);
+                    relaxedAnEdge = true;
                 }
             }
 
@@ -304,9 +310,13 @@ bool Graph::findCheapestPath(Vertex *origin, Vertex *dest) const {
                 if (e->getFlow() > 0 && relaxEdge) {
                     adjNode->setPrice(orig->getPrice() - e->getService());
                     adjNode->setPath(e);
+                    relaxedAnEdge = true;
                 }
             }
         }
+
+        if (!relaxedAnEdge)
+            break;
     }
 
     return dest->getPath() != nullptr;
@@ -337,8 +347,7 @@ bool Graph::removeVertex(const std::string &id) {
     v->removeOutgoingEdges();
     auto lowerId = v->getId();
     transform(lowerId.begin(), lowerId.end(), lowerId.begin(), ::tolower);
-    int i = vertexSet.erase(lowerId);
-    auto aaa = findVertex("Super Node");
+    vertexSet.erase(lowerId);
     return true;
 }
 
@@ -350,21 +359,6 @@ bool Graph::removeVertex(Vertex *v) {
     vertexSet.erase(lowerId);
     return true;
 }
-/*
- * Adds an edge to a graph (this), given the contents of the source and
- * destination vertices and the edge weight (w).
- * Returns true if successful, and false if the source or destination vertex does not exist.
- */
-
-/*
-bool Graph::addEdge(const int &source, const int &dest, double w) {
-    auto v1 = findVertex(source);
-    auto v2 = findVertex(dest);
-    if (v1 == nullptr || v2 == nullptr)
-        return false;
-    v1->addEdge(v2, w);
-    return true;
-}*/
 
 bool Graph::addBidirectionalEdge(const string &sourc, const string &dest, double c, enum service s) {
     auto v1 = findVertex(sourc);
@@ -425,27 +419,7 @@ int Graph::getDistrictMaxFlow(Vertex *v1, Vertex *v2) {
     return flow;
 }
 
-void deleteMatrix(int **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
-void deleteMatrix(double **m, int n) {
-    if (m != nullptr) {
-        for (int i = 0; i < n; i++)
-            if (m[i] != nullptr)
-                delete [] m[i];
-        delete [] m;
-    }
-}
-
 Graph::~Graph() {
-    deleteMatrix(distMatrix, vertexSet.size());
-    deleteMatrix(pathMatrix, vertexSet.size());
 }
 
 int Graph::computeCost(Vertex *origin) const {
@@ -522,4 +496,53 @@ int Graph::getVertexFlow(Vertex *v) const {
     }
 
     return totalFlow;
+}
+
+Vertex *Graph::addSuperSource(Vertex* dest) {
+    string superNode = "Super Node";
+
+    addVertex(superNode);
+
+    for (auto e: extremes){
+        if (e != dest) addBidirectionalEdge(superNode, e->getId(), 9999, STANDARD);
+    }
+
+    findVertex(superNode)->setComponent(0);
+
+    return findVertex(superNode);
+}
+
+void Graph::removeSuperSource(Vertex* superSource) {
+    for (Vertex *extreme: extremes) {
+        extreme->removeEdge(superSource->getId());
+    }
+
+    removeVertex(superSource->getId());
+}
+
+void Graph::connectedComponentsDfs(Vertex *src, int i) {
+    src->setVisited(true);
+    src->setComponent(i);
+
+    for (Edge *e: src->getAdj()) {
+        Vertex *dest = e->getDest();
+
+        if (!dest->isVisited()) {
+            connectedComponentsDfs(dest, i);
+        }
+    }
+}
+
+void Graph::setConnectedComponents() {
+    resetNodes();
+    int i = 1;
+
+    for (const auto& v: vertexSet) {
+        Vertex *vertex = v.second;
+
+        if (!vertex->isVisited()) {
+            connectedComponentsDfs(vertex, i);
+            i++;
+        }
+    }
 }

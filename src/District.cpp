@@ -77,7 +77,7 @@ map<string,vector<int>> District::connectedComponents() {
         v.second->setVisited(false);
     }
 
-    for(auto v : railway->getVertexSet()){
+    for(const auto& v : railway->getVertexSet()){
         int flow = 0;
         if(!v.second->isVisited()){
             dfs(v.second, flow);

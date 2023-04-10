@@ -26,6 +26,8 @@ Program::Program()
     createMenu4();
     createMenu5();
     createMenuReducedConnectivity();
+
+    railway.setConnectedComponents();
 }
 
 /**
@@ -33,8 +35,6 @@ Program::Program()
  */
 void Program::run()
 {
-
-
     int option;
     while (currMenuPage != -1)
     {

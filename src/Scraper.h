@@ -1,7 +1,3 @@
-//
-// Created by work on 17-03-2023.
-//
-
 #ifndef PROJECT_RAILWAY_SCRAPER_H
 #define PROJECT_RAILWAY_SCRAPER_H
 
@@ -64,7 +60,7 @@ public:
 private:
     /**
      * Finds the extremes based on only if a vertex only has one adjacent edge, or if it has more than two adjacent edges;
-     * Time Complexity: O(V+E), where V is the number of vertices in the graph and E is the number of edges in the graph; //TODO: check this
+     * Time Complexity: O(V+E), where V is the number of vertices in the graph and E is the number of edges in the graph;
      * @param map - the unordered_map containing all the stations of the graph;
      * @param gh - the graph used to find the extremes;
      */
