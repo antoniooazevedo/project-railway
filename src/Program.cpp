@@ -8,6 +8,7 @@
  */
 Program::Program()
 {
+    /*
     auto region_map = Scraper::scrape_stations("../src/data/stations.csv", railway);
     Scraper::scrape_networks("../src/data/network.csv", railway);
     Scraper::fix_graph(railway);
@@ -17,6 +18,29 @@ Program::Program()
     Scraper::findExtremes(region_map, railway);
     railway.setRegion(DISTRICTS);
     Scraper::findExtremes(region_map, railway);
+     */
+
+    /* EXEMPLO 2.1
+    railway = ExampleGraphs::Graph1();
+     */
+
+    /* EXEMPLO 2.2
+    railway = ExampleGraphs::Graph7();
+    */
+
+    /* EXEMPLO 2.3
+    railway = ExampleGraphs::Graph8();
+    */
+
+    /* EXEMPLO 2.4
+    railway = ExampleGraphs::Graph9();
+    */
+
+    /* EXEMPLO 3
+    railway = ExampleGraphs::costGraph2();
+    */
+
+    railway = ExampleGraphs::Graph4();
 
     currMenuPage = 0;
     createMainMenu();

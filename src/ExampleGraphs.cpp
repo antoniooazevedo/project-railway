@@ -242,3 +242,65 @@ Graph ExampleGraphs::topSegmentFailureGraph2() {
     return gh;
 }
 
+Graph ExampleGraphs::Graph7() {
+    Graph gh;
+    for (auto i = 1; i <= 6; i++) {
+        int line = 1;
+        Vertex *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 2,STANDARD);
+    gh.addBidirectionalEdge("V1", "V3", 1,STANDARD);
+    gh.addBidirectionalEdge("V3", "V5", 1,STANDARD);
+    gh.addBidirectionalEdge("V2", "V5", 2,STANDARD);
+    gh.addBidirectionalEdge("V1", "V4", 3,STANDARD);
+    gh.addBidirectionalEdge("V4", "V5", 2,STANDARD);
+    gh.addBidirectionalEdge("V5", "V6", 3,STANDARD);
+
+    return gh;
+}
+
+Graph ExampleGraphs::Graph8() {
+    Graph gh;
+    for (auto i = 1; i <= 5; i++) {
+        int line = 1;
+        Vertex *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(i), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh.addVertex(v);
+    }
+
+    gh.addBidirectionalEdge("V1", "V2", 6,STANDARD);
+    gh.addBidirectionalEdge("V2", "V3", 2,STANDARD);
+    gh.addBidirectionalEdge("V3", "V4", 6,STANDARD);
+    gh.addBidirectionalEdge("V4", "V5", 4,STANDARD);
+
+    return gh;
+}
+
+Graph ExampleGraphs::Graph9() {
+    Graph gh2;
+    for (auto i = 1; i <= 13; i++) {
+        int line = 1;
+        int mun = 0;
+        if (i <= 11){
+            mun = 1;
+        }
+        Vertex *v = new Vertex("V" + to_string(i), "District" + to_string(i), "Municipality" + to_string(mun), "Line" + to_string(line), {"Township" + to_string(i)});
+        gh2.addVertex(v);
+    }
+
+    gh2.addBidirectionalEdge("V1", "V2", 2,STANDARD);
+    gh2.addBidirectionalEdge("V2", "V3", 4,STANDARD);
+    gh2.addBidirectionalEdge("V4", "V5", 4,STANDARD);
+    gh2.addBidirectionalEdge("V5", "V12", 3,STANDARD);
+    gh2.addBidirectionalEdge("V12", "V8", 1,STANDARD);
+    gh2.addBidirectionalEdge("V8", "V9", 2,STANDARD);
+    gh2.addBidirectionalEdge("V9", "V10", 2,STANDARD);
+    gh2.addBidirectionalEdge("V10", "V11", 4,STANDARD);
+    gh2.addBidirectionalEdge("V7", "V8", 4,STANDARD);
+    gh2.addBidirectionalEdge("V6", "V7", 2,STANDARD);
+    gh2.addBidirectionalEdge("V12", "V13", 3,STANDARD);
+
+    return gh2;
+}
+

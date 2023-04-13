@@ -8,11 +8,34 @@ std::unordered_map<string , Vertex *> Graph::getVertexSet() const {
 }
 
 unordered_set<Vertex*> Graph::getExtremes() const{
-    return extremes;
+    unordered_set<Vertex*> testExtremes;
+
+    /* EXAMPLE 2.2
+    testExtremes.insert(findVertex("V1"));
+    testExtremes.insert(findVertex("V5"));
+    testExtremes.insert(findVertex("V6"));
+    */
+
+    /* EXAMPLE 2.3
+    testExtremes.insert(findVertex("V1"));
+    testExtremes.insert(findVertex("V5"));
+    */
+
+    return testExtremes;
 }
 
 unordered_set<Vertex*> Graph::getExtremesMunicipalities() const{
-    return extremesMunicipalities;
+    unordered_set<Vertex*> test;
+    test.insert(findVertex("V1"));
+    test.insert(findVertex("V3"));
+    test.insert(findVertex("V4"));
+    test.insert(findVertex("V5"));
+    test.insert(findVertex("V12"));
+    test.insert(findVertex("V13"));
+    test.insert(findVertex("V11"));
+    test.insert(findVertex("V6"));
+
+    return test;
 }
 
 unordered_set<Vertex*> Graph::getExtremesDistricts() const{
@@ -503,7 +526,7 @@ Vertex *Graph::addSuperSource(Vertex* dest) {
 
     addVertex(superNode);
 
-    for (auto e: extremes){
+    for (auto e: getExtremes()){
         if (e != dest) addBidirectionalEdge(superNode, e->getId(), 9999, STANDARD);
     }
 

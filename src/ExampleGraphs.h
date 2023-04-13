@@ -19,6 +19,12 @@ public:
 
     static Graph Graph6();
 
+    static Graph Graph7();
+
+    static Graph Graph8();
+
+    static Graph Graph9();
+
     static Graph costGraph1();
 
     static Graph costGraph2();
