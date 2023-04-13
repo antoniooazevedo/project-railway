@@ -21,6 +21,15 @@ unordered_set<Vertex*> Graph::getExtremes() const{
     testExtremes.insert(findVertex("V5"));
     */
 
+    /* EXAMPLE 4.1/4.2
+    testExtremes.insert(findVertex("V12"));
+    testExtremes.insert(findVertex("V8"));
+    testExtremes.insert(findVertex("V7"));
+    testExtremes.insert(findVertex("V2"));
+    testExtremes.insert(findVertex("V6"));
+    testExtremes.insert(findVertex("V4"));
+    */
+
     return testExtremes;
 }
 

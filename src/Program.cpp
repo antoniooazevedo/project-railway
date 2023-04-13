@@ -40,7 +40,9 @@ Program::Program()
     railway = ExampleGraphs::costGraph2();
     */
 
+    /* EXEMPLO 4.1/4.2
     railway = ExampleGraphs::Graph4();
+    */
 
     currMenuPage = 0;
     createMainMenu();
